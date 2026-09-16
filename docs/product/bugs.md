@@ -1,0 +1,3 @@
+# Bugs
+
+Nenhum bug registrado.

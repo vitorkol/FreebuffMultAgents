@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "project": "FreebuffMultAgents",
+  "agents": [
+    { "name": "revisor", "path": "agents/revisor", "role": "Revisor" },
+    { "name": "anr", "path": "agents/analista_requisitos", "role": "Analista de Requisitos" },
+    { "name": "tech-leader", "path": "agents/tech_leader", "role": "Tech Leader" },
+    { "name": "developer", "path": "agents/developer", "role": "Developer" },
+    { "name": "qa", "path": "agents/qa", "role": "QA" }
+  ],
+  "orchestrators": [
+    { "name": "delivery-pipeline", "path": ".agents/orchestrators/delivery-pipeline.ts" }
+  ]
+}
