@@ -4,6 +4,12 @@
 
 Este é um projeto Laravel + React com um fluxo local de agentes organizado em arquivos versionados.
 
+## Entrada padrão e meetings
+
+Por padrão, o pipeline usa `docs/product/meeting-summary.md`.
+
+Também foi criada a pasta `docs/product/meetings/` para permitir que o Revisor liste os arquivos de reunião disponíveis e use o selecionado, em vez de exigir o caminho fixo todas as vezes.
+
 ## Agentes
 
 - **Revisor**: corrige clareza, gramática, ortografia e terminologia.

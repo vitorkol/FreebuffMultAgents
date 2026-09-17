@@ -53,11 +53,16 @@ Se o Freebuff exigir um arquivo de configuração ou uma convenção diferente, 
 
 ## Como iniciar o pipeline
 
-Coloque o resumo em `docs/product/meeting-summary.md`, execute `freebuff` na raiz e solicite:
+Por padrão, coloque o resumo em `docs/product/meeting-summary.md`, execute `freebuff` na raiz e solicite:
 
 ```text
 Leia AGENTS.md e agents/agents.md. Execute o pipeline definido em .agents/orchestrators/delivery-pipeline.ts, usando o resumo em docs/product/meeting-summary.md. Preserve os gates de aprovação, salve cada artefato em docs/product/ e não implemente código antes da aprovação do ANR e do Tech Leader.
 ```
+
+Se sua versão do Freebuff suportar escolha dinâmica, você também pode usar uma pasta de reuniões em `docs/product/meetings/`. Nesse caso, ao iniciar o pipeline o Revisor pode listar ou solicitar qual arquivo de reunião processar, por exemplo:
+
+- `reuniao-16-09-26-tela-cadastro.doc`
+
 
 ## Artefatos
 

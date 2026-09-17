@@ -1,0 +1,5 @@
+# Placeholder de reuniões automática
+
+> Este arquivo é apenas um exemplo.
+
+Ao invés de repassar o caminho manual, o pipeline pode listar os arquivos em `docs/product/meetings` e usar o selecionado.
