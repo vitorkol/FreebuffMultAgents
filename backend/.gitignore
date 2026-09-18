@@ -1,0 +1,27 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/php-extensions/
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+# Banco sqlite local
+/database/*.sqlite
+
+# Extensões PHP extraídas localmente (ver php83.sh)
+/php-extensions/root/
+/php-extensions/debs/

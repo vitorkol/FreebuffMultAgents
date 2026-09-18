@@ -5,7 +5,7 @@
 - RNF: requisito não funcional.
 - CA: critério de aceite.
 - BDD: Behavior-Driven Development.
-- ANR: Analista de Requisitos.
+- ANR: Analista de Negócios e Requisitos.
 - US: User Story / História de Usuário.
 
 Atualize este arquivo quando o domínio introduzir novos termos.
