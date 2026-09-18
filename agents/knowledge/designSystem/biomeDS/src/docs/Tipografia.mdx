@@ -1,0 +1,407 @@
+{/* Tipografia.mdx */}
+import React from 'react'
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, TokenTable, DoRule, DontRule } from './components'
+import { TypographyScale, FontFamilyCard } from './components'
+import { cn } from '../utils/cn'
+
+export const TYPO_CONTRACT_ROWS = [
+  { badge: 'H1', tag: 'h1', tier: 'display', title: 'Título de página', util: 'text-display-xl', figma: 'Display / XL' },
+  { badge: 'H2', tag: 'h2', tier: 'display', title: 'Título de seção', util: 'text-heading-l', figma: 'Heading / L' },
+  { badge: 'H3', tag: 'h3', tier: 'display', title: 'Subtítulo', util: 'text-heading-m', figma: 'Heading / M' },
+  { badge: 'H4', tag: 'h4', tier: 'heading', title: 'Título de card', util: 'text-heading-s', figma: 'Heading / S' },
+  { badge: 'H5', tag: 'h5', tier: 'heading', title: 'Rótulo de grupo', util: 'text-heading-xs', figma: 'Heading / XS' },
+  { badge: 'H6', tag: 'h6', tier: 'heading', title: 'Legenda ou nota', util: 'text-body-xs', figma: 'Body / XS' },
+  { badge: 'p', tag: 'p', tier: 'body', title: 'Parágrafo de corpo.', util: 'text-body-m', figma: 'Body / M' },
+  { badge: 'small', tag: 'small', tier: 'meta', title: 'Nota auxiliar.', util: 'text-meta-xs', figma: 'Meta / XS' },
+  { badge: 'label', tag: 'label', tier: 'meta', title: 'Campo ou filtro', util: 'text-label-m', figma: 'Label / M' },
+]
+
+<Meta title="Fundações/Tipografia" />
+
+<DocsPageHeader
+  title="Tipografia"
+  badge="Fundações"
+  description="O Biome usa duas famílias tipográficas com papéis bem definidos: Roboto para texto de interface e Poppins para títulos e displays. A escala foi calibrada para legibilidade e hierarquia claras nas interfaces da SEMAD."
+/>
+
+<SectionHeader title="Famílias Tipográficas" description="Cada família tem um papel semântico distinto. Não as intercambie arbitrariamente." />
+
+<div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}>
+  <FontFamilyCard
+    name="Roboto"
+    cssVar="--font-roboto"
+    tailwind="font-sans"
+    description="Padrão da interface. Use em labels, parágrafos, inputs, tabelas e qualquer texto de UI operacional."
+    specimen="Biome"
+    weights={['400', '500', '600', '700']}
+  />
+  <FontFamilyCard
+    name="Poppins"
+    cssVar="--font-poppins"
+    tailwind="font-display"
+    description="Apenas para headings de nível de página (H1–H3) e seções de destaque visual. Não use em texto de UI."
+    specimen="Biome"
+    weights={['600', '700']}
+  />
+</div>
+
+<DocsCallout type="tip" title="Regra de família">
+  <strong>font-sans (Roboto)</strong> é o padrão absoluto. Aplique <strong>font-display (Poppins)</strong> somente em H1–H3 e displays — nunca em texto de interface denso.
+</DocsCallout>
+
+<SectionHeader title="Contrato HTML ↔ Figma ↔ classes" description="Use o elemento semântico e aplique explicitamente a classe/tokens do Biome para materializar o nível tipográfico." />
+
+<div className="not-prose relative mx-auto mb-16 w-full max-w-[min(58rem,100%)]">
+  <div
+    aria-hidden
+    className="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(120%_80%_at_10%_-20%,color-mix(in_oklab,var(--color-secondary)_22%,transparent),transparent_58%),radial-gradient(100%_60%_at_95%_110%,color-mix(in_oklab,var(--color-muted-foreground)_12%,transparent),transparent_55%)] opacity-100 dark:opacity-90"
+  />
+  <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card via-card to-muted/[0.35] shadow-[0_1px_0_0_rgba(255,255,255,0.06)_inset,0_16px_48px_-20px_rgba(0,0,0,0.14)] ring-1 ring-black/[0.03] dark:from-card dark:via-card dark:to-muted/20 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset,0_24px_64px_-24px_rgba(0,0,0,0.55)] dark:ring-white/[0.06]">
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-secondary/25 to-transparent dark:via-secondary/20" />
+    <div className="relative border-b border-border/50 bg-muted/[0.22] px-4 py-4 backdrop-blur-[2px] sm:px-6">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+        <span className="inline-flex items-center gap-2 rounded-full border border-secondary/25 bg-secondary/12 px-3 py-2 shadow-sm ring-1 ring-secondary/10 dark:bg-secondary/[0.15] dark:ring-secondary/20">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-secondary to-secondary/75 ring-4 ring-secondary/20 dark:ring-secondary/25" aria-hidden />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground/85">Display (H1–H3)</span>
+        </span>
+        <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-2 shadow-sm ring-1 ring-accent/15 dark:bg-accent/[0.12]">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-accent to-accent/80 ring-4 ring-accent/18" aria-hidden />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground/85">Heading (H4–H6)</span>
+        </span>
+        <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-muted/35 px-3 py-2 shadow-sm dark:bg-muted/25">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-muted-foreground/50 to-muted-foreground/35 ring-2 ring-border/60" aria-hidden />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Corpo</span>
+        </span>
+        <span className="inline-flex items-center gap-2 rounded-full border border-info-surface-border bg-info-surface/60 px-3 py-2 shadow-sm ring-1 ring-info-surface-border/30 dark:bg-info-surface/25">
+          <span
+            className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-info-on-surface/90 to-info-on-surface/60 shadow-inner"
+            aria-hidden
+          />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-info-on-surface">Meta</span>
+        </span>
+      </div>
+    </div>
+
+    <div className="divide-y divide-border/[0.45]">
+      {TYPO_CONTRACT_ROWS.map((row, i) => (
+        <div
+          key={row.badge}
+          className={cn(
+            'group relative overflow-hidden transition-all duration-300 ease-out',
+            i % 2 === 0 ? 'bg-gradient-to-r from-card to-muted/[0.12]' : 'bg-muted/[0.06]',
+            'hover:bg-muted/12 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] dark:hover:bg-muted/10 dark:hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]',
+          )}
+        >
+          <span
+            aria-hidden
+            className={cn(
+              'absolute left-0 top-1/2 w-[4px] -translate-y-1/2 rounded-r-full transition-[height,box-shadow,opacity] duration-300 ease-out group-hover:h-[78%]',
+              'h-[min(3.25rem,72%)] opacity-95 group-hover:opacity-100',
+              row.tier === 'display' &&
+                'bg-gradient-to-b from-secondary via-secondary to-secondary/85 shadow-[4px_0_18px_-3px_var(--color-secondary)]',
+              row.tier === 'heading' &&
+                'bg-gradient-to-b from-accent via-accent to-accent/88 shadow-[4px_0_18px_-3px_var(--color-accent)]',
+              row.tier === 'body' &&
+                'bg-gradient-to-b from-muted-foreground/45 to-muted-foreground/28 shadow-none',
+              row.tier === 'meta' && 'bg-gradient-to-b from-info-surface-border to-info-surface-border/65',
+            )}
+          />
+
+          <div className="relative flex min-w-0 flex-nowrap items-center gap-3 overflow-x-auto overflow-y-hidden px-4 py-[1.125rem] pl-7 pr-4 sm:gap-6 sm:pl-10 sm:pr-8">
+            <span
+              className={cn(
+                'inline-flex shrink-0 select-none items-center justify-center font-mono font-bold uppercase shadow-sm',
+                row.tag === 'small' || row.tag === 'label'
+                  ? 'h-6 min-w-[2.125rem] rounded-md px-1.5 text-[8px] leading-tight tracking-[0.12em]'
+                  : 'h-[1.875rem] min-w-[3rem] rounded-xl px-2.5 text-[10px] tracking-[0.09em]',
+                row.tier === 'display' &&
+                  'border border-secondary/25 bg-gradient-to-br from-secondary to-secondary/90 text-secondary-foreground shadow-md shadow-secondary/30 ring-1 ring-white/20 dark:shadow-secondary/20',
+                row.tier === 'heading' &&
+                  'border border-accent/35 bg-gradient-to-br from-accent to-accent/88 text-accent-foreground shadow-md shadow-accent/22 ring-1 ring-white/15',
+                row.tier === 'body' && 'border border-border/65 bg-muted/45 text-foreground shadow-sm dark:bg-muted/30',
+                row.tier === 'meta' &&
+                  'border border-info-surface-border bg-gradient-to-br from-info-surface to-info-surface/82 text-info-on-surface',
+              )}
+            >
+              {row.badge}
+            </span>
+
+            <div className="min-w-0 flex-1 overflow-hidden md:mr-3 sm:min-w-[8rem]">
+              {React.createElement(
+                row.tag,
+                {
+                  className: 'm-0 inline align-middle',
+                },
+                row.title,
+              )}
+            </div>
+
+            <span
+              aria-hidden
+              className="hidden h-9 w-px shrink-0 bg-gradient-to-b from-transparent via-border/70 to-transparent md:block"
+            />
+
+            <div className="flex shrink-0 items-baseline gap-x-2 whitespace-nowrap sm:gap-x-2.5">
+              <span className="font-mono text-[10px] font-medium tabular-nums tracking-tight text-foreground/[0.78] sm:text-[11px]">
+                {row.util}
+              </span>
+              <span className="select-none px-px text-muted-foreground/55" aria-hidden>
+                ·
+              </span>
+              <span className="font-mono text-[10px] tracking-tight text-muted-foreground sm:text-[11px]">
+                {'<' + row.tag + '>'}
+              </span>
+              <span className="select-none px-px text-muted-foreground/55" aria-hidden>
+                ·
+              </span>
+              <span className="max-w-[7rem] truncate text-[11px] font-semibold tracking-tight text-text-primary sm:max-w-[11rem] md:max-w-none">
+                {row.figma}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-border/55 to-transparent" />
+  </div>
+</div>
+
+<DocsCallout type="info" title="Quando usar text-*">
+  Sempre que você precisar definir o nível tipográfico no consumo. Aplique o nível visual via classes semânticas (<code>{'text-display-*'}</code>, <code>{'text-heading-*'}</code>, <code>{'text-body-*'}</code>, <code>{'text-label-*'}</code>, <code>{'text-meta-*'}</code>).
+</DocsCallout>
+
+<SectionHeader title="Como usar tipografia" description="Ordem de prioridade — uma única fonte de verdade; detalhes nas seções seguintes." />
+
+<DocsCallout type="tip" title="Ordem de prioridade">
+  <ol style={{ margin: '8px 0 0', paddingLeft: 20, lineHeight: 1.6 }}>
+    <li><strong>HTML semântico + classe semântica</strong> — <code>&lt;h1 className="text-display-xl"&gt;</code>, <code>&lt;p className="text-body-m"&gt;</code>, <code>&lt;label className="text-label-m"&gt;</code>.</li>
+    <li><strong>Tokens de cor semântica</strong> no mesmo elemento quando necessário (<code>text-foreground</code>, <code>text-muted-foreground</code>, etc.).</li>
+    <li><strong>Override raro</strong> — somente classes nomeadas da escala do DS para exceções reais de contexto.</li>
+  </ol>
+</DocsCallout>
+
+<DocsCallout type="danger" title="Não faça">
+  Misturar tipografia manual com utilitários do Tailwind fora do contrato, por exemplo: <code>text-sm</code>, <code>font-medium</code>, <code>leading-tight</code>, <code>tracking-wide</code> em paralelo ao DS. Hierarquia e métricas vêm de <code>h1–h6</code>, <code>p</code>, <code>small</code>, <code>label</code> e <strong>classes utilitárias nomeadas do DS</strong> (<code>text-body-m</code>, <code>text-label-s</code>, …).
+</DocsCallout>
+
+<DocsCallout type="info" title="Contrato de uso">
+  A escala tipográfica do Biome é entregue por classes e tokens. Aplique explicitamente o nível tipográfico no elemento que representa o conteúdo.
+</DocsCallout>
+
+<SectionHeader title="Garantias do sistema" description="O pacote público fecha o contrato via classes/tokens, e o CI impede regressão de escala." />
+
+<DocsCallout type="success" title="O que você ganha com o contrato">
+  <ul style={{ margin: '8px 0 0', paddingLeft: 20, lineHeight: 1.65 }}>
+    <li>Classes semânticas tipográficas estáveis e alinhadas ao Figma (<code>{'text-display-*'}</code>, <code>{'text-heading-*'}</code>, <code>{'text-body-*'}</code>, <code>{'text-label-*'}</code>, <code>{'text-meta-*'}</code>).</li>
+    <li>Tokens de cor semântica para contraste e contexto (<code>text-foreground</code>, <code>text-muted-foreground</code>, etc.).</li>
+    <li>Governança para bloquear tipografia fora do contrato em componentes do design system.</li>
+  </ul>
+  <p style={{ marginBottom: 0, marginTop: 12 }}>
+    <strong>O nível tipográfico deve ser aplicado explicitamente</strong> no elemento que representa o conteúdo.
+  </p>
+</DocsCallout>
+
+<DocsCallout type="tip" title="Regra mental do desenvolvedor">
+  Pense sempre em dupla: <strong>semântica HTML + classe tipográfica do Biome</strong>. Ex.: <code>&lt;h2 className="text-heading-l"&gt;</code>, <code>&lt;p className="text-body-m"&gt;</code>, <code>&lt;small className="text-meta-xs"&gt;</code>.
+</DocsCallout>
+
+<SectionHeader title="Isso quebra o sistema" description="O governança de CSS e o script de enforce bloqueiam estes padrões no CI." />
+
+<DocsCallout type="danger" title="Evite">
+  <ul style={{ margin: '8px 0 0', paddingLeft: 20, lineHeight: 1.65 }}>
+    <li>Classes de escala genérica do Tailwind: <code>text-sm</code>, <code>text-xs</code>, <code>font-bold</code>, <code>leading-tight</code>, <code>tracking-wide</code>, etc.</li>
+    <li>Tipografia “na mão” fora da escala nomeada do DS (Display, Heading, Body, Label, Meta).</li>
+    <li>Estilos inline com <code>fontSize</code> / <code>fontWeight</code> em componentes de interface (documentação explicativa em MDX é outro contexto).</li>
+  </ul>
+</DocsCallout>
+
+<SectionHeader title="Três níveis de uso tipográfico" description="Do padrão mais simples ao override avançado (mesmo contrato visual em todas as linhas)." />
+
+<DocsCallout type="danger" title="IMPORTANTE">
+  O HTML define semântica e acessibilidade. Para qualquer árvore (semântica ou composicional), aplique as classes semânticas <strong>text-*</strong> do Biome para garantir o nível visual correto.
+</DocsCallout>
+
+### 1. HTML semântico + classe explícita (padrão)
+
+```html
+<h1 className="text-display-xl text-foreground">Título de página</h1>
+<p className="text-body-m text-foreground">Texto corrido da interface.</p>
+<small className="text-meta-xs text-muted-foreground">Rubrica ou nota menor</small>
+```
+
+- O elemento semântico continua obrigatório para acessibilidade e estrutura.
+- O nível visual deve ser aplicado com classes da escala tipográfica do Biome.
+
+---
+
+### 2. text-* em elementos não semânticos (uso controlado)
+
+```tsx
+<span className="text-heading-l text-foreground">
+  Título dentro de slot/árvore sem marcador semântico adequado
+</span>
+```
+
+- Adequado a **Radix**, **slots** e **composição** quando não é possível usar diretamente `h1`–`h6`, `p`, `label`, etc.
+- Mantenha semântica com HTML sempre que possível; use `text-*` como fallback técnico.
+
+---
+
+### 3. Override avançado (com classes do contrato)
+
+```tsx
+<p className="text-body-s text-muted-foreground">Texto secundário menor</p>
+<h4 className="text-heading-m text-foreground">Título menor em contexto denso</h4>
+```
+
+- Sobrescritas seguem exclusivamente a escala nomeada do DS.
+- Para cor, use tokens semânticos sem sair do contrato tipográfico.
+
+---
+
+<DocsCallout type="danger" title="Ordem recomendada (resumo)">
+  <ol style={{ margin: '8px 0 0', paddingLeft: 20 }}>
+    <li><strong>HTML semântico</strong> para estrutura e acessibilidade.</li>
+    <li><strong>Classe tipográfica do Biome</strong> para materializar o nível visual.</li>
+    <li><strong>Tokens semânticos de cor</strong> para contraste/contexto.</li>
+  </ol>
+</DocsCallout>
+
+```tsx
+<h3 className="text-heading-m text-foreground">Título semântico da seção</h3>
+
+<span className="text-heading-m text-foreground">
+  Título visual em árvore composta apenas com div/span
+</span>
+
+<span className="text-body-m">
+  Linha em célula composta apenas com divs
+</span>
+```
+
+<SectionHeader title="Escala semântica (.text-*)" description="Nomes alinhados ao Figma e ao export typography.json — não use a escala text-xs…7xl do Tailwind como substituto da tabela acima." />
+
+<TypographyScale
+  items={[
+    { label: 'text-meta-2xs',  size: '.text-meta-2xs',  value: '0.625rem', weight: '400', usage: 'Notas densas', fontFamily: 'Roboto, sans-serif', sample: 'Ref. cadastral', lineHeight: '1.5' },
+    { label: 'text-meta-xs',   size: '.text-meta-xs',   value: '0.75rem',  weight: '400', usage: '= small, metadados', fontFamily: 'Roboto, sans-serif', sample: 'Atualizado há 2 dias', lineHeight: '1.5' },
+    { label: 'text-label-s',   size: '.text-label-s',   value: '0.75rem',  weight: '500', usage: 'Rótulos densos em span/div', fontFamily: 'Roboto, sans-serif', sample: 'CPF ou e-mail', lineHeight: '1.5' },
+    { label: 'text-body-s',    size: '.text-body-s',    value: '0.875rem', weight: '400', usage: 'Texto auxiliar', fontFamily: 'Roboto, sans-serif', sample: 'Campo obrigatório.', lineHeight: '1.5' },
+    { label: 'text-body-m',    size: '.text-body-m',    value: '1rem',     weight: '400', usage: '= parágrafo base', fontFamily: 'Roboto, sans-serif', sample: 'O sistema ambiental da SEMAD.', lineHeight: '1.5' },
+    { label: 'text-heading-xl',size: '.text-heading-xl',value: '1.875rem', weight: '700', usage: 'Título menor que H1', fontFamily: 'Poppins, sans-serif', sample: 'Seção em destaque', lineHeight: '1.2' },
+    { label: 'text-display-xl',size: '.text-display-xl',value: '3.75rem', weight: '700', usage: '= h1 (página)', fontFamily: 'Poppins, sans-serif', sample: 'Bem-vindo ao Biome', lineHeight: '1.2' },
+  ]}
+/>
+
+<SectionHeader title="Hierarquia de Headings" description="Use o elemento HTML para semântica e aplique a classe tipográfica correspondente para garantir o nível visual do contrato." />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', background: '#fff' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 220px', gap: 16, padding: '14px 20px', borderBottom: '1px solid #f5f5f5', alignItems: 'center', background: '#fff' }}>
+    <span style={{ fontSize: 11, fontWeight: 700, color: '#264c37', background: '#e9f4ee', padding: '2px 7px', borderRadius: 4, textAlign: 'center' }}>H1</span>
+    <div>
+      <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 60, color: 'var(--text-primary)', lineHeight: 1.2 }}>Bem-vindo ao Biome</div>
+      <code style={{ fontSize: 10, color: '#9f9f9f', display: 'block', marginTop: 3 }}>&lt;h1&gt; mesmo estilo que .text-display-xl</code>
+    </div>
+    <span style={{ fontSize: 12, color: '#737373', textAlign: 'right' }}>Título principal de página</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 220px', gap: 16, padding: '14px 20px', borderBottom: '1px solid #f5f5f5', alignItems: 'center', background: '#fafafa' }}>
+    <span style={{ fontSize: 11, fontWeight: 700, color: '#264c37', background: '#e9f4ee', padding: '2px 7px', borderRadius: 4, textAlign: 'center' }}>H2</span>
+    <div>
+      <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600, fontSize: 24, color: 'var(--text-primary)', lineHeight: 1.29 }}>Perguntas Frequentes</div>
+      <code style={{ fontSize: 10, color: '#9f9f9f', display: 'block', marginTop: 3 }}>&lt;h2&gt; · .text-heading-l</code>
+    </div>
+    <span style={{ fontSize: 12, color: '#737373', textAlign: 'right' }}>Título de seção</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 220px', gap: 16, padding: '14px 20px', borderBottom: '1px solid #f5f5f5', alignItems: 'center', background: '#fff' }}>
+    <span style={{ fontSize: 11, fontWeight: 700, color: '#264c37', background: '#e9f4ee', padding: '2px 7px', borderRadius: 4, textAlign: 'center' }}>H3</span>
+    <div>
+      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: 20, color: 'var(--text-primary)', lineHeight: 1.3 }}>Detalhes do Atendimento</div>
+      <code style={{ fontSize: 10, color: '#9f9f9f', display: 'block', marginTop: 3 }}>&lt;h3&gt; · .text-heading-m</code>
+    </div>
+    <span style={{ fontSize: 12, color: '#737373', textAlign: 'right' }}>Subtítulo de seção</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 220px', gap: 16, padding: '14px 20px', borderBottom: '1px solid #f5f5f5', alignItems: 'center', background: '#fafafa' }}>
+    <span style={{ fontSize: 11, fontWeight: 700, color: '#264c37', background: '#e9f4ee', padding: '2px 7px', borderRadius: 4, textAlign: 'center' }}>H4</span>
+    <div>
+      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500, fontSize: 18, color: 'var(--text-primary)', lineHeight: 1.5 }}>Protocolo #2024-001</div>
+      <code style={{ fontSize: 10, color: '#9f9f9f', display: 'block', marginTop: 3 }}>&lt;h4&gt; · .text-heading-s</code>
+    </div>
+    <span style={{ fontSize: 12, color: '#737373', textAlign: 'right' }}>Título de card ou modal</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 220px', gap: 16, padding: '14px 20px', borderBottom: '1px solid #f5f5f5', alignItems: 'center', background: '#fff' }}>
+    <span style={{ fontSize: 11, fontWeight: 700, color: '#264c37', background: '#e9f4ee', padding: '2px 7px', borderRadius: 4, textAlign: 'center' }}>H5</span>
+    <div>
+      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500, fontSize: 16, color: 'var(--text-primary)', lineHeight: 1.5 }}>Sobre a solicitação</div>
+      <code style={{ fontSize: 10, color: '#9f9f9f', display: 'block', marginTop: 3 }}>&lt;h5&gt; · .text-heading-xs</code>
+    </div>
+    <span style={{ fontSize: 12, color: '#737373', textAlign: 'right' }}>Rótulo de grupo</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 220px', gap: 16, padding: '14px 20px', alignItems: 'center', background: '#fafafa' }}>
+    <span style={{ fontSize: 11, fontWeight: 700, color: '#264c37', background: '#e9f4ee', padding: '2px 7px', borderRadius: 4, textAlign: 'center' }}>H6</span>
+    <div>
+      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: 12, color: 'var(--text-primary)', lineHeight: 1.5 }}>Informações adicionais</div>
+      <code style={{ fontSize: 10, color: '#9f9f9f', display: 'block', marginTop: 3 }}>&lt;h6&gt; · .text-body-xs</code>
+    </div>
+    <span style={{ fontSize: 12, color: '#737373', textAlign: 'right' }}>Subtítulo fino</span>
+  </div>
+</div>
+
+<SectionHeader title="Pesos" description="Escala de 4 pesos para Roboto. Poppins usa apenas 600 e 700." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12 }}>
+  {[
+    { weight: '400', tailwind: 'font-normal',   label: 'Normal',   usage: 'Corpo de texto' },
+    { weight: '500', tailwind: 'font-medium',   label: 'Medium',   usage: 'Labels, botões, UI' },
+    { weight: '600', tailwind: 'font-semibold', label: 'Semibold', usage: 'Subtítulos de card' },
+    { weight: '700', tailwind: 'font-bold',     label: 'Bold',     usage: 'Headings, destaques' },
+  ].map(({ weight, tailwind, label, usage }) => (
+    <div key={weight} style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px', background: '#fff' }}>
+      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: weight, fontSize: 24, color: 'var(--text-primary)', marginBottom: 8, lineHeight: 1 }}>
+        Biome DS
+      </div>
+      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+        <code style={{ fontSize: 11, background: '#e9f4ee', color: '#264c37', padding: '1px 6px', borderRadius: 4 }}>{tailwind}</code>
+        <span style={{ fontSize: 11, color: '#9f9f9f' }}>{weight}</span>
+      </div>
+      <p style={{ fontSize: 11, color: '#737373', margin: '6px 0 0' }}>{usage}</p>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Line Height" description="5 valores para controlar densidade vertical do texto." />
+
+<TokenTable
+  rows={[
+    { token: '--line-height-tight',   tailwind: 'leading-tight',   value: '1.25',  usage: 'Headings grandes (H1, H2)' },
+    { token: '--line-height-snug',    tailwind: 'leading-snug',    value: '1.375', usage: 'Headings médios (H3, H4)' },
+    { token: '--line-height-normal',  tailwind: 'leading-normal',  value: '1.5',   usage: 'Texto de corpo padrão' },
+    { token: '--line-height-relaxed', tailwind: 'leading-relaxed', value: '1.625', usage: 'Texto longo, artigos' },
+    { token: '--line-height-loose',   tailwind: 'leading-loose',   value: '2',     usage: 'Listas espaçadas' },
+  ]}
+/>
+
+<SectionHeader title="Padrões Comuns de Interface" />
+
+```tsx
+// Cabeçalho de modal — aplique o nível explicitamente
+<h2 className="text-heading-l text-foreground">Protocolo #2024-001</h2>
+<p className="text-body-m text-muted-foreground">Criado em 08/03/2024</p>
+
+// Dado com rótulo (rótulos densos podem usar .text-label-s em span)
+<dt className="text-muted-foreground uppercase tracking-wider"><span className="text-label-s">Status</span></dt>
+<dd className="text-foreground mt-0.5 font-medium">Concluído</dd>
+
+// Número de destaque sem usar parágrafo como headline
+<span className="text-heading-xl text-brand-green-dark font-bold">#2024-003</span>
+```
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Use elementos <code>h1</code>–<code>h6</code>, <code>p</code>, <code>small</code> e <code>label</code> quando couber, aplicando explicitamente a classe de escala do Biome para cada caso.</DoRule>
+<DoRule>Fora de elementos semânticos, use apenas os nomes de escala{' '}<code>{'text-meta-*'}</code>,{' '}<code>{'text-body-*'}</code>,{' '}<code>{'text-heading-*'}</code>,{' '}<code>{'text-display-*'}</code> — não <code>text-xl</code> genérico do Tailwind como se fosse o DS.</DoRule>
+<DoRule>Use <code>pnpm governance:typography-contract</code> antes de PR em componentes que alterem JSX com parágrafos/títulos.</DoRule>
+<DontRule>Não deixe níveis tipográficos sem declaração explícita em <code>{'h*'}</code>, <code>p</code> e <code>label</code>; aplique sempre classes tipográficas do DS.</DontRule>
+<DontRule>Não use <code>font-display</code> (Poppins) em metadados pequenos; use roboto + escalas compactas ({' '}<code>{'text-meta-*'}</code>, <code>text-body-s</code>).</DontRule>
+<DontRule>Mantenha uma única hierarquia: Figma Styles ↔ utility <code>{'.text-*'}</code> ↔ <code>{':root'}</code> (<code>typography.json</code>).</DontRule>

@@ -1,0 +1,55 @@
+{/* textarea.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as TextareaStories from './textarea.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={TextareaStories} />
+
+# Textarea
+
+Campo de texto multilinha alinhado à mesma família de API dos campos `Input` e `Select`, com suporte a `label`, `size`, `helperText` e `hasError`.
+
+<ComponentOverviewCard
+  category="Form Controls"
+  file="src/components/ui/textarea/textarea.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Tamanhos" description="Mesma escala de tamanhos da família de campos (sm, md, lg, xl)." />
+
+<Canvas of={TextareaStories.Sizes} />
+
+<SectionHeader title="Com erro" description="Estado de erro consistente com Input e Select." />
+
+<Canvas of={TextareaStories.WithError} />
+
+<SectionHeader title="Com Valor Pré-preenchido" description="Textarea com conteúdo padrão para demonstrar como o componente se comporta com texto." />
+
+<Canvas of={TextareaStories.WithValue} />
+
+<SectionHeader title="Desabilitado" description="Estado desabilitado para campos que não podem ser editados no momento." />
+
+<Canvas of={TextareaStories.Disabled} />
+
+<SectionHeader title="Altura Personalizada" description="Use classes de altura mínima para ajustar o tamanho ao tipo de conteúdo esperado." />
+
+<Canvas of={TextareaStories.CustomHeight} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Utiliza o elemento nativo `<textarea>`, herdando toda a semântica e comportamento de teclado do navegador.
+- Sempre associe um `<label>` externo ao Textarea, ou forneça `aria-label` para contexto acessível.
+- Textareas desabilitados (`disabled`) não são focáveis via teclado, seguindo o comportamento padrão do HTML.
+- Quando usado em formulários, certifique-se de que mensagens de erro estejam vinculadas via `aria-describedby`.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Sempre forneça um label visível ou acessível para o campo.</DoRule>
+<DoRule>Defina um número de linhas (`rows`) ou altura mínima adequado ao conteúdo esperado.</DoRule>
+
+<DontRule>Não use Textarea para entrada de linha única — use Input nesse caso.</DontRule>
+<DontRule>Não desabilite o redimensionamento (`resize-none`) sem uma justificativa clara de design.</DontRule>

@@ -1,0 +1,6 @@
+# Use pnpm's default global store (usually ~/Library/pnpm/store on macOS or ~/.local/share/pnpm/store on Linux).
+# Keeping the store inside the repository caused tens of thousands of files to be tracked by git.
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true

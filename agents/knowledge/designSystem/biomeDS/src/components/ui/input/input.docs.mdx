@@ -1,0 +1,130 @@
+{/* input.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as InputStories from './input.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule, DocsCallout } from '../../../docs/components'
+
+<Meta of={InputStories} />
+
+# Input
+
+Campo de texto **canônico** do Biome para produto: label opcional, texto auxiliar, validação inline e acessórios internos (ícones, `passwordToggle`, `endAction="clear"`). Substitui os antigos `InputText`, `SearchInput` e o input primitivo — use apenas este componente para entradas de uma linha.
+
+`type="search"` aplica o estilo de busca nativo sem o botão cancel do WebKit; com `endAction="clear"`, o botão limpar só aparece quando há texto, alinhado ao padrão de busca.
+
+<ComponentOverviewCard
+  category="Formulários"
+  file="src/components/ui/input/input.tsx"
+/>
+
+<SectionHeader title="Playground" description="Ajuste props no painel de controles. Experimente startIcon, endIcon, passwordToggle e endAction." />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Tamanhos" description="Quatro escalas de altura para diferentes densidades de layout." />
+
+<Canvas of={InputStories.Sizes} />
+
+<SectionHeader title="Com erro" description="Estado de erro com mensagem de validação inline e destaque visual." />
+
+<Canvas of={InputStories.WithError} />
+
+<SectionHeader title="Ícone à esquerda" description="Use startIcon para indicar o tipo de conteúdo esperado." />
+
+<Canvas of={InputStories.WithStartIcon} />
+
+```tsx
+<Input startIcon="search" label="Buscar" placeholder="Pesquisar..." />
+```
+
+<SectionHeader title="Ícone à direita" description="Use endIcon para reforçar o contexto visual do campo." />
+
+<Canvas of={InputStories.WithEndIcon} />
+
+```tsx
+<Input endIcon="mail" label="E-mail" placeholder="nome@exemplo.com" />
+```
+
+<SectionHeader title="Ambos os ícones" />
+
+<Canvas of={InputStories.WithBothIcons} />
+
+<SectionHeader title="Toggle de senha" description="Alterna a visibilidade do texto com um botão interno. Funciona apenas com type=&quot;password&quot;." />
+
+<Canvas of={InputStories.PasswordToggle} />
+
+```tsx
+<Input label="Senha" type="password" passwordToggle />
+
+<Input label="Senha" type="password" startIcon="lock" passwordToggle />
+```
+
+<SectionHeader title="Ação de limpar" description='endAction="clear" renderiza um botão interno que limpa o valor do campo. Com type="search", o botão só aparece quando há texto.' />
+
+<Canvas of={InputStories.ClearAction} />
+
+<Canvas of={InputStories.SearchField} />
+
+```tsx
+const [value, setValue] = React.useState("")
+
+<Input
+  label="Buscar"
+  type="search"
+  startIcon="search"
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  endAction="clear"
+  onClear={() => setValue("")}
+/>
+```
+
+<SectionHeader title="Prioridade do lado direito" description="Quando múltiplas props do lado direito estão presentes, o componente segue uma ordem de prioridade estrita." />
+
+<Canvas of={InputStories.RightSidePriority} />
+
+- 1ª prioridade: `passwordToggle` (quando `type="password"`) — sobrescreve `endAction` e `endIcon`.
+- 2ª prioridade: `endAction` — sobrescreve `endIcon` quando a ação está visível.
+- 3ª prioridade: `endIcon` — usado quando nenhum item acima ocupa o lado direito.
+
+<SectionHeader title="Formulário completo" description="Exemplo realista combinando vários campos Input." />
+
+<Canvas of={InputStories.CompleteForm} />
+
+<SectionHeader title="Desabilitado" />
+
+<Canvas of={InputStories.Disabled} />
+
+<SectionHeader title="Acessibilidade" />
+
+- **Associação de label** — A prop `label` renderiza um `<label>` vinculado ao input via `htmlFor`/`id`, garantindo que leitores de tela anunciem o nome do campo.
+- **Mensagens de erro** — Com `hasError`, o texto auxiliar se torna mensagem de erro conectada via `aria-describedby` ao input.
+- **Toggle de senha** — O botão de visibilidade possui `aria-label` dinâmico ("Mostrar senha" / "Ocultar senha") e `aria-pressed` atualizado, comunicando o estado corretamente.
+- **Ação de limpar** — O botão de limpar possui `aria-label="Limpar campo"` e foca automaticamente o input após a ação.
+- **Ícones decorativos** — Ícones de `startIcon` e `endIcon` recebem `aria-hidden="true"` automaticamente.
+
+<SectionHeader title="API pública" />
+
+- `startIcon` (`IconName`) — ícone Lucide à esquerda do campo.
+- `endIcon` (`IconName`) — ícone Lucide à direita; oculto por `clear` ou `passwordToggle`.
+- `passwordToggle` (`boolean`) — botão interno para alternar visibilidade da senha.
+- `endAction` (`"clear"`) — ação interna no lado direito para limpar o campo.
+- `onClear` (`() => void`) — callback ao clicar em limpar.
+- `label` (`string`) — rótulo acima do campo.
+- `helperText` (`string`) — texto auxiliar ou mensagem de erro.
+- `hasError` (`boolean`) — ativa estado visual de erro e ARIA correspondente.
+- `size` (`"sm" | "md" | "lg" | "xl"`) — escala de altura do campo.
+
+<DocsCallout type="info" title="API declarativa">
+  O Input não expõe slots para ReactNode arbitrário. O consumidor declara a intenção (por exemplo, <code>passwordToggle</code> ou <code>endAction="clear"</code>) e o design system decide internamente como renderizar, usando os próprios componentes Biome.
+</DocsCallout>
+
+<SectionHeader title="Boas práticas" />
+
+<DoRule>Prefira sempre um label visível ou uma associação explícita via <code>aria-label</code> quando o layout não puder exibir rótulo.</DoRule>
+<DoRule>Use helperText para comunicar expectativas de formato (por exemplo, "Mínimo 8 caracteres, letras e números").</DoRule>
+<DoRule>Use passwordToggle em campos de senha para melhorar a usabilidade sem comprometer acessibilidade.</DoRule>
+<DoRule>Use type="search" com startIcon="search" e endAction="clear" para busca com UX alinhada ao padrão de mercado.</DoRule>
+
+<DontRule>Não passe componentes JSX diretamente como acessórios — use as props declarativas startIcon, endIcon, passwordToggle e endAction.</DontRule>
+<DontRule>Não confie apenas em cor para indicar erro — a mensagem de texto no helperText fornece o contexto necessário.</DontRule>

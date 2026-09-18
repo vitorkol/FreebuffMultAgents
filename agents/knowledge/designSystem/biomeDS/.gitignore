@@ -1,0 +1,123 @@
+# =============================================================================
+# Biome Design System — GitLab / Git ignores
+# Version only source and files required to develop and publish the DS.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Operating system
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# -----------------------------------------------------------------------------
+# Editor / IDE
+# -----------------------------------------------------------------------------
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# VS Code — ignore local/state; track shared snippets if needed via negation below
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# -----------------------------------------------------------------------------
+# Environment & secrets (never commit)
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env*.example
+
+# -----------------------------------------------------------------------------
+# Dependencies & package manager (local installs / caches only)
+# -----------------------------------------------------------------------------
+node_modules/
+
+# pnpm — local global store overrides (committed .npmrc is allowed)
+.pnpm-store/
+.pnpm-debug.log*
+
+# npm — local metadata (pnpm-lock.yaml / package.json remain tracked)
+.npm/
+
+# Yarn Berry — ignore cache/speed; keep committed tooling when using Plug'n'Play
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# -----------------------------------------------------------------------------
+# Build & distribution output
+# -----------------------------------------------------------------------------
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# -----------------------------------------------------------------------------
+# Storybook — static preview build (regenerate with `pnpm build-storybook`)
+# -----------------------------------------------------------------------------
+storybook-static/
+
+# -----------------------------------------------------------------------------
+# Tests, coverage & quality tooling
+# -----------------------------------------------------------------------------
+coverage/
+coverage-final.json
+*.lcov
+
+# Reports (gerados automaticamente — manter docs se necessário)
+reports/
+!reports/README.md
+
+# Vitest (cache directory when enabled via config)
+.vitest/
+
+# -----------------------------------------------------------------------------
+# Caches & temp
+# -----------------------------------------------------------------------------
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# -----------------------------------------------------------------------------
+# Logs
+# -----------------------------------------------------------------------------
+logs/
+*.log
+*.log.*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# -----------------------------------------------------------------------------
+# Docker & local tooling (machine-specific overlays)
+# -----------------------------------------------------------------------------
+docker/*.log
+*.local
+
+# -----------------------------------------------------------------------------
+# Generated from TypeScript — rebuild before Docker / ESLint plugin consumers
+#   - ESLint rule: `pnpm build:eslint-rule`
+#   - Docker static server for Storybook image: `pnpm build:docker-serve`
+# -----------------------------------------------------------------------------
+eslint-rules/*.js
+docker/serve.mjs

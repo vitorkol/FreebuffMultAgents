@@ -1,0 +1,47 @@
+{/* progress.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as ProgressStories from './progress.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={ProgressStories} />
+
+# Progress
+
+Indicador visual que mostra o andamento de conclusão de uma tarefa ou processo. Construído sobre o Radix UI Progress, com suporte a diferentes alturas e transições animadas.
+
+<ComponentOverviewCard
+  category="Feedback"
+  file="src/components/ui/progress/progress.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Tamanhos" description="Controle a espessura da barra com classes utilitárias de altura." />
+
+<Canvas of={ProgressStories.Sizes} />
+
+<SectionHeader title="Com Label" description="Combine o Progress com texto descritivo para dar contexto ao usuário." />
+
+<Canvas of={ProgressStories.WithLabel} />
+
+<SectionHeader title="Animado" description="Transição suave para atualizações em tempo real." />
+
+<Canvas of={ProgressStories.Animated} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Utiliza `role="progressbar"` com `aria-valuenow`, `aria-valuemin` e `aria-valuemax` automaticamente via Radix UI.
+- Sempre forneça um label visível ou `aria-label` descrevendo o que está em progresso (ex.: "Upload de arquivo").
+- Leitores de tela anunciam o valor atual como porcentagem — mantenha o `value` atualizado com precisão.
+- Evite remover o componente abruptamente ao completar; prefira transicionar para um estado de "concluído" antes.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Sempre forneça contexto sobre o que o progresso representa — use um label visível junto à barra.</DoRule>
+<DoRule>Use transições animadas para atualizações em tempo real, melhorando a percepção de responsividade.</DoRule>
+
+<DontRule>Não use a barra de progresso para carregamentos indeterminados — use Spinner em vez disso.</DontRule>
+<DontRule>Não deixe a barra de progresso sem um label — o usuário precisa saber o que está sendo processado.</DontRule>

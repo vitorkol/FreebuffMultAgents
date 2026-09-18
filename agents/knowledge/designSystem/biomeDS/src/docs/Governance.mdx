@@ -1,0 +1,129 @@
+{/* Governance.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule } from './components'
+import { BIOME_PACKAGE_WITH_VERSION } from './biome-metadata'
+
+<Meta title="Começar/Governança" />
+
+<DocsPageHeader
+  title="Governança do Design System"
+  badge="Arquitetura"
+  description="Regras de decisão e políticas de superfície pública do Biome. Define o que o time pode expor ao produto e como manter a API estável e clara."
+/>
+
+<DocsCallout type="info" title="Contribution guide vs. governança">
+  Este documento responde ao **o quê** e **por quê** arquitetural. Para **como** implementar (pastas, stories, checklist técnico), use **Começar → Guia de Contribuição**. A família de campos de formulário (`Input`, `Textarea`, `Select`) está detalhada em **Começar → Família de campos**.
+</DocsCallout>
+
+<SectionHeader title="Finalidade" />
+
+A governança existe para:
+
+- **Reduzir ambiguidade** ao criar ou alterar componentes.
+- **Proteger produtos consumidores** contra divergências de API e retrabalho.
+- **Documentar decisões** que não cabem em um guia passo a passo de implementação.
+
+<SectionHeader title="Estado atual do Biome" />
+
+- **Versão atual do pacote:** `{BIOME_PACKAGE_WITH_VERSION}`.
+- **Modelo de consumo vigente:** plug-and-play por padrão, com composição manual apenas como escape hatch avançado.
+- **Escopo público atual:** componentes canônicos expostos via `src/index.ts` e documentados em Storybook.
+- **Fora de escopo no momento:** `Card` e `Typography` não fazem parte da superfície pública atual.
+- **Publicação:** exclusivamente via pipeline do GitLab CI, com bump manual semver.
+
+<SectionHeader title="Componentes de alto nível vs. composição" />
+
+**Alto nível (produto):** quando o caso de uso aparece repetidamente no produto e há um padrão único (campo com label, erro, tamanhos). O produto importa **um** componente e declara intenção via props — não monta Radix/HTML manualmente.
+
+**Primitivos:** mantenha-os quando:
+
+- casos avançados exigem flexibilidade (ex.: `SelectRoot`, `SelectTrigger`, peças de `Dialog`);
+- a biblioteca precisa testar e documentar o comportamento de baixo nível.
+
+**Exemplos:**
+
+- **`Input`:** um único campo de texto canônico. Remove-se redundância (`InputText`, `SearchInput`, grupo primitivo) a favor de um contrato de campo claro.
+- **`Select`:** campo de alto nível com `options` + primitivos Radix exportados com nomes explícitos para exceções.
+- **`Dialog`:** `DialogModal` para o fluxo comum; `DialogContent`, `DialogHeader`, etc., para layouts customizados.
+
+<DoRule>Prefira um componente de **alto nível documentado** como caminho padrão para o produto.</DoRule>
+<DontRule>Não exponha vários nomes públicos para o **mesmo problema** sem razão documentada.</DontRule>
+
+<SectionHeader title="Mandato Plug-and-Play" />
+
+No Biome, todo componente destinado ao consumo em app deve ser **plug-and-play por padrão**:
+
+- O consumidor importa **um componente canônico** e resolve o caso com props declarativas.
+- O app **não deve montar estrutura do zero** com primitives para reproduzir o fluxo comum.
+- Se existir caminho manual, ele é apenas **escape hatch avançado**, nunca o caminho recomendado.
+
+<DoRule>Entregue API declarativa pronta para uso (ex.: <code>items</code>, <code>options</code>, <code>trigger</code>, <code>content</code>, <code>footer</code>) sem exigir montagem manual do consumidor.</DoRule>
+<DontRule>Não publique componente que force consumidor a compor header/body/footer/slots manualmente para o caso comum.</DontRule>
+
+<SectionHeader title="Família de campos (resumo)" />
+
+`Input`, `Textarea` e `Select` devem parecer **uma única família** para o desenvolvedor:
+
+- Props alinhadas: `label`, `helperText`, `hasError`, `size`, `wrapperClassName` (quando aplicável).
+- Mesma escala `FieldSize` / tamanhos visuais coerentes.
+- Mensagens de erro e ARIA no mesmo padrão.
+
+Diferenças intencionais — por exemplo `options` no `Select`, `passwordToggle` / `endAction` no `Input`, multilinha no `Textarea` — são esperadas; o restante não deve “parecer outro design system”.
+
+Para exemplos lado a lado e orientação para novos campos, veja **Começar → Família de campos**.
+
+<SectionHeader title="Superfície pública (API)" />
+
+- **Um canônico por responsabilidade** quando possível (ex.: um `Input` para entrada de uma linha).
+- **Evitar duplicar** wrappers de produto em repositórios externos se o Biome já oferece o padrão.
+- **Deprecação:** remover export antigo só com plano de migração e docs atualizados.
+
+<SectionHeader title="Tipagem pública" />
+
+- Props que o produto usa com frequência (`size`, `variant`, `intent`, etc.) devem aparecer no `dist` como **uniões literais explícitas** ou tipos exportados (`ButtonVariant`, `FieldSize`, …), não apenas como `Pick<VariantProps<typeof …>>` opaco.
+- **Motivo:** autocomplete e mensagens de erro estáveis nos apps consumidores.
+- O uso de **CVA** continua **internamente** para composição de classes; a interface pública materializa os literais.
+
+<SectionHeader title="Política de forwardRef" />
+
+- Componentes que encaminham um **elemento DOM único** (ou o elemento “principal”) devem usar **`React.forwardRef`** e definir **`displayName`**.
+- Isso é obrigatório para integração com formulários, focus management e bibliotecas que injetam ref.
+
+<SectionHeader title="asChild e Slot (Radix)" />
+
+Quando um wrapper é usado com **`asChild`**, o filho precisa receber **todas** as props e o **ref** que o Radix injeta — caso contrário quebram clique, foco e modal.
+
+Implementação segura: **`forwardRef`** + **`...props`** até o elemento nativo ou subcomponente compatível.
+
+<SectionHeader title="Ícones" />
+
+- **Sempre** a abstração **`Icon`** do Biome e nomes **`IconName`** (kebab-case no registry).
+- **`lucide-react`** direto **só** no registro/base do sistema de ícones, não em componentes de UI de alto nível.
+- Preferir props do tipo **`startIcon?: IconName`** em vez de `ReactNode` para ícones, quando fizer sentido para a API.
+
+<SectionHeader title="Consumo no produto consumidor" />
+
+- Importar do pacote Biome (**`@biome/design-system`**) os componentes **de alto nível** disponíveis.
+- **Não** recriar localmente padrões já cobertos pelo Biome (ex.: `SearchInput` custom duplicando `Input`).
+- **Não** compor apenas primitivos no app se existir **campo ou wrapper de alto nível** equivalente — abre divergência de ARIA, layout e tokens.
+
+<SectionHeader title="Checklist antes de criar ou expor API nova" />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+  {[
+    <>O padrão já existe em <code>Input</code>, <code>Select</code>, <code>Dialog</code> ou outro canônico?</>,
+    <>O produto precisa mesmo de <strong>novo nome exportado</strong> ou basta estender props / variantes?</>,
+    <>A API pública usa <strong>tipos literais exportados</strong> onde o time digita strings no dia a dia?</>,
+    <>Há <strong>story + MDX</strong> e regras de acessibilidade cobertas?</>,
+    <><code>forwardRef</code> e <code>asChild</code> foram considerados se o componente encaixa nesses fluxos?</>,
+  ].map((node, i) => (
+    <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '12px 16px', border: '1px solid #e5e5e5', borderRadius: 10, background: '#fff' }}>
+      <span style={{ color: '#264c37', fontWeight: 700, flexShrink: 0 }}>☐</span>
+      <span style={{ fontSize: 13, color: '#4c4d4d', lineHeight: 1.5 }}>{node}</span>
+    </div>
+  ))}
+</div>
+
+<DocsCallout type="tip" title="Próximo passo">
+  Depois de alinhar a decisão aqui, siga o **Guia de Contribuição** para pasta, código, stories e checklist técnico.
+</DocsCallout>

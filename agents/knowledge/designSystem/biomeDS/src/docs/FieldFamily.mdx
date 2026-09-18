@@ -1,0 +1,176 @@
+{/* FieldFamily.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule } from './components'
+
+<Meta title="Começar/Família de campos" />
+
+<DocsPageHeader
+  title="Família de campos"
+  badge="Formulário"
+  description="Padrão único para Input, Textarea e Select: mesma linguagem de API, estados e acessibilidade. Use esta página ao implementar novos campos ou revisar consistência."
+/>
+
+<DocsCallout type="info" title="Onde isso se encaixa na governança">
+  As **regras arquiteturais** (quando usar alto nível vs. primitivos, tipagem pública, produto) estão em **Começar → Governança**. Aqui o foco é o **contrato da família de campos** e exemplos práticos.
+</DocsCallout>
+
+<SectionHeader title="Objetivo compartilhado" />
+
+Os três componentes resolvem **entrada de dados** em formulários com:
+
+- um **rótulo** opcional porém recomendado (`label`);
+- **feedback** abaixo do controle (`helperText`);
+- **validação visual e ARIA** (`hasError`);
+- **densidade** compartilhada via escala de tamanho (`size` alinhado a `FieldSize` onde aplicável);
+- **espaço para layout** do consumidor (`wrapperClassName`).
+
+<SectionHeader title="Props comuns" />
+
+{(() => {
+  const fieldCols = 'minmax(152px, 0.85fr) minmax(200px, 1.35fr) minmax(228px, 1fr)'
+  const badge = {
+    fontSize: 10,
+    fontWeight: 600,
+    letterSpacing: '0.04em',
+    textTransform: 'uppercase',
+    color: '#264c37',
+    background: '#e9f4ee',
+    padding: '3px 8px',
+    borderRadius: 4,
+    lineHeight: 1.2,
+    flexShrink: 0,
+  }
+  const rows = [
+    { p: 'label', role: 'Texto do rótulo acima do campo', i: '✓', t: '✓', s: '✓' },
+    { p: 'helperText', role: 'Dica ou mensagem de erro abaixo', i: '✓', t: '✓', s: '✓' },
+    { p: 'hasError', role: 'Estilo de erro + aria-invalid / alert', i: '✓', t: '✓', s: '✓' },
+    { p: 'size', role: 'Escala visual (sm–xl)', i: '✓', t: '✓', s: '✓' },
+    { p: 'wrapperClassName', role: 'Classe no container da coluna do campo', i: '✓', t: '✓', s: '✓' },
+    { p: 'className', role: 'Classe no elemento principal (input/textarea/trigger)', i: '✓', t: '✓', s: '✓' },
+    { p: 'placeholder', role: 'Texto placeholder', i: '✓', t: '✓', s: '✓ (valor exibido quando vazio)' },
+    { p: 'disabled / required / name', role: 'Atributos de formulário padrão', i: '✓', t: '✓', s: '✓ (via root Radix + HTML comum)' },
+  ]
+  return (
+    <div style={{ border: '1px solid #e5e5e5', borderRadius: 12, overflow: 'hidden', marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: fieldCols, columnGap: 16, rowGap: 0, background: '#f5f5f5', padding: '10px 16px', alignItems: 'start' }}>
+        <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase' }}>Prop</span>
+        <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase' }}>Papel</span>
+        <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', lineHeight: 1.35 }}>Input · Textarea · Select</span>
+      </div>
+      {rows.map((row, idx) => (
+        <div
+          key={row.p}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: fieldCols,
+            columnGap: 16,
+            padding: '12px 16px',
+            background: idx % 2 ? '#fafafa' : '#fff',
+            borderTop: '1px solid #f0f0f0',
+            alignItems: 'start',
+            fontSize: 13,
+          }}
+        >
+          <code style={{ color: '#264c37', fontSize: 12, lineHeight: 1.45, paddingTop: 1 }}>{row.p}</code>
+          <span style={{ color: '#4c4d4d', lineHeight: 1.45 }}>{row.role}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {[
+              { name: 'Input', val: row.i },
+              { name: 'Textarea', val: row.t },
+              { name: 'Select', val: row.s },
+            ].map(({ name, val }) => (
+              <div key={name} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, minWidth: 0 }}>
+                <span style={badge}>{name}</span>
+                <span style={{ fontSize: 12, lineHeight: 1.45, flex: 1, minWidth: 0, display: 'inline-flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 4 }}>
+                  {val.startsWith('✓') ? (
+                    <>
+                      <span style={{ fontWeight: 600, color: '#264c37' }}>✓</span>
+                      {val.length > 1 ? (
+                        <span style={{ fontWeight: 400, color: '#9f9f9f', fontSize: 11 }}>{val.slice(1).trimStart()}</span>
+                      ) : null}
+                    </>
+                  ) : (
+                    <span style={{ color: '#4c4d4d' }}>{val}</span>
+                  )}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+})()}
+
+<SectionHeader title="Diferenças permitidas" />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+  <div style={{ borderLeft: '3px solid #264c37', padding: '10px 14px', background: '#fff', border: '1px solid #e5e5e5', borderRadius: 8 }}>
+    <strong style={{ fontSize: 13 }}>Input</strong>
+    <p style={{ margin: '6px 0 0', fontSize: 13, color: '#4c4d4d', lineHeight: 1.55 }}>
+      <code>startIcon</code>, <code>endIcon</code>, <code>passwordToggle</code>, <code>endAction</code> / <code>onClear</code>, <code>type="search"</code> com UX de limpar só quando há texto. Não aplica a <code>Textarea</code>/<code>Select</code> da mesma forma.
+    </p>
+  </div>
+  <div style={{ borderLeft: '3px solid #264c37', padding: '10px 14px', background: '#fff', border: '1px solid #e5e5e5', borderRadius: 8 }}>
+    <strong style={{ fontSize: 13 }}>Textarea</strong>
+    <p style={{ margin: '6px 0 0', fontSize: 13, color: '#4c4d4d', lineHeight: 1.55 }}>
+      Multilinha, <code>rows</code> e comportamento nativo de redimensionamento. Sem ícones laterais no padrão atual — evite introduzir acessórios sem alinhar com o Input.
+    </p>
+  </div>
+  <div style={{ borderLeft: '3px solid #264c37', padding: '10px 14px', background: '#fff', border: '1px solid #e5e5e5', borderRadius: 8 }}>
+    <strong style={{ fontSize: 13 }}>Select</strong>
+    <p style={{ margin: '6px 0 0', fontSize: 13, color: '#4c4d4d', lineHeight: 1.55 }}>
+      <code>options</code>, <code>value</code> / <code>onValueChange</code>, <code>startIcon</code> / <code>endIcon</code> no trigger. Expõe ainda primitivos (<code>SelectRoot</code>, …) para casos avançados documentados na governança.
+    </p>
+  </div>
+</div>
+
+<SectionHeader title="Exemplos lado a lado (API em inglês)" />
+
+```tsx
+import { Input, Textarea, Select } from "@biome/design-system"
+
+// Shared field language: label, helperText, hasError, size, wrapperClassName
+export function FieldExamples() {
+  return (
+    <>
+      <Input
+        label="Full name"
+        placeholder="Jane Doe"
+        size="md"
+        helperText="As on your ID."
+        hasError={false}
+        wrapperClassName="gap-1"
+      />
+      <Textarea
+        label="Notes"
+        placeholder="Optional context…"
+        size="md"
+        helperText="Visible to reviewers."
+        hasError={false}
+      />
+      <Select
+        label="Status"
+        placeholder="Choose status"
+        size="md"
+        helperText="Required for submission."
+        hasError={false}
+        options={[
+          { value: "open", label: "Open" },
+          { value: "done", label: "Done" },
+        ]}
+      />
+    </>
+  )
+}
+```
+
+<SectionHeader title="Orientação para novos campos" />
+
+<DoRule>Reutilize a escala <code>FieldSize</code> e os mesmos nomes de props da família quando o controle for equivalente a um campo de formulário.</DoRule>
+<DoRule>Mantenha <code>aria-describedby</code> ligado ao texto de ajuda/erro e <code>aria-invalid</code> quando <code>hasError</code>.</DoRule>
+<DontRule>Não crie um terceiro padrão visual para borda, raio e foco — alinhe ao Input como referência de campo.</DontRule>
+
+<DocsCallout type="tip" title="Implementação">
+  Depois de validar o desenho da API aqui e em **Governança**, siga o **Guia de Contribuição** para arquivos, stories e checklist técnico.
+</DocsCallout>

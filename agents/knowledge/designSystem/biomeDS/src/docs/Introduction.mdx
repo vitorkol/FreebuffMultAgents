@@ -1,0 +1,198 @@
+{/* Introduction.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsCallout, TokenCategoryCard, ComponentGrid, SectionHeader } from './components'
+import { BIOME_VERSION_TAG } from './biome-metadata'
+
+<Meta title="Começar/Introdução" />
+
+<div className="text-center py-8 pb-6 mb-8 border-b border-border">
+  <h1
+    className="m-0"
+    style={{
+      color: 'var(--text-primary, #4c4d4d)',
+      fontFamily: 'var(--font-display, "Poppins", sans-serif)',
+      fontSize: '60px',
+      fontWeight: 'var(--font-weight-bold, 700)',
+      lineHeight: 'var(--line-height-tight, 1.2)',
+      letterSpacing: 'var(--letter-spacing-tight, -0.01em)',
+      marginBottom: '8px',
+    }}
+  >
+    {'Biome Design System'}
+  </h1>
+  <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <div
+      className="mb-0 leading-relaxed"
+      style={{ maxWidth: 520, width: '100%', textAlign: 'center', color: 'var(--text-primary, #4c4d4d)' }}
+    >
+      Sistema de design interno da <strong>SEMAD — Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável de Minas Gerais</strong>.
+    </div>
+  </div>
+  <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
+    <span style={{ background: '#e9f4ee', color: '#166534', padding: '4px 12px', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>{BIOME_VERSION_TAG}</span>
+    <span style={{ background: '#f5f5f5', color: '#737373', padding: '4px 12px', borderRadius: 100, fontSize: 12 }}>React + TypeScript</span>
+    <span style={{ background: '#f5f5f5', color: '#737373', padding: '4px 12px', borderRadius: 100, fontSize: 12 }}>Tailwind CSS v4</span>
+    <span style={{ background: '#f5f5f5', color: '#737373', padding: '4px 12px', borderRadius: 100, fontSize: 12 }}>Storybook 8</span>
+  </div>
+</div>
+
+<h2 style={{ color: 'var(--text-primary, #4c4d4d)' }}>O que é o Biome?</h2>
+
+<div style={{ color: 'var(--text-primary, #4c4d4d)' }}>
+  <p>
+    O Biome é um conjunto unificado de <strong>componentes React</strong>, <strong>tokens de design</strong> e
+    <strong> padrões documentados</strong> que orienta a criação das interfaces digitais do ecossistema <strong>SEMAD/PSEG</strong>.
+    Ele promove:
+  </p>
+
+  <ul>
+    <li><strong>Consistência</strong> visual entre telas e fluxos dos produtos consumidores</li>
+    <li><strong>Acessibilidade</strong> como requisito, não opcional — conformidade mínima WCAG 2.1 AA</li>
+    <li><strong>Produtividade</strong> — componentes prontos para casos de uso reais identificados no produto</li>
+    <li><strong>Escalabilidade</strong> — tokens como única fonte de verdade para cores, tipografia e espaçamento</li>
+  </ul>
+</div>
+
+<DocsCallout type="tip" title="Baseado em uso real">
+  Cada componente do Biome nasceu de um padrão real identificado em produtos consumidores. Nenhum componente é especulativo — tudo tem origem em interfaces que já existem em uso.
+</DocsCallout>
+
+<SectionHeader title="Princípios de Design" />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
+  {[
+    { icon: '🔒', title: 'Consistência antes de flexibilidade', desc: 'Variantes e tamanhos bem definidos. Personalização por className é suportada, mas os padrões cobrem 95% dos casos reais.' },
+    { icon: '♿', title: 'Acessibilidade como requisito', desc: 'ARIA correto, foco gerenciado, navegação por teclado e suporte a leitores de tela em todos os componentes.' },
+    { icon: '🌱', title: 'Baseado em uso real', desc: 'Cada componente nasceu de um padrão identificado em produtos consumidores. Zero especulação.' },
+    { icon: '🎨', title: 'Tokens como verdade única', desc: 'Cores, tipografia e espaçamento como tokens CSS. Trocar o tema = mudar variáveis, não reescrever componentes.' },
+  ].map(({ icon, title, desc }) => (
+    <div key={title} style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+      <div style={{ fontSize: 24, marginBottom: 8 }}>{icon}</div>
+      <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 14, marginBottom: 4, lineHeight: 1.3 }}>{title}</div>
+      <p style={{ fontSize: 12, color: '#737373', margin: 0, lineHeight: 1.5 }}>{desc}</p>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Tokens de Design" description="Sistema de tokens em duas camadas: paleta bruta (hex fixo) e tokens semânticos (CSS custom properties)." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
+  <TokenCategoryCard category="Cores Base" description="Fundos de página, cards e overlay" examples={['background', 'foreground', 'card', 'popover']} color="#264c37" />
+  <TokenCategoryCard category="Cores Semânticas" description="Ações, estados e hierarquia" examples={['primary', 'secondary', 'muted', 'accent']} color="#4ade80" />
+  <TokenCategoryCard category="Feedback Sólido" description="Botões e ícones com cor forte" examples={['success', 'warning', 'info', 'destructive']} color="#198754" />
+  <TokenCategoryCard category="Feedback Surface" description="Alerts, badges e banners suaves" examples={['*-surface', '*-surface-border', '*-on-surface']} color="#92b123" />
+  <TokenCategoryCard category="Tipografia" description="HTML semântico + classes text-* do contrato (tokens = Figma)" examples={['<h1 className="text-display-xl">', 'text-body-m', 'text-meta-xs', 'typography.json']} color="#2563eb" />
+  <TokenCategoryCard category="Espaçamento" description="Grade base de 4px" examples={['space-1 (4px)', 'space-4 (16px)', 'space-8 (32px)']} color="#d97706" />
+  <TokenCategoryCard category="Border Radius" description="Suavidade de xs a full" examples={['radius-xs (4px)', 'radius-md (8px)', 'radius-full']} color="#9333ea" />
+  <TokenCategoryCard category="Sombra & Z-Index" description="Elevação e sobreposição" examples={['shadow-sm', 'shadow-lg', 'z-200', 'z-400']} color="#64748b" />
+</div>
+
+<DocsCallout type="tip" title="Tipografia por contrato">
+  Use semântica HTML para estrutura e aplique a classe tipográfica correspondente no elemento (<code>{'text-display-*'}</code>, <code>{'text-heading-*'}</code>, <code>{'text-body-*'}</code>, <code>{'text-label-*'}</code>, <code>{'text-meta-*'}</code>). Detalhes em <strong>Fundações / Tipografia</strong>.
+</DocsCallout>
+
+<SectionHeader title="Componentes Disponíveis" description="Todos os componentes são estáveis e prontos para uso em produção." />
+
+<ComponentGrid
+  items={[
+    { name: 'Button',       category: 'Primitivos',    description: '6 variantes, 4 tamanhos, loading state, ícones',               status: 'stable' },
+    { name: 'Input',        category: 'Formulário',    description: 'Campo de texto canônico: label, validação, ícones, busca e senha', status: 'stable' },
+    { name: 'Textarea',     category: 'Formulário',    description: 'Área de texto multilinha',                                       status: 'stable' },
+    { name: 'Select',       category: 'Formulário',    description: 'Menu suspenso baseado em Radix UI',                             status: 'stable' },
+    { name: 'Checkbox',     category: 'Formulário',    description: 'Checkbox com suporte a estado indeterminate',                   status: 'stable' },
+    { name: 'Radio',        category: 'Formulário',    description: 'Botão de rádio acessível com RadioGroup',                       status: 'stable' },
+    { name: 'Alert',        category: 'Feedback',      description: 'Banner contextual com 5 intents e dismiss',                     status: 'stable' },
+    { name: 'Badge',        category: 'Feedback',      description: 'Etiqueta compacta com 10 variantes de cor',                    status: 'stable' },
+    { name: 'StatusBadge',  category: 'Feedback',      description: 'Badge especializado para status de processo',                   status: 'stable' },
+    { name: 'Spinner',      category: 'Feedback',      description: 'Indicador de carregamento animado com 4 tamanhos',              status: 'stable' },
+    { name: 'Chip',         category: 'Seleção',       description: 'Chip selecionável e removível',                                 status: 'stable' },
+    { name: 'Dialog',       category: 'Overlay',       description: 'Modal Radix com tamanhos e anatomia padronizada',               status: 'stable' },
+    { name: 'Sheet',        category: 'Overlay',       description: 'Painel lateral/deslizante para fluxos contextuais',             status: 'stable' },
+    { name: 'Accordion',    category: 'Layout',        description: 'Painel expansível com animação suave',                          status: 'stable' },
+    { name: 'Skeleton',     category: 'Utilitários',   description: 'Placeholder de carregamento animado',                           status: 'stable' },
+    { name: 'Carousel',     category: 'Utilitários',   description: 'Carrossel de itens com navegação',                              status: 'stable' },
+  ]}
+/>
+
+<SectionHeader title="Uso Básico" />
+
+```tsx
+import "@biome/design-system/styles.css"
+import "@biome/design-system/tokens.css"
+
+import { Button, Input, Select } from "@biome/design-system"
+
+export function Example() {
+  return (
+    <form>
+      <Input label="Full name" placeholder="Jane Doe" />
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+}
+```
+
+<SectionHeader title="Fundações" description="Explore os tokens e sistemas visuais do Biome." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10 }}>
+  {[
+    { name: 'Cores',                href: '/?path=/docs/fundações-cores--docs',                      desc: 'Paleta, tokens semânticos, dark mode' },
+    { name: 'Tipografia',           href: '/?path=/docs/fundações-tipografia--docs',                 desc: 'Famílias, escala, pesos' },
+    { name: 'Espaçamentos',         href: '/?path=/docs/fundações-espaçamentos--docs',               desc: 'Grade 4px, escala numérica' },
+    { name: 'Dimensionamento',      href: '/?path=/docs/fundações-dimensionamento--docs',            desc: 'Contêiner, breakpoints, z-index' },
+    { name: 'Raio de Borda',        href: '/?path=/docs/fundações-raio-de-borda--docs',             desc: 'Escala xs → full' },
+    { name: 'Sombras',              href: '/?path=/docs/fundações-sombras-e-sobreposição--docs',     desc: 'Elevação, z-index stack' },
+    { name: 'Iconografia',          href: '/?path=/docs/fundações-iconografia--docs',               desc: 'Bootstrap Icons, tamanhos' },
+    { name: 'Opacidade',            href: '/?path=/docs/fundações-opacidade--docs',                  desc: 'Escala de transparência' },
+    { name: 'Preenchimento',        href: '/?path=/docs/fundações-preenchimento--docs',              desc: 'Superfícies e fills' },
+  ].map(({ name, href, desc }) => (
+    <a key={name} href={href} style={{
+      border: '1px solid #e5e5e5',
+      borderRadius: 10,
+      padding: '12px 14px',
+      background: '#fff',
+      textDecoration: 'none',
+      display: 'block',
+      transition: 'border-color 0.15s, box-shadow 0.15s',
+    }}>
+      <div style={{ fontWeight: 600, color: '#264c37', fontSize: 14, marginBottom: 4 }}>{name} →</div>
+      <p style={{ fontSize: 12, color: '#9f9f9f', margin: 0, lineHeight: 1.4 }}>{desc}</p>
+    </a>
+  ))}
+</div>
+
+<SectionHeader title="Roadmap" description="Desenvolvimento orientado por auditorias de produto e necessidades reais de uso." />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+  {[
+    { batch: 'Estado atual', label: `${BIOME_VERSION_TAG} — Em produção`, items: 'Componentes canônicos plug-and-play documentados em Storybook (ex.: Input, Select, DialogModal, Accordion, Tooltip, DropdownMenu, Table, Carousel, Tabs, Breadcrumb).', done: true },
+    { batch: 'Ajustes recentes', label: 'Concluído', items: 'Mandato plug-and-play aplicado em documentação e stories. Breadcrumb com API items, Tooltip com side declarativo e DropdownMenu com atalhos declarativos.', done: true },
+    { batch: 'Escopo temporário', label: 'Não exposto atualmente', items: 'Card e Typography foram retirados da superfície pública por decisão de escopo atual.', done: true },
+    { batch: 'Próximos incrementos', label: 'Planejado', items: 'Novas evoluções seguem governança semver com bump manual e publicação somente via pipeline GitLab.', done: false },
+  ].map(({ batch, label, items, done }) => (
+    <div key={batch} style={{
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: 12,
+      padding: '12px 16px',
+      border: '1px solid #e5e5e5',
+      borderRadius: 8,
+      background: done ? '#f0fdf4' : '#fff',
+      borderLeftWidth: 3,
+      borderLeftColor: done ? '#166534' : '#e5e5e5',
+    }}>
+      <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{done ? '✅' : '📋'}</span>
+      <div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 3 }}>
+          <strong style={{ fontSize: 13, color: 'var(--text-primary)' }}>{batch}</strong>
+          <span style={{ fontSize: 11, color: done ? '#166534' : '#737373', background: done ? '#e9f4ee' : '#f5f5f5', padding: '1px 7px', borderRadius: 100 }}>{label}</span>
+        </div>
+        <p style={{ fontSize: 12, color: '#737373', margin: 0 }}>{items}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<div style={{ textAlign: 'center', marginTop: 32, paddingTop: 24, borderTop: '1px solid #e5e5e5', fontSize: 12, color: '#9f9f9f' }}>
+  Biome Design System · SEMAD/MG · {BIOME_VERSION_TAG}
+</div>

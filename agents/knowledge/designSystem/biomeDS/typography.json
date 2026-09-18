@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Export Figma / Tokens Studio — espelha classes em src/styles.css (px @ 16px root; lineHeight em px = round(fontSize * factor))",
+  "_contratoHtmlEFigma": {
+    "h1": { "utility": "text-display-xl", "figmaStyle": "Display / XL" },
+    "h2": { "utility": "text-heading-l", "figmaStyle": "Heading / L" },
+    "h3": { "utility": "text-heading-m", "figmaStyle": "Heading / M" },
+    "h4": { "utility": "text-heading-s", "figmaStyle": "Heading / S" },
+    "h5": { "utility": "text-heading-xs", "figmaStyle": "Heading / XS" },
+    "h6": { "utility": "text-body-xs", "figmaStyle": "Body / XS" },
+    "p": { "utility": "text-body-m", "figmaStyle": "Body / M" },
+    "small": { "utility": "text-meta-xs", "figmaStyle": "Meta / XS" },
+    "label": { "utility": "text-label-m", "figmaStyle": "Label / M" }
+  },
+  "text-display-2xl": {
+    "fontFamily": "Poppins",
+    "fontSize": 72,
+    "fontWeight": 700,
+    "lineHeight": 86,
+    "letterSpacing": -0.72
+  },
+  "text-display-xl": {
+    "fontFamily": "Poppins",
+    "fontSize": 60,
+    "fontWeight": 700,
+    "lineHeight": 72,
+    "letterSpacing": -0.6
+  },
+  "text-display-l": {
+    "fontFamily": "Poppins",
+    "fontSize": 48,
+    "fontWeight": 700,
+    "lineHeight": 58,
+    "letterSpacing": -0.48
+  },
+  "text-heading-xl": {
+    "fontFamily": "Poppins",
+    "fontSize": 30,
+    "fontWeight": 700,
+    "lineHeight": 36,
+    "letterSpacing": -0.3
+  },
+  "text-heading-l": {
+    "fontFamily": "Poppins",
+    "fontSize": 24,
+    "fontWeight": 600,
+    "lineHeight": 31,
+    "letterSpacing": 0
+  },
+  "text-heading-m": {
+    "fontFamily": "Roboto",
+    "fontSize": 20,
+    "fontWeight": 600,
+    "lineHeight": 26,
+    "letterSpacing": 0
+  },
+  "text-heading-s": {
+    "fontFamily": "Roboto",
+    "fontSize": 18,
+    "fontWeight": 500,
+    "lineHeight": 27,
+    "letterSpacing": 0
+  },
+  "text-heading-xs": {
+    "fontFamily": "Roboto",
+    "fontSize": 16,
+    "fontWeight": 500,
+    "lineHeight": 24,
+    "letterSpacing": 0
+  },
+  "text-body-l": {
+    "fontFamily": "Roboto",
+    "fontSize": 18,
+    "fontWeight": 400,
+    "lineHeight": 27,
+    "letterSpacing": 0
+  },
+  "text-body-m": {
+    "fontFamily": "Roboto",
+    "fontSize": 16,
+    "fontWeight": 400,
+    "lineHeight": 24,
+    "letterSpacing": 0
+  },
+  "text-body-s": {
+    "fontFamily": "Roboto",
+    "fontSize": 14,
+    "fontWeight": 400,
+    "lineHeight": 21,
+    "letterSpacing": 0
+  },
+  "text-body-xs": {
+    "fontFamily": "Roboto",
+    "fontSize": 12,
+    "fontWeight": 400,
+    "lineHeight": 18,
+    "letterSpacing": 0
+  },
+  "text-label-m": {
+    "fontFamily": "Roboto",
+    "fontSize": 14,
+    "fontWeight": 500,
+    "lineHeight": 21,
+    "letterSpacing": 0.35
+  },
+  "text-label-s": {
+    "fontFamily": "Roboto",
+    "fontSize": 12,
+    "fontWeight": 500,
+    "lineHeight": 18,
+    "letterSpacing": 0.3
+  },
+  "text-meta-xs": {
+    "fontFamily": "Roboto",
+    "fontSize": 12,
+    "fontWeight": 400,
+    "lineHeight": 18,
+    "letterSpacing": 0
+  },
+  "text-meta-2xs": {
+    "fontFamily": "Roboto",
+    "fontSize": 10,
+    "fontWeight": 400,
+    "lineHeight": 15,
+    "letterSpacing": 0
+  }
+}

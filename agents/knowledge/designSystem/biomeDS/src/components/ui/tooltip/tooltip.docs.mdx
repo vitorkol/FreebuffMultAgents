@@ -1,0 +1,59 @@
+{/* tooltip.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as TooltipStories from './tooltip.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+Overlay compacto que exibe informações complementares ao passar o mouse ou focar em um elemento gatilho. O uso recomendado no Biome é declarativo via `trigger` + `content`, com composição manual reservada para cenários avançados.
+
+<ComponentOverviewCard
+  category="Overlay"
+  file="src/components/ui/tooltip/tooltip.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Tooltip
+  trigger={<Button variant="outline">Hover me</Button>}
+  content="This is a tooltip"
+  side="top"
+/>
+```
+
+<DoRule>Prefira a API declarativa para manter consistência entre times e reduzir composição manual.</DoRule>
+
+<SectionHeader title="Posições" description="O tooltip pode ser posicionado em qualquer lado do elemento gatilho: top, bottom, left ou right." />
+
+<Canvas of={TooltipStories.Positions} />
+
+<SectionHeader title="Com Ícone" description="Use tooltip em botões de ícone para fornecer contexto textual sobre a ação." />
+
+<Canvas of={TooltipStories.WithIcon} />
+
+<SectionHeader title="Composição avançada" description="Use apenas quando precisar controlar manualmente Provider, Trigger e Content." />
+
+<Canvas of={TooltipStories.ComposicaoAvancada} />
+
+<SectionHeader title="Acessibilidade" />
+
+- O conteúdo do tooltip é vinculado ao elemento gatilho via `aria-describedby`, garantindo que leitores de tela anunciem a informação.
+- O tooltip aparece ao focar no elemento via teclado, não apenas com hover do mouse.
+- Pode ser descartado com a tecla Escape, seguindo o padrão WAI-ARIA.
+- O conteúdo do tooltip deve ser suplementar — nunca coloque informações essenciais que não estejam disponíveis de outra forma.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use em botões de ícone que precisam de explicação textual sobre sua função.</DoRule>
+<DoRule>Mantenha o conteúdo curto (1-2 frases no máximo). Escolha o posicionamento adequado para evitar corte pela viewport.</DoRule>
+
+<DontRule>Não coloque elementos interativos (links, botões) dentro do tooltip — use Popover para isso.</DontRule>
+<DontRule>Não use tooltip para informações críticas que o usuário precisa ver obrigatoriamente; nem em interfaces exclusivamente touch sem alternativa.</DontRule>

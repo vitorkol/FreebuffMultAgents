@@ -1,0 +1,147 @@
+{/* sheet.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as SheetStories from './sheet.stories'
+import { ComponentOverviewCard, PropsTable, SectionHeader, DoRule, DontRule, DocsCallout, KeyboardShortcuts } from '../../../docs/components'
+
+<Meta of={SheetStories} />
+
+# Sheet
+
+Painel deslizante para fluxos secundários de produto, como filtros, formulários curtos e detalhes contextuais, sem quebrar o contexto da tela atual.
+
+<ComponentOverviewCard
+  category="Overlay"
+  aria="Gerenciamento automático de foco (focus trap)"
+  file="src/components/ui/sheet/sheet.tsx"
+  darkMode="Automático via tokens"
+/>
+
+- **Primitivo base** — `@radix-ui/react-dialog`.
+- **Caminho recomendado** — `SheetPanel` (API declarativa plug-and-play).
+- **Escape hatch** — composição com `Sheet`, `SheetContent`, `SheetHeader`, `SheetFooter`.
+- **Fechamento** — suporta `Escape`, overlay e botão de fechar.
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Dois níveis de API" />
+
+#### `SheetPanel` — uso recomendado
+
+```tsx
+<SheetPanel
+  trigger={<Button>Abrir painel</Button>}
+  title="Editar perfil"
+  description="Atualize os dados e salve."
+  side="right"
+  footer={
+    <>
+      <SheetClose asChild><Button variant="outline">Cancelar</Button></SheetClose>
+      <Button>Salvar</Button>
+    </>
+  }
+>
+  <Input label="Nome" />
+</SheetPanel>
+```
+
+#### Primitives — composição avançada
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild><Button>Abrir</Button></SheetTrigger>
+  <SheetContent side="right">
+    <SheetHeader>
+      <SheetTitle>Título</SheetTitle>
+      <SheetDescription>Descrição</SheetDescription>
+    </SheetHeader>
+    <SheetFooter>...</SheetFooter>
+  </SheetContent>
+</Sheet>
+```
+
+---
+
+<SectionHeader title="Variações de lado" />
+
+<Canvas of={SheetStories.Sides} />
+
+---
+
+<SectionHeader title="Com formulário" />
+
+<Canvas of={SheetStories.WithForm} />
+
+---
+
+<SectionHeader title="Composição avançada" />
+
+<Canvas of={SheetStories.ComposicaoAvancada} />
+
+---
+
+<SectionHeader title="Quando usar" />
+
+<DoRule>Use para edição lateral de dados sem perder o contexto da página atual.</DoRule>
+<DoRule>Use para filtros de listagens e ajustes rápidos de parâmetros.</DoRule>
+<DoRule>Use para detalhes complementares que não exigem navegação dedicada.</DoRule>
+
+<SectionHeader title="Quando não usar" />
+
+<DontRule>Não use para confirmações destrutivas críticas — prefira `Dialog`.</DontRule>
+<DontRule>Não use para fluxos longos/multi-step complexos — prefira página dedicada.</DontRule>
+<DontRule>Não use para menus simples de ação — prefira `DropdownMenu` ou `Popover`.</DontRule>
+
+---
+
+<SectionHeader title="Acessibilidade" />
+
+- O foco é preso dentro do painel enquanto aberto (focus trap).
+- O foco retorna para o trigger ao fechar.
+- `role="dialog"` e `aria-modal="true"` são aplicados pelo Radix.
+- `SheetTitle` e `SheetDescription` alimentam `aria-labelledby` e `aria-describedby`.
+
+<KeyboardShortcuts shortcuts={[
+  { key: 'Escape', action: 'Fecha o sheet' },
+  { key: 'Tab', action: 'Move para o próximo elemento focável' },
+  { key: 'Shift + Tab', action: 'Move para o elemento focável anterior' },
+  { key: 'Enter / Space', action: 'Ativa o elemento focado' },
+]} />
+
+---
+
+<SectionHeader title="Props — SheetPanel" />
+
+<PropsTable
+  rows={[
+    { prop: 'title',        type: 'ReactNode',                    required: true, description: 'Título principal do painel' },
+    { prop: 'description',  type: 'string',                       description: 'Descrição auxiliar abaixo do título' },
+    { prop: 'trigger',      type: 'ReactNode',                    description: 'Elemento que abre o sheet' },
+    { prop: 'open',         type: 'boolean',                      description: 'Controle externo de aberto/fechado' },
+    { prop: 'onOpenChange', type: '(open: boolean) => void',      description: 'Callback de mudança de estado' },
+    { prop: 'side',         type: '"top" | "right" | "bottom" | "left"', default: '"right"', description: 'Lado de entrada do painel' },
+    { prop: 'hideClose',    type: 'boolean',                      default: 'false', description: 'Oculta o botão fechar (×)' },
+    { prop: 'footer',       type: 'ReactNode',                    description: 'Área de ações no rodapé' },
+    { prop: 'children',     type: 'ReactNode',                    description: 'Conteúdo principal' },
+  ]}
+/>
+
+<SectionHeader title="Props — SheetContent" />
+
+<PropsTable
+  rows={[
+    { prop: 'side',      type: '"top" | "right" | "bottom" | "left"', default: '"right"', description: 'Lado de entrada do painel' },
+    { prop: 'hideClose', type: 'boolean', default: 'false', description: 'Oculta o botão fechar (×)' },
+  ]}
+/>
+
+---
+
+<SectionHeader title="Boas práticas" />
+
+<DocsCallout type="tip" title="Mantenha saída explícita">
+  Se usar <code>hideClose</code>, garanta sempre outra ação de saída visível no footer, além do suporte a <code>Escape</code>.
+</DocsCallout>
+

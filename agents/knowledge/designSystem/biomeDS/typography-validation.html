@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Biome DS — validação tipografia (SSOT)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Roboto:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Rode antes: pnpm build:css — gera dist/styles.css -->
+    <link rel="stylesheet" href="./dist/styles.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 2rem;
+        max-width: 48rem;
+      }
+      .stack > * + * {
+        margin-top: 1.5rem;
+      }
+      .row {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 1rem 0;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-foreground">
+    <h1 class="text-heading-xl">Heading XL (Poppins / 30px)</h1>
+    <p class="text-body-m">Body M — Roboto 16px. Deve ser claramente menor que o título e legível.</p>
+    <span class="text-meta-xs text-muted-foreground">Meta XS — 12px Roboto</span>
+
+    <div class="stack" style="margin-top: 3rem">
+      <div class="row text-display-2xl">display-2xl</div>
+      <div class="row text-display-xl">display-xl</div>
+      <div class="row text-display-l">display-l</div>
+      <div class="row text-heading-xl">heading-xl</div>
+      <div class="row text-heading-l">heading-l</div>
+      <div class="row text-heading-m">heading-m</div>
+      <div class="row text-body-s">body-s</div>
+      <div class="row text-meta-2xs">meta-2xs</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+{/* Sombras.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, TokenTable, DoRule, DontRule, ShadowCard, ZIndexStack } from './components'
+
+<Meta title="Fundações/Sombras e Sobreposição" />
+
+<DocsPageHeader
+  title="Sombras e Sobreposição"
+  badge="Fundações"
+  description="O sistema de sombras do Biome comunica elevação e hierarquia visual. Em conjunto com o sistema de z-index, define como as camadas da interface se empilham e se relacionam."
+/>
+
+<SectionHeader title="Escala de Sombras" description="Progressão de elevação do mais sutil ao mais pronunciado." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+  <ShadowCard token="--shadow-xs"     tailwind="shadow-xs" shadow="0 1px 2px rgba(0,0,0,0.05)"                                                      usage="Inputs em repouso" />
+  <ShadowCard token="--shadow-sm"     tailwind="shadow-sm" shadow="0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)"                          usage="Cards em repouso" />
+  <ShadowCard token="--shadow-md"     tailwind="shadow-md" shadow="0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)"                usage="Cards hover, dropdowns" />
+  <ShadowCard token="--shadow-lg"     tailwind="shadow-lg" shadow="0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)"              usage="Modais, sheets" />
+  <ShadowCard token="--shadow-xl"     tailwind="shadow-xl" shadow="0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)"            usage="Overlays de alto nível" />
+  <ShadowCard token="--shadow-header" tailwind="(custom)" shadow="0px 1px 4px rgba(0,0,0,0.10)"                                                     usage="Header fixo" />
+</div>
+
+<SectionHeader title="Hierarquia de Elevação" description="Cada camada recebe a sombra adequada à sua posição na hierarquia visual." />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', background: '#fff' }}>
+  {[
+    { label: 'Página', shadow: 'none',      element: 'Fundo geral', depth: 0 },
+    { label: 'Card (repouso)', shadow: 'shadow-sm',  element: 'Cards, superfícies', depth: 1 },
+    { label: 'Card (hover)', shadow: 'shadow-md',    element: 'Interatividade', depth: 2 },
+    { label: 'Dropdown', shadow: 'shadow-md',        element: '+ z-100', depth: 3 },
+    { label: 'Modal', shadow: 'shadow-lg',           element: '+ z-400', depth: 4 },
+    { label: 'Toast', shadow: 'shadow-xl',           element: '+ z-600', depth: 5 },
+  ].map(({ label, shadow, element, depth }, i) => (
+    <div key={label} style={{
+      display: 'grid',
+      gridTemplateColumns: '160px 120px 1fr',
+      gap: 12,
+      padding: '12px 20px',
+      borderBottom: i < 5 ? '1px solid #f5f5f5' : 'none',
+      alignItems: 'center',
+      background: i % 2 === 0 ? '#fff' : '#fafafa',
+      paddingLeft: `${20 + depth * 16}px`,
+    }}>
+      <span style={{ fontSize: 13, color: 'var(--text-primary)', fontWeight: depth === 0 ? 400 : 500 }}>{label}</span>
+      <code style={{ fontSize: 11, background: '#f5f5f5', padding: '2px 6px', borderRadius: 4 }}>{shadow}</code>
+      <span style={{ fontSize: 12, color: '#9f9f9f' }}>{element}</span>
+    </div>
+  ))}
+</div>
+
+```tsx
+// ✅ Card com transição de sombra ao hover
+<div className="rounded-xl border bg-card shadow-sm hover:shadow-md transition-shadow duration-200">
+  {/* conteúdo */}
+</div>
+```
+
+<SectionHeader title="Sistema de Z-Index (Sobreposição)" description="Stack semântico de camadas. Nunca use valores arbitrários como z-[9999]." />
+
+<ZIndexStack
+  rows={[
+    { token: '--z-dropdown', value: 100, tailwind: 'z-100', element: 'Menus dropdown, selects flutuantes' },
+    { token: '--z-sticky',   value: 200, tailwind: 'z-200', element: 'Header fixo, elementos sticky' },
+    { token: '--z-overlay',  value: 300, tailwind: 'z-300', element: 'Overlay/backdrop de modal' },
+    { token: '--z-modal',    value: 400, tailwind: 'z-400', element: 'Painel de modal (DialogContent)' },
+    { token: '--z-popover',  value: 500, tailwind: 'z-500', element: 'Popovers e tooltips complexos' },
+    { token: '--z-toast',    value: 600, tailwind: 'z-600', element: 'Toasts e notificações' },
+    { token: '--z-tooltip',  value: 700, tailwind: 'z-700', element: 'Tooltips simples' },
+  ]}
+/>
+
+```tsx
+// ✅ Usar tokens semânticos — nunca valores arbitrários
+<header className="sticky top-0 z-200 bg-background shadow-header">...</header>
+<div className="fixed inset-0 z-300 bg-black/50">...</div> // overlay
+<div className="fixed z-400 ...">...</div> // modal panel
+```
+
+<SectionHeader title="Sombras no Dark Mode" />
+
+<DocsCallout type="warning" title="Sombras escuras em fundos escuros">
+  Em dark mode, sombras baseadas em <code>rgba(0,0,0,*)</code> ficam menos visíveis sobre fundos escuros. Use bordas (<code>border-border</code>) como complemento para delimitar superfícies.
+</DocsCallout>
+
+```tsx
+// ✅ Funciona bem em ambos os modos
+<div className="rounded-xl bg-card border border-border shadow-sm dark:shadow-none">
+```
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Escolha sombra pela elevação real do elemento, não pela estética.</DoRule>
+<DoRule>Combine sombra + z-index para elementos flutuantes: <code>shadow-md + z-100</code> para dropdowns.</DoRule>
+<DoRule>Use <code>shadow-sm</code> + <code>hover:shadow-md</code> para cards interativos com transição suave.</DoRule>
+<DontRule>Não empilhe múltiplas sombras no mesmo elemento — use apenas uma por nível.</DontRule>
+<DontRule>Nunca use <code>z-[9999]</code> — use o token semântico (<code>z-700</code> para tooltip).</DontRule>
+<DontRule>Não ignore bordas no dark mode — sombras perdem contraste em fundos escuros.</DontRule>

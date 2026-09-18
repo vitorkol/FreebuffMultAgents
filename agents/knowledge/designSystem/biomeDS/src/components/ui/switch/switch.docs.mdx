@@ -1,0 +1,43 @@
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as SwitchStories from './switch.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+Controle de alternância para estados binários on/off. Construído sobre o Radix UI Switch.
+
+<ComponentOverviewCard
+  category="Formulário"
+  aria='role="switch"'
+  file="src/components/ui/switch/switch.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Com Label" />
+
+<Canvas of={SwitchStories.WithLabel} />
+
+<SectionHeader title="Exemplo em Formulário" />
+
+<Canvas of={SwitchStories.FormExample} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Usa `role="switch"` para leitores de tela
+- `aria-checked` reflete o estado atual (true/false)
+- Alternado via teclado com **Space** quando focado
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use Switch para configurações binárias (ligar/desligar, habilitar/desabilitar).</DoRule>
+<DoRule>Sempre associe com um label visível para clareza.</DoRule>
+<DoRule>Use em formulários para preferências como notificações ou toggles de funcionalidades.</DoRule>
+
+<DontRule>Não use Switch para selecionar uma opção entre muitas — use Radio.</DontRule>
+<DontRule>Não use Switch para ações que disparam envio imediato — use Button.</DontRule>

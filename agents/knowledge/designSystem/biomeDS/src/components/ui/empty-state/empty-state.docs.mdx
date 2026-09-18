@@ -1,0 +1,48 @@
+{/* empty-state.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as EmptyStateStories from './empty-state.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={EmptyStateStories} />
+
+# Empty State
+
+Componente placeholder exibido quando uma seção não tem conteúdo para mostrar. Comunica por que a área está vazia e, opcionalmente, o que o usuário pode fazer — suportando ícone, título, descrição e botão de ação.
+
+<ComponentOverviewCard
+  category="Feedback"
+  file="src/components/ui/empty-state/empty-state.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Com Ação" description="Inclua um botão de ação para que o usuário possa resolver o estado vazio." />
+
+<Canvas of={EmptyStateStories.WithAction} />
+
+<SectionHeader title="Busca — Sem Resultados" description="Estado vazio especializado para contextos de busca ou filtro com ação 'Limpar filtros'." />
+
+<Canvas of={EmptyStateStories.SearchNoResults} />
+
+<SectionHeader title="Sem Notificações" description="Estado vazio informativo quando não há nada acionável para o usuário." />
+
+<Canvas of={EmptyStateStories.NoNotifications} />
+
+<SectionHeader title="Acessibilidade" />
+
+- **Conteúdo informativo** — O estado vazio é puramente apresentacional. Não requer roles ARIA especiais; a hierarquia de headings (`title`) e parágrafo (`description`) fornecem estrutura semântica.
+- **Botões de ação** — Quando um botão de ação está presente, ele deve ser focável via teclado e ter um rótulo descritivo que explique a ação (ex: "Criar item" ao invés de "Clique aqui").
+- **Ícones** — O ícone é decorativo e deve carregar `aria-hidden="true"` para que leitores de tela o ignorem.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Sempre forneça um título claro e específico explicando por que o conteúdo está ausente (ex: "Nenhum resultado encontrado" ao invés de "Nada aqui").</DoRule>
+<DoRule>Inclua um botão de ação quando o usuário pode tomar uma medida para resolver o estado vazio (ex: criar um item, limpar filtros).</DoRule>
+<DoRule>Escolha um ícone que se relacione ao contexto — use Search para sem resultados, Inbox para listas vazias, Bell para notificações.</DoRule>
+
+<DontRule>Não exiba um estado vazio sem título explicativo — o usuário precisa entender o que aconteceu.</DontRule>
+<DontRule>Não use texto genérico como "Nada aqui" ou "Sem dados" — seja específico sobre o tipo de conteúdo e o que o usuário pode fazer.</DontRule>
+<DontRule>Não sobrecarregue o estado vazio com múltiplas ações — limite a no máximo uma ação primária.</DontRule>

@@ -1,0 +1,154 @@
+{/* StatusBadge.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as StatusBadgeStories from './status-badge.stories'
+import { ComponentOverviewCard, PropsTable, DocsCallout, SectionHeader, DoRule, DontRule, TokenTable } from '../../../docs/components'
+
+<Meta of={StatusBadgeStories} />
+
+# StatusBadge
+
+Badge especializado para comunicar o estado de um processo ou entidade. Combina cor de surface semântica e ícone de status em um componente de uso único.
+
+<ComponentOverviewCard
+  category="Feedback / Data Display"
+  file="src/components/ui/status-badge/status-badge.tsx"
+  darkMode="Automático via tokens surface"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Badge vs. StatusBadge" description="Quando usar cada um." />
+
+<div className="grid gap-3 md:grid-cols-2">
+  <div className="rounded-lg border border-input bg-background p-4">
+    <div className="mb-2 text-label-m text-label">Badge</div>
+    <div className="flex flex-col gap-1.5 text-body-xs text-muted-foreground">
+      <span>✦ API: <code>variant="success"</code></span>
+      <span>✦ Ícone opcional via prop</span>
+      <span>✦ Uso genérico — tags, rótulos, versões</span>
+      <span>✦ Semântica visual</span>
+    </div>
+  </div>
+  <div className="rounded-lg border-2 border-brand-green bg-success-surface p-4">
+    <div className="mb-2 text-label-m text-success-on-surface">StatusBadge ← use para status</div>
+    <div className="flex flex-col gap-1.5 text-body-xs text-foreground">
+      <span>✦ API: <code>intent="success" label="Concluído"</code></span>
+      <span>✦ Ícone automático por intent</span>
+      <span>✦ Específico — estado de processos</span>
+      <span>✦ Semântica + visual</span>
+    </div>
+  </div>
+</div>
+
+<SectionHeader title="Quando Usar" />
+
+<DoRule>Para exibir o status de um atendimento (Concluído, Em Andamento, Cancelado, Aguardando).</DoRule>
+<DoRule>Em listas de itens onde cada item tem um estado distinto.</DoRule>
+<DoRule>Em cabeçalhos de detalhe para mostrar o estado atual do item visualizado.</DoRule>
+
+<SectionHeader title="Quando Não Usar" />
+
+<DontRule>Para categorias ou tags — use Badge com variant="primary" ou variant="neutral".</DontRule>
+<DontRule>Para contadores numéricos — use Badge diretamente.</DontRule>
+<DontRule>Para indicar estado de atividade em tempo real (online/offline).</DontRule>
+
+<SectionHeader title="Mapeamento de Intent → Status do Produto" />
+
+<div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+  {[
+    { intent: 'success', label: 'success', statuses: 'Concluído, Finalizado, Encerrado', cardClass: 'border-success-surface-border bg-success-surface text-success-on-surface' },
+    { intent: 'warning', label: 'warning', statuses: 'Em Andamento, Aguardando análise', cardClass: 'border-warning-surface-border bg-warning-surface text-warning-on-surface' },
+    { intent: 'info', label: 'info', statuses: 'Ativo, Em análise, Padrão', cardClass: 'border-info-surface-border bg-info-surface text-info-on-surface' },
+    { intent: 'destructive', label: 'destructive', statuses: 'Cancelado, Arquivado', cardClass: 'border-destructive-surface-border bg-destructive-surface text-destructive-on-surface' },
+    { intent: 'neutral', label: 'neutral', statuses: 'Desconhecido, não mapeado', cardClass: 'border-neutral-surface-border bg-neutral-surface text-neutral-on-surface' },
+  ].map(({ intent, label, statuses, cardClass }) => (
+    <div key={intent} className={`rounded-lg border p-3.5 ${cardClass}`}>
+      <code className="mb-1.5 block text-body-xs">{label}</code>
+      <p className="m-0 text-meta-xs">{statuses}</p>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Todos os Intents" />
+
+<Canvas of={StatusBadgeStories.Intents} />
+
+<SectionHeader title="Tamanhos" />
+
+<Canvas of={StatusBadgeStories.Sizes} />
+
+<SectionHeader title="Sem Ícone / Ícone Customizado" />
+
+<Canvas of={StatusBadgeStories.WithoutIcon} />
+<Canvas of={StatusBadgeStories.WithCustomIcon} />
+
+<SectionHeader title="Contexto Real — Lista de Atendimentos" description="Substitui getStatusColor() + getStatusIcon() legados por um único componente." />
+
+<Canvas of={StatusBadgeStories.ServiceContext} />
+
+```tsx
+// Antes (legado) — lógica manual, sem tokens
+<div className={`px-3 py-1.5 rounded-full text-xs font-medium border
+  ${getStatusColor(attendance.statusProcesso)}`}>
+  <i className={`bi ${getStatusIcon(attendance.statusProcesso)}`} />
+  {attendance.statusProcesso}
+</div>
+
+// ✅ Depois (Biome) — um componente, semântico, dark mode automático
+<StatusBadge intent={mapStatus(attendance.statusProcesso)} label={attendance.statusProcesso} />
+```
+
+<SectionHeader title="Grade Completa" />
+
+<Canvas of={StatusBadgeStories.Grade} />
+
+<SectionHeader title="Acessibilidade" />
+
+<DocsCallout type="info">
+  O ícone usa <code>aria-hidden="true"</code> — a informação de status é transmitida pelo <code>label</code> e pela cor, não apenas pelo ícone. O <strong>label textual é obrigatório</strong>.
+</DocsCallout>
+
+- `StatusBadge` renderiza um `<span>` — não é interativo. Se o status for clicável, envolva em um `<button>`.
+- Em listas longas, adicione `aria-label` descritivo ao elemento pai.
+
+<SectionHeader title="Props" />
+
+<PropsTable
+  rows={[
+    { prop: 'intent',    type: '"success" | "warning" | "info" | "destructive" | "neutral"', required: true, description: 'Intent semântico — controla cores e ícone' },
+    { prop: 'label',     type: 'string',                                                     required: true, description: 'Texto exibido no badge — reflita o status real do sistema' },
+    { prop: 'showIcon',  type: 'boolean', default: 'true',  description: 'Exibe/oculta o ícone líder' },
+    { prop: 'icon',      type: 'IconName',                   description: 'Nome de ícone Lucide em kebab-case para substituir o ícone automático' },
+    { prop: 'size',      type: '"xs" | "sm" | "md" | "lg"', default: '"sm"', description: 'Escala de tamanho' },
+    { prop: 'className', type: 'string',                    description: 'Classes adicionais' },
+  ]}
+/>
+
+<SectionHeader title="Boas Práticas" />
+
+```tsx
+// ✅ Use sempre o label do status real do sistema
+<StatusBadge intent="success" label={attendance.statusProcesso} />
+
+// ✅ Crie uma função de mapeamento centralizada
+// utils/status.ts
+export function getStatusIntent(status?: string): StatusIntent {
+  if (!status) return 'neutral'
+  const s = status.toLowerCase()
+  if (['conclu', 'finaliz', 'encerrad'].some(k => s.includes(k))) return 'success'
+  if (['cancel', 'arquiv'].some(k => s.includes(k)))              return 'destructive'
+  if (['andamento', 'aguard'].some(k => s.includes(k)))           return 'warning'
+  return 'info'
+}
+
+// ❌ Não use Badge raw com classes utilitárias soltas de status
+<span className="rounded-full border px-2 py-1 text-label-s">
+  Concluído
+</span>
+
+// ✅ Correto
+<StatusBadge intent="success" label="Concluído" />
+```

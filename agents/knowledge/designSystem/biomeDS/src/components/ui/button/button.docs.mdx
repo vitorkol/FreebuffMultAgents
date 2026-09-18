@@ -1,0 +1,104 @@
+{/* Button.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as ButtonStories from './button.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+import { ButtonIconPicker } from '../../../docs/components'
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Componente de ação que dispara eventos ao ser clicado. Suporta variantes visuais, tamanhos, ícones laterais e estado de carregamento.
+
+<ComponentOverviewCard
+  category="Ações"
+  file="src/components/ui/button/button.tsx"
+/>
+
+<SectionHeader title="Playground" description="Ajuste variante, tamanho, texto e ícones usando os controles. Os ícones usam nomes oficiais do Lucide em kebab-case." />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Seletor visual de ícones" description="Explore visualmente os ícones disponíveis para o botão e copie o snippet de uso." />
+
+<ButtonIconPicker />
+
+<SectionHeader title="Variantes" description="Estilos visuais e semânticos para diferentes contextos de ação." />
+
+<Canvas of={ButtonStories.Variants} />
+
+- **primary** — Ação principal da tela (ex: Salvar, Enviar)
+- **secondary** — Ação secundária com borda da marca
+- **ghost** — Ação terciária, sem fundo até hover
+- **outline** — Ação alternativa com borda neutra
+- **danger** — Ação destrutiva (ex: Excluir, Cancelar)
+- **link** — Aparência de link, sem padding vertical
+
+<SectionHeader title="Tamanhos" />
+
+<Canvas of={ButtonStories.Sizes} />
+
+<SectionHeader title="Estado de carregamento" description="Exibe Spinner e desabilita interação durante operações assíncronas." />
+
+<Canvas of={ButtonStories.Loading} />
+
+<SectionHeader title="Com ícones" description="Use iconLeft e iconRight com nomes de ícone Lucide em kebab-case." />
+
+<Canvas of={ButtonStories.WithIcons} />
+
+```tsx
+import { Button } from "@biome/ui"
+
+<Button iconLeft="search">
+  Search
+</Button>
+
+<Button iconRight="arrow-right">
+  Next
+</Button>
+
+<Button iconLeft="download" iconRight="chevron-down">
+  Download
+</Button>
+```
+
+<SectionHeader title="Largura total" />
+
+<Canvas of={ButtonStories.FullWidth} />
+
+<SectionHeader title="Desabilitado" />
+
+<Canvas of={ButtonStories.Disabled} />
+
+<SectionHeader title="AsChild" description="Renderiza o botão como outro elemento usando o padrão Radix Slot." />
+
+<Canvas of={ButtonStories.AsChild} />
+
+```tsx
+<Button asChild>
+  <a href="/page">Navigate</a>
+</Button>
+```
+
+<SectionHeader title="Acessibilidade" />
+
+- **Navegação por teclado** — O botão recebe foco via Tab e é acionado por Enter ou Space
+- **Estados de foco** — Anel de foco visível (`focus-visible:ring-2`) indica foco vindo do teclado
+- **aria-busy** — Durante loading, o componente define `aria-busy="true"` para leitores de tela
+- **Desabilitado** — Quando `disabled` ou `loading`, o botão não recebe foco e não é acionável
+- **Ícones decorativos** — Ícones adicionados via `iconLeft`/`iconRight` são automaticamente decorativos (`aria-hidden`)
+
+<SectionHeader title="Boas práticas" />
+
+<DoRule>Use variant="primary" para a ação principal de cada contexto (formulário, modal, página).</DoRule>
+<DoRule>Use variant="danger" apenas para ações irreversíveis ou destrutivas.</DoRule>
+<DoRule>Use loading para indicar que uma ação assíncrona está em andamento.</DoRule>
+<DoRule>Combine iconLeft ou iconRight com texto descritivo para clareza.</DoRule>
+<DoRule>Use nomes de ícone em kebab-case diretamente como string: `iconLeft="search"`</DoRule>
+
+<DontRule>Não use múltiplos botões primary na mesma área — destaque apenas uma ação principal.</DontRule>
+<DontRule>Não use variant="link" para ações que não navegam — prefira ghost ou outline.</DontRule>
+<DontRule>Não oculte o loading — sempre mostre feedback visual durante operações assíncronas.</DontRule>
+<DontRule>Não use ícones como único conteúdo em botões de ação — adicione texto ou aria-label.</DontRule>
+<DontRule>Não importe ícones diretamente de lucide-react — use props string como iconLeft="search".</DontRule>

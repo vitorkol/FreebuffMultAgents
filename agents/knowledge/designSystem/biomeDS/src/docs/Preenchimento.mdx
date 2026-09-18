@@ -1,0 +1,88 @@
+{/* Preenchimento.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule, ColorGroup } from './components'
+
+<Meta title="Fundações/Preenchimento" />
+
+<DocsPageHeader
+  title="Preenchimento"
+  badge="Fundações"
+  description="Tokens de preenchimento definem como as superfícies e regiões de cor são aplicadas na interface. O sistema cobre desde fundos estruturais da página até superfícies de feedback contextual."
+/>
+
+<DocsCallout type="tip" title="Hierarquia de superfícies">
+  Cada nível de elevação tem sua própria superfície: <strong>background</strong> → <strong>card / popover</strong> → <strong>muted / accent</strong> (hover states). Use a superfície do nível correto.
+</DocsCallout>
+
+<SectionHeader title="Superfícies Estruturais" description="Fundos de página, cards e elementos neutros da interface." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--background',  tailwind: 'bg-background', light: '#ffffff', dark: '#0c1410', description: 'Fundo padrão da página' },
+    { token: '--card',        tailwind: 'bg-card',       light: '#ffffff', dark: '#162019', description: 'Superfície de card' },
+    { token: '--popover',     tailwind: 'bg-popover',    light: '#ffffff', dark: '#162019', description: 'Dropdown, tooltip, popover' },
+    { token: '--muted',       tailwind: 'bg-muted',      light: '#f5f5f5', dark: '#1e2d24', description: 'Fundos neutros, inputs disabled' },
+    { token: '--accent',      tailwind: 'bg-accent',     light: '#f5f5f5', dark: '#1e2d24', description: 'Hover de itens de lista' },
+    { token: '--secondary',   tailwind: 'bg-secondary',  light: '#e9f4ee', dark: '#1a3327', description: 'Botões secundários, chips' },
+  ]}
+/>
+
+<SectionHeader title="Superfícies de Marca" description="Preenchimentos com a identidade visual da SEMAD." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--primary',          tailwind: 'bg-primary',          light: '#264c37', dark: '#4ade80', description: 'Ações primárias' },
+    { token: '--brand-green',      tailwind: 'bg-brand-green',      light: '#198754', description: 'Verde principal SEMAD' },
+    { token: '--brand-green-dark', tailwind: 'bg-brand-green-dark', light: '#024d2a', description: 'Hover de botões primários' },
+    { token: '--brand-lime',       tailwind: 'bg-brand-lime',       light: '#92b123', description: 'Accent secundário de marca' },
+    { token: '--mint',             tailwind: 'bg-mint',             light: '#a7f3d0', description: 'Decorativo, ilustrações' },
+    { token: '--footer-bg',        tailwind: 'bg-footer-bg',        light: '#053b2d', description: 'Fundo do footer' },
+    { token: '--section-gray',     tailwind: 'bg-section-gray',     light: '#fafafa', description: 'Fundo de seções alternadas' },
+  ]}
+/>
+
+<SectionHeader title="Superfícies de Feedback" description="Para alertas, banners e indicadores contextuais. Use sempre o track completo (*-surface + *-surface-border + *-on-surface)." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--success-surface',     tailwind: 'bg-success-surface',     light: '#f0fdf4', dark: '#052e16', description: 'Fundo — sucesso, concluído' },
+    { token: '--warning-surface',     tailwind: 'bg-warning-surface',     light: '#fffbeb', dark: '#1a1200', description: 'Fundo — aviso, em andamento' },
+    { token: '--info-surface',        tailwind: 'bg-info-surface',        light: '#eff6ff', dark: '#172554', description: 'Fundo — informação' },
+    { token: '--destructive-surface', tailwind: 'bg-destructive-surface', light: '#fef2f2', dark: '#450a0a', description: 'Fundo — erro, cancelamento' },
+    { token: '--neutral-surface',     tailwind: 'bg-neutral-surface',     light: '#f5f5f5', dark: '#1a1a1a', description: 'Fundo — status neutro' },
+  ]}
+/>
+
+<SectionHeader title="Padrões de Código" />
+
+```tsx
+// ✅ Card padrão
+<div className="bg-card rounded-xl border border-border shadow-sm p-6">
+  <h3 className="text-foreground font-semibold">Título</h3>
+  <p className="text-muted-foreground text-sm">Descrição</p>
+</div>
+
+// ✅ Seção alternada
+<section className="bg-section-gray py-15 md:py-30">...</section>
+
+// ✅ Item de lista com hover
+<li className="rounded-lg px-4 py-3 hover:bg-accent transition-colors cursor-pointer">
+  {/* item */}
+</li>
+
+// ✅ Track completo de surface (Alert)
+<div className="bg-success-surface border border-success-surface-border rounded-lg p-4">
+  <p className="text-success-on-surface font-semibold">Sucesso</p>
+</div>
+```
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Use <code>bg-card</code> para todo conteúdo em cards — nunca <code>bg-white</code>.</DoRule>
+<DoRule>Use <code>bg-section-gray</code> para alternar seções — mantém contraste em light e dark mode.</DoRule>
+<DoRule>Use <code>bg-muted</code> para inputs desabilitados e áreas de rascunho.</DoRule>
+<DontRule>Nunca use <code>bg-white</code> — use <code>bg-background</code> ou <code>bg-card</code>. <code>bg-white</code> quebra o dark mode.</DontRule>
+<DontRule>Não misture preenchimento sólido (<code>bg-success</code>) com surface (<code>bg-success-surface</code>) no mesmo elemento de feedback.</DontRule>

@@ -1,0 +1,198 @@
+{
+  "$comment": "Mapa das utilities semânticas Biome DS — espelhar mudanças em figma-biome-linked/tools/generate-linked-manifests.mjs (BIOME_SEMANTIC_UTILITY_CLASSES).",
+  "generatedAt": "2026-05-08T20:29:54.541Z",
+  "utilities": {
+    "structural": {
+      "icon-slot-base": [
+        "--icon-slot-* (pointer-events / shrink)",
+        "svg descendente"
+      ],
+      "icon-slot-2xs": [
+        "--icon-slot-2xs-size"
+      ],
+      "icon-slot-xs": [
+        "--icon-slot-xs-size"
+      ],
+      "icon-slot-sm": [
+        "--icon-slot-sm-size"
+      ],
+      "icon-slot-md": [
+        "--icon-slot-md-size"
+      ],
+      "breadcrumb-separator-icon-slot": [
+        "--icon-slot-xs-size"
+      ],
+      "translate-micro-y": [
+        "--motion-micro-offset-y"
+      ],
+      "carousel-nav-prev-horizontal": [
+        "--motion-carousel-inset",
+        "--motion-anchor-shift-half"
+      ],
+      "carousel-nav-next-horizontal": [
+        "--motion-carousel-inset",
+        "--motion-anchor-shift-half"
+      ],
+      "carousel-nav-prev-vertical": [
+        "--motion-carousel-inset",
+        "--motion-anchor-shift-half",
+        "--motion-rotate-quarter-turn"
+      ],
+      "carousel-nav-next-vertical": [
+        "--motion-carousel-inset",
+        "--motion-anchor-shift-half",
+        "--motion-rotate-quarter-turn"
+      ],
+      "select-trigger-value-slot": [
+        "tipografia / line-clamp via tokens"
+      ],
+      "select-trigger-placeholder-tone": [
+        "--text-placeholder"
+      ],
+      "select-popper-axis-nudge": [
+        "--motion-popover-nudge"
+      ],
+      "select-item-secondary-slot": [
+        "layout textual"
+      ],
+      "transition-field-border": [
+        "--motion-duration-field-border",
+        "--easing-default"
+      ],
+      "input-hide-webkit-search-cancel": [
+        "reset estrutural"
+      ],
+      "peer-disabled-form-lock": [
+        "--opacity-disabled"
+      ],
+      "radio-ring-peer": [
+        "--primary",
+        "--ring",
+        "--background"
+      ],
+      "radio-indicator-dot": [
+        "--primary-foreground",
+        "--motion-radio-dot-scale-*"
+      ],
+      "switch-track-surface": [
+        "--brand-green",
+        "--input"
+      ],
+      "switch-thumb-motion": [
+        "--motion-switch-thumb-travel-x"
+      ],
+      "tabs-trigger-active-tone": [
+        "--background",
+        "--foreground",
+        "--shadow-sm"
+      ],
+      "toggle-on-surface": [
+        "--accent",
+        "--accent-foreground"
+      ],
+      "accordion-trigger-chevron": [
+        "--motion-accordion-chevron-open-rotate"
+      ],
+      "radix-menu-item-disabled": [
+        "--opacity-disabled"
+      ],
+      "radix-submenu-trigger-open": [
+        "--accent",
+        "--accent-foreground"
+      ],
+      "sheet-close-open-surface": [
+        "--secondary"
+      ],
+      "bg-overlay-scrim-modal": [
+        "--overlay-scrim-modal"
+      ],
+      "bg-overlay-scrim-sheet": [
+        "--overlay-scrim-sheet"
+      ],
+      "table-head-rows-border": [
+        "--border-width",
+        "--border-style",
+        "--border"
+      ],
+      "table-body-rows-last-border-none": [
+        "--border"
+      ],
+      "table-footer-shell": [
+        "bg-muted/50 via @apply SSOT"
+      ],
+      "table-footer-rows-last-border-none": [
+        "--border"
+      ],
+      "table-row-interactive": [
+        "--muted",
+        "bg-muted/50 hover via @apply SSOT"
+      ],
+      "table-cell-checkbox-layout": [
+        "--motion-micro-offset-y",
+        "--space-0"
+      ],
+      "toast-host-surface": [
+        "--background",
+        "--foreground",
+        "--border",
+        "--shadow-lg"
+      ],
+      "toast-slot-description": [
+        "--muted-foreground"
+      ],
+      "toast-slot-action-primary": [
+        "--primary",
+        "--primary-foreground"
+      ],
+      "toast-slot-cancel-muted": [
+        "--muted",
+        "--muted-foreground"
+      ],
+      "interactive-hit-hover-tonal-subtle": [
+        "hover:bg-black/5 via @apply SSOT"
+      ],
+      "interactive-hit-hover-tonal-muted": [
+        "hover:bg-black/10 via @apply SSOT"
+      ]
+    },
+    "behavioral": {
+      "radix-overlay-fade-motion": [
+        "tw-animate / Radix data-state"
+      ],
+      "radix-popover-content-motion": [
+        "tw-animate / Radix data-state / data-side"
+      ],
+      "tooltip-content-motion": [
+        "tw-animate"
+      ],
+      "dialog-overlay-motion": [
+        "tw-animate"
+      ],
+      "dialog-content-fade-motion": [
+        "tw-animate"
+      ],
+      "accordion-content-motion": [
+        "tw-animate accordion-*"
+      ],
+      "sheet-overlay-motion": [
+        "tw-animate"
+      ],
+      "sheet-panel-motion-base": [
+        "tw-animate",
+        "--transition-slow"
+      ],
+      "sheet-panel-top": [
+        "slide sheet"
+      ],
+      "sheet-panel-bottom": [
+        "slide sheet"
+      ],
+      "sheet-panel-left": [
+        "slide sheet"
+      ],
+      "sheet-panel-right": [
+        "slide sheet"
+      ]
+    }
+  }
+}

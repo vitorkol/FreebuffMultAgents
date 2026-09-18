@@ -1,0 +1,143 @@
+{/* Icones.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule } from './components'
+import { IconBrowser, IconSizePreview, IconStrokePreview, IconUsageExamples } from './components/IconBrowser'
+
+<Meta title="Fundações/Iconografia" />
+
+<DocsPageHeader
+  title="Iconografia"
+  badge="Fundações"
+  description="O Biome utiliza Lucide como sistema de ícones interno. O componente Icon abstrai a biblioteca — basta usar o nome kebab-case do ícone. Não é necessário importar lucide-react."
+/>
+
+<SectionHeader title="Princípios" description="A filosofia do sistema de ícones no Biome." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10, marginBottom: 24 }}>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff', borderLeft: '3px solid #264c37' }}>
+    <strong style={{ fontSize: 13, color: 'var(--text-primary)' }}>Abstração</strong>
+    <p style={{ fontSize: 12, color: '#737373', margin: '4px 0 0', lineHeight: 1.5 }}>
+      O consumidor usa apenas o componente Icon com um nome. A biblioteca de ícones é interna e substituível sem breaking changes.
+    </p>
+  </div>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff', borderLeft: '3px solid #264c37' }}>
+    <strong style={{ fontSize: 13, color: 'var(--text-primary)' }}>Clareza</strong>
+    <p style={{ fontSize: 12, color: '#737373', margin: '4px 0 0', lineHeight: 1.5 }}>
+      Cada ícone deve comunicar seu significado sem ambiguidade. Use ícones familiares e universais.
+    </p>
+  </div>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff', borderLeft: '3px solid #264c37' }}>
+    <strong style={{ fontSize: 13, color: 'var(--text-primary)' }}>Acessibilidade</strong>
+    <p style={{ fontSize: 12, color: '#737373', margin: '4px 0 0', lineHeight: 1.5 }}>
+      Ícones decorativos recebem aria-hidden automaticamente. Ícones semânticos recebem aria-label e role="img".
+    </p>
+  </div>
+</div>
+
+<SectionHeader title="Como Usar" description="O componente Icon é a única API pública para ícones. Não importe lucide-react diretamente." />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 12, overflow: 'hidden', marginBottom: 16 }}>
+  <div style={{ padding: '10px 16px', background: '#fafafa', borderBottom: '1px solid #e5e5e5', fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
+    API do Icon
+  </div>
+  <pre style={{ padding: 16, margin: 0, fontSize: 12, lineHeight: 1.7, color: '#264c37', background: '#fff', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace' }}>
+{`import { Icon } from "@biome/ui"
+
+<Icon name="arrow-right" />
+<Icon name="circle-user" size="lg" />
+<Icon name="triangle-alert" size="sm" className="text-warning" />
+<Icon name="calendar-days" aria-label="Calendário" />`}
+  </pre>
+</div>
+
+<DocsCallout type="info" title="Nomes de ícones">
+  Os nomes seguem o padrão kebab-case do <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer" style={{ color: '#264c37', fontWeight: 600 }}>lucide.dev</a>. Procure o ícone no site, copie o nome, e use diretamente como prop <code>name</code>.
+</DocsCallout>
+
+<IconUsageExamples />
+
+<SectionHeader title="Navegador de Ícones" description="Pesquise e copie ícones diretamente para seu código. Clique em um ícone para copiar o JSX." />
+
+<IconBrowser />
+
+<SectionHeader title="Escala de Tamanhos" description="Tokens de tamanho padronizados e seus contextos de uso." />
+
+<IconSizePreview />
+
+<SectionHeader title="Espessura de Traço" description="Variações de strokeWidth e quando usar cada uma." />
+
+<IconStrokePreview />
+
+<SectionHeader title="Acessibilidade" description="Diretrizes de como usar ícones de forma acessível." />
+
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+    <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-primary)', marginBottom: 8 }}>
+      🎨 Ícone Decorativo
+    </div>
+    <p style={{ fontSize: 12, color: '#737373', lineHeight: 1.6, margin: '0 0 10px' }}>
+      Quando o ícone acompanha texto que já comunica o significado.
+    </p>
+    <pre style={{ fontSize: 11, color: '#264c37', background: '#f8faf9', padding: 10, borderRadius: 6, margin: 0, fontFamily: 'ui-monospace, SFMono-Regular, monospace' }}>
+{`{/* aria-hidden automático */}
+<Icon name="search" />
+<span>Buscar</span>`}
+    </pre>
+  </div>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+    <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-primary)', marginBottom: 8 }}>
+      ♿ Ícone Semântico
+    </div>
+    <p style={{ fontSize: 12, color: '#737373', lineHeight: 1.6, margin: '0 0 10px' }}>
+      Quando o ícone é o único conteúdo ou transmite informação essencial.
+    </p>
+    <pre style={{ fontSize: 11, color: '#264c37', background: '#f8faf9', padding: 10, borderRadius: 6, margin: 0, fontFamily: 'ui-monospace, SFMono-Regular, monospace' }}>
+{`{/* role="img" automático */}
+<Icon
+  name="triangle-alert"
+  aria-label="Aviso importante"
+/>`}
+    </pre>
+  </div>
+</div>
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff', marginBottom: 16 }}>
+  <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-primary)', marginBottom: 8 }}>
+    🖱️ Botão com Ícone
+  </div>
+  <p style={{ fontSize: 12, color: '#737373', lineHeight: 1.6, margin: '0 0 10px' }}>
+    Em botões icon-only, o aria-label deve estar no botão.
+  </p>
+  <pre style={{ fontSize: 11, color: '#264c37', background: '#f8faf9', padding: 10, borderRadius: 6, margin: 0, fontFamily: 'ui-monospace, SFMono-Regular, monospace' }}>
+{`<button aria-label="Fechar">
+  <Icon name="x" />
+</button>
+
+{/* Com texto, o ícone é decorativo */}
+<button>
+  <Icon name="send" size="sm" />
+  Enviar
+</button>`}
+  </pre>
+</div>
+
+<SectionHeader title="Regras de Uso" />
+
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+  <div>
+    <DoRule>Use o componente Icon com prop name — não importe lucide-react diretamente.</DoRule>
+    <DoRule>Use tokens de tamanho (sm, md, lg) para consistência visual.</DoRule>
+    <DoRule>Mantenha tamanhos consistentes dentro do mesmo contexto.</DoRule>
+    <DoRule>Adicione aria-label quando o ícone transmite informação sem texto associado.</DoRule>
+  </div>
+  <div>
+    <DontRule>Não importe ícones diretamente de lucide-react em código consumidor.</DontRule>
+    <DontRule>Não misture bibliotecas de ícones (Bootstrap Icons, FontAwesome, etc.).</DontRule>
+    <DontRule>Não use tamanhos menores que xs (14px) — perdem legibilidade.</DontRule>
+    <DontRule>Não use ícone como única forma de comunicar informação crítica sem texto alternativo.</DontRule>
+  </div>
+</div>
+
+<DocsCallout type="tip" title="Catálogo completo">
+  O Biome inclui automaticamente todos os ícones do Lucide. Procure qualquer ícone em <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer" style={{ color: '#264c37', fontWeight: 600 }}>lucide.dev/icons</a>, copie o nome kebab-case, e use diretamente como <code>{`<Icon name="..." />`}</code>.
+</DocsCallout>

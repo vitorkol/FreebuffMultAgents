@@ -1,0 +1,107 @@
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as IconStories from './icon.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule, DocsCallout } from '../../../docs/components'
+import { IconBrowser, IconSizePreview, IconStrokePreview, IconUsageExamples } from '../../../docs/components/IconBrowser'
+
+<Meta of={IconStories} />
+
+# Icon
+
+Componente padronizado para renderizar ícones Lucide por nome. Abstrai a biblioteca de ícones internamente — o consumidor não precisa importar lucide-react.
+
+<ComponentOverviewCard
+  category="Utility"
+  file="src/components/ui/icon/icon.tsx"
+/>
+
+<SectionHeader title="Playground" description="Selecione um ícone pelo nome no painel de controles e ajuste tamanho, cor e espessura de traço." />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso Básico" />
+
+```tsx
+import { Icon } from "@biome/ui"
+
+<Icon name="arrow-right" />
+<Icon name="circle-check" size="lg" />
+<Icon name="triangle-alert" className="text-warning" />
+```
+
+<SectionHeader title="Tamanhos" />
+
+<Canvas of={IconStories.Sizes} />
+
+- `xs` (`14px`) — indicadores compactos.
+- `sm` (`16px`) — uso inline com texto e badges.
+- `md` (`20px`) — padrão de UI para botões e inputs.
+- `lg` (`24px`) — destaques e ações primárias.
+- `xl` (`32px`) — empty states e áreas de destaque.
+- `2xl` (`40px`) até `10xl` (`104px`) — destaques progressivos para cenários visuais maiores.
+- Também é possível usar valor numérico direto, por exemplo `size={40}`.
+
+<Canvas of={IconStories.NumericSizes} />
+
+<SectionHeader title="Espessura do traço" />
+
+<Canvas of={IconStories.StrokeWidths} />
+
+<SectionHeader title="Com cor" />
+
+<Canvas of={IconStories.WithColor} />
+
+<SectionHeader title="Ícones comuns" />
+
+<Canvas of={IconStories.CommonIcons} />
+
+<SectionHeader title="Acessibilidade" />
+
+<Canvas of={IconStories.Accessibility} />
+
+O componente gerencia acessibilidade automaticamente:
+
+- **Ícone decorativo** — Sem `aria-label`, recebe `aria-hidden="true"`
+- **Ícone semântico** — Com `aria-label`, recebe `role="img"` e o label é anunciado
+- **Ícone em botão** — Envolva em um botão com `aria-label` no botão
+
+<SectionHeader title="Navegador de Ícones" />
+
+Pesquise e copie ícones diretamente para seu código. Clique em um ícone para copiar o JSX.
+
+<IconBrowser />
+
+<SectionHeader title="Escala de Tamanhos" />
+
+<IconSizePreview />
+
+<SectionHeader title="Espessura de Traço" />
+
+<IconStrokePreview />
+
+<SectionHeader title="Exemplos de Uso" />
+
+<IconUsageExamples />
+
+<SectionHeader title="Nomes de Ícones" />
+
+Os nomes seguem o padrão kebab-case do site [lucide.dev](https://lucide.dev/icons):
+
+```
+arrow-right       circle-user        calendar-days
+circle-check      triangle-alert     layout-dashboard
+```
+
+<DocsCallout type="info" title="Catálogo completo">
+  O Biome inclui automaticamente todos os ícones do Lucide. Procure qualquer ícone em <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer">lucide.dev/icons</a>, copie o nome kebab-case, e use diretamente como <code>{`<Icon name="..." />`}</code>.
+</DocsCallout>
+
+<SectionHeader title="Boas práticas" />
+
+<DoRule>Use o nome kebab-case do lucide.dev — ele funciona diretamente como prop name.</DoRule>
+<DoRule>Use os tokens de tamanho do Biome (`xs` ... `10xl`) para consistência visual entre aplicações.</DoRule>
+<DoRule>Use aria-label quando o ícone é o único conteúdo interativo.</DoRule>
+
+<DontRule>Não importe lucide-react diretamente em código consumidor — use o componente Icon.</DontRule>
+<DontRule>Não use tamanhos menores que xs (14px) — perdem legibilidade.</DontRule>
+<DontRule>Não misture bibliotecas de ícones — use apenas o sistema Biome.</DontRule>

@@ -1,0 +1,81 @@
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as TabsStories from './tabs.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule, KeyboardShortcuts } from '../../../docs/components'
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+Organize o conteúdo em diferentes visões onde apenas uma fica visível por vez. O uso recomendado no Biome é declarativo via prop `items` (sem precisar montar `TabsList`, `TabsTrigger` e `TabsContent` manualmente).
+
+<ComponentOverviewCard
+  category="Navegação"
+  aria="role='tablist'"
+  file="src/components/ui/tabs/tabs.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Tabs
+  items={[
+    { value: "account", label: "Conta", content: "Conteúdo da aba Conta" },
+    { value: "password", label: "Senha", content: "Conteúdo da aba Senha" },
+  ]}
+/>
+```
+
+<DoRule>Prefira a prop <code>items</code> no uso em produto. O Biome cuida da estrutura interna e semântica.</DoRule>
+
+<SectionHeader title="Com ícones" />
+
+<Canvas of={TabsStories.WithIcons} />
+
+<SectionHeader title="Aba desabilitada" />
+
+<Canvas of={TabsStories.Disabled} />
+
+<SectionHeader title="Composição avançada" />
+
+<Canvas of={TabsStories.ComposicaoAvancada} />
+
+<SectionHeader title="Anatomia (modo avançado)" />
+
+- **Tabs** — Contêiner raiz que gerencia estado e valor selecionado.
+- **TabsList** — Faixa que agrupa os gatilhos.
+- **TabsTrigger** — Botão de aba que ativa um painel.
+- **TabsContent** — Painel associado ao valor ativo.
+
+<DontRule>Não use a composição manual por padrão. Reserve para cenários avançados de layout.</DontRule>
+
+<SectionHeader title="Navegação por teclado" />
+
+<KeyboardShortcuts
+  shortcuts={[
+    { key: 'Tab', action: 'Move o foco para dentro e para fora da lista de abas' },
+    { key: 'Arrow Left / Arrow Right', action: 'Move o foco entre as abas' },
+    { key: 'Home', action: 'Foca a primeira aba' },
+    { key: 'End', action: 'Foca a última aba' },
+    { key: 'Space / Enter', action: 'Ativa a aba em foco' },
+  ]}
+/>
+
+<SectionHeader title="Acessibilidade" />
+
+Os roles ARIA (`tablist`, `tab`, `tabpanel`) são gerenciados pelo Radix UI. A gestão de foco segue o padrão de abas: o foco se move entre os gatilhos com as setas, e o painel ativo é associado via `aria-controls` e `aria-labelledby`. Abas desabilitadas não recebem foco e são marcadas com `aria-disabled`.
+
+<SectionHeader title="Boas práticas" />
+
+<DoRule>Use rótulos claros e concisos em cada aba para que o usuário saiba que conteúdo esperar.</DoRule>
+<DoRule>Mantenha o conteúdo de cada aba focado em um único tópico ou tarefa.</DoRule>
+<DoRule>Use ícones junto com texto quando isso adicionar significado (por exemplo, configurações, notificações).</DoRule>
+
+<DontRule>Não use mais que 5–7 abas em um mesmo grupo — considere outro padrão para muitas seções.</DontRule>
+<DontRule>Não aninhe abas dentro de outras abas — isso torna a navegação confusa.</DontRule>
+<DontRule>Não use abas para etapas sequenciais — prefira um stepper ou wizard.</DontRule>
+

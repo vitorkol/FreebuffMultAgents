@@ -1,0 +1,47 @@
+{/* toggle.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as ToggleStories from './toggle.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={ToggleStories} />
+
+# Toggle
+
+Botão de dois estados que pode ser ativado ou desativado. Suporta variante outline e labels de texto. Construído sobre o Radix UI Toggle.
+
+<ComponentOverviewCard
+  category="Form Controls"
+  file="src/components/ui/toggle/toggle.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Variante Outline" description="Versão com borda visível para uso em barras de ferramentas e contextos com fundo neutro." />
+
+<Canvas of={ToggleStories.Outline} />
+
+<SectionHeader title="Com Texto" description="Combine ícone e texto para maior clareza sobre a ação do toggle." />
+
+<Canvas of={ToggleStories.WithText} />
+
+<SectionHeader title="Desabilitado" description="Estado desabilitado para quando a opção não está disponível no momento." />
+
+<Canvas of={ToggleStories.Disabled} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Utiliza `aria-pressed` para comunicar o estado atual (ativado/desativado) a tecnologias assistivas.
+- Acessível via teclado com Enter e Space para alternar o estado.
+- Sempre forneça `aria-label` descrevendo o que está sendo alternado, especialmente em toggles apenas com ícone.
+- O estado visual ativo deve ter contraste suficiente para ser distinguido do estado inativo.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use para configurações ou preferências que entram em vigor imediatamente (ex: negrito, itálico).</DoRule>
+<DoRule>Forneça feedback visual claro para o estado ativo, com contraste adequado.</DoRule>
+
+<DontRule>Não use Toggle para escolhas binárias que precisam ser submetidas com o formulário — use Checkbox.</DontRule>
+<DontRule>Não use Toggle sem um label claro (visual ou via `aria-label`).</DontRule>

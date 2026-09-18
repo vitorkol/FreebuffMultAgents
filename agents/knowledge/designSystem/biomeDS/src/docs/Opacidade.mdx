@@ -1,0 +1,89 @@
+{/* Opacidade.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule, OpacityDemo } from './components'
+
+<Meta title="Fundações/Opacidade" />
+
+<DocsPageHeader
+  title="Opacidade"
+  badge="Fundações"
+  description="O sistema de opacidade do Biome define uma escala semântica de transparência para estados de componentes, overlays e feedback visual. Cada valor tem um propósito definido."
+/>
+
+<SectionHeader title="Demonstração Visual" description="Cada nível mostra como a opacidade afeta um elemento sobre fundo xadrez (representando transparência)." />
+
+<OpacityDemo />
+
+<DocsCallout type="info" title="Nota sobre valores">
+  Os tokens de opacidade do Tailwind são frações decimais (0 a 1). A escala acima representa esses valores como porcentagem para facilitar a leitura.
+</DocsCallout>
+
+<SectionHeader title="Escala Completa" description="Todos os valores disponíveis com seus usos semânticos." />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '120px 60px 1fr 1fr', gap: 12, padding: '8px 16px', background: '#f5f5f5', fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+    <div>Tailwind</div>
+    <div>Valor</div>
+    <div>Visualização</div>
+    <div>Uso semântico</div>
+  </div>
+  {[
+    { tw: 'opacity-0',   pct: '0%',   usage: 'Invisível — saída de animação' },
+    { tw: 'opacity-5',   pct: '5%',   usage: 'Hover overlay ultrasuave' },
+    { tw: 'opacity-10',  pct: '10%',  usage: 'Shimmer / skeleton' },
+    { tw: 'opacity-20',  pct: '20%',  usage: 'Disabled leve' },
+    { tw: 'opacity-25',  pct: '25%',  usage: 'Backdrop leve' },
+    { tw: 'opacity-50',  pct: '50%',  usage: 'Desabilitado padrão' },
+    { tw: 'opacity-60',  pct: '60%',  usage: 'Desabilitado suave' },
+    { tw: 'opacity-75',  pct: '75%',  usage: 'Texto auxiliar sobre fundo' },
+    { tw: 'opacity-80',  pct: '80%',  usage: 'Tooltips e overlays' },
+    { tw: 'opacity-90',  pct: '90%',  usage: 'Modal backdrop claro' },
+    { tw: 'opacity-100', pct: '100%', usage: 'Visível — padrão' },
+  ].map(({ tw, pct, usage }, i) => (
+    <div key={tw} style={{ display: 'grid', gridTemplateColumns: '120px 60px 1fr 1fr', gap: 12, padding: '10px 16px', borderTop: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa', alignItems: 'center' }}>
+      <code style={{ fontSize: 12, fontWeight: 600, color: '#264c37' }}>{tw}</code>
+      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{pct}</span>
+      <div style={{ height: 20, borderRadius: 4, background: `rgba(38, 76, 55, ${parseFloat(pct) / 100})`, border: '1px solid #e5e5e5' }} />
+      <span style={{ fontSize: 12, color: '#737373' }}>{usage}</span>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Modificadores de Opacidade Tailwind" description="O Tailwind v4 suporta modificadores / em qualquer utilitário de cor — prefira este padrão a opacity-* quando quiser transparência em cores específicas." />
+
+```tsx
+// ✅ Modificador / — afeta apenas a cor, não os filhos
+<div className="bg-primary/10">...</div>         // fundo com 10% de opacidade
+<div className="border-destructive/30">...</div> // borda com 30%
+<p className="text-foreground/70">...</p>         // texto com 70%
+
+// ✅ Overlay de modal
+<div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-300" />
+```
+
+<SectionHeader title="Uso por Contexto" />
+
+```tsx
+// ✅ Elemento desabilitado
+<button disabled className="opacity-50 cursor-not-allowed">Desabilitado</button>
+// O Button do Biome aplica disabled:opacity-50 automaticamente
+
+// ✅ Skeleton placeholder
+<div className="animate-pulse bg-muted opacity-60 rounded-md h-4 w-full" />
+
+// ✅ Animações de entrada/saída
+.entering { opacity: 0; }
+.entered  { opacity: 1; transition: opacity 200ms ease; }
+```
+
+<DocsCallout type="warning" title="Opacidade em texto">
+  Para texto auxiliar e desabilitado, prefira tokens de cor semânticos (<code>text-muted-foreground</code>, <code>text-text-disabled</code>) em vez de <code>opacity-*</code>. Opacidade no texto pode confundir leitores de tela.
+</DocsCallout>
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Use modificadores <code>/</code> para transparência em cores — <code>bg-primary/10</code> em vez de <code>opacity-10</code> no elemento pai.</DoRule>
+<DoRule>Use <code>opacity-50</code> consistentemente para estado disabled.</DoRule>
+<DoRule>Use <code>opacity-0</code> / <code>opacity-100</code> para animações de entrada e saída.</DoRule>
+<DontRule>Não use <code>opacity-*</code> em texto para comunicar estado — use tokens de cor semânticos.</DontRule>
+<DontRule>Não aplique opacidade em componentes que já gerenciam seu próprio estado disabled.</DontRule>

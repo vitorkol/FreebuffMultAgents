@@ -1,0 +1,61 @@
+{/* Instalacao.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule } from './components'
+
+<Meta title="Começar/Instalação" />
+
+<DocsPageHeader
+  title="Instalação"
+  badge="Começar"
+  description="Guia de setup para projetos consumidores, alinhado ao README do pacote."
+/>
+
+<SectionHeader title="Instalação (projetos consumidores)" />
+
+**1. Crie um `.npmrc` na raiz do projeto:**
+
+```ini
+@biome:registry=https://nexus.meioambiente.mg.gov.br/repository/npm-group/
+//nexus.meioambiente.mg.gov.br/repository/npm-group/:_auth=bnBtLXJlYWRlci11c2VyOm5wbS1yZWFkZXItdXNlci0xMjM=
+```
+
+**2. Instale:**
+
+```bash
+pnpm add @biome/design-system
+```
+
+**3. Importe os estilos na raiz da aplicação:**
+
+```tsx
+import "@biome/design-system/styles.css"
+import "@biome/design-system/tokens.css"
+```
+
+<SectionHeader title="Uso" />
+
+```tsx
+import { Button, Input, Select } from "@biome/design-system"
+
+export function Example() {
+  return (
+    <form>
+      <Input label="Full name" placeholder="Jane Doe" />
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+}
+```
+
+Requer **React 18 ou 19** como peer dependency.
+
+<SectionHeader title="Desenvolvimento" />
+
+```bash
+pnpm install
+pnpm storybook        # dev server na porta 6006
+pnpm build            # gera o pacote em dist/
+pnpm build-storybook  # gera o Storybook estático
+pnpm typecheck        # tsc --noEmit
+pnpm test             # vitest + eslint rule
+```

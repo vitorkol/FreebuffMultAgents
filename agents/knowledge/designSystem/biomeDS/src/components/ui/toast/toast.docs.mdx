@@ -1,0 +1,47 @@
+{/* toast.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as ToastStories from './toast.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={ToastStories} />
+
+# Toast
+
+Notificação não-bloqueante que aparece temporariamente para informar o usuário sobre o resultado de uma ação. Construído sobre o Sonner, suporta variantes (success, error, warning, info) e botões de ação opcionais.
+
+<ComponentOverviewCard
+  category="Feedback"
+  file="src/components/ui/toast/toast.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Com Descrição" description="Adicione uma descrição para fornecer mais contexto sobre a notificação." />
+
+<Canvas of={ToastStories.WithDescription} />
+
+<SectionHeader title="Variantes" description="Use a variante adequada para comunicar a natureza da mensagem: sucesso, erro, aviso ou informação." />
+
+<Canvas of={ToastStories.Variants} />
+
+<SectionHeader title="Com Ação" description="Inclua um botão de ação (ex: Desfazer) para permitir que o usuário reverta a operação." />
+
+<Canvas of={ToastStories.WithAction} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Toasts utilizam `role="status"` e `aria-live="polite"` para mensagens não-críticas, anunciadas sem interromper o usuário.
+- Toasts de erro devem usar `aria-live="assertive"` para garantir que leitores de tela anunciem imediatamente.
+- Botões de ação dentro de toasts devem ser acessíveis via teclado (Tab + Enter/Space).
+- Toasts são automaticamente descartados após um tempo — não use para informações que exigem confirmação do usuário.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Mantenha mensagens curtas e objetivas. Use a variante correta para o tipo de feedback.</DoRule>
+<DoRule>Forneça uma ação de "Desfazer" quando a operação for reversível.</DoRule>
+
+<DontRule>Não use toasts para informações críticas que exigem confirmação — use Dialog nesses casos.</DontRule>
+<DontRule>Não empilhe mais de 3 toasts simultaneamente — pode sobrecarregar o usuário.</DontRule>

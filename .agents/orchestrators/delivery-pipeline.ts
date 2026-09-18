@@ -25,6 +25,7 @@ export const deliveryPipeline = {
     { agent: "tech-leader", input: ["docs/product/user-stories.md"], output: ["docs/product/technical-refinement.md"], approvalRequired: true },
     { agent: "anr", input: ["docs/product/user-stories.md", "docs/product/technical-refinement.md"], output: ["docs/product/sprint-prioritization.md"], approvalRequired: true },
     { agent: "developer", input: ["docs/product/user-stories.md", "docs/product/technical-refinement.md"], output: ["backend/", "frontend/"], approvalRequired: true },
+    { agent: "designer", input: ["docs/product/user-stories.md", "docs/product/technical-refinement.md"], output: ["docs/product/designs.md"], approvalRequired: true },
     { agent: "qa", input: ["docs/product/user-stories.md", "backend/", "frontend/"], output: ["docs/product/test-plan.md", "docs/product/test-evidence.md", "docs/product/bugs.md"] }
   ]
 };
