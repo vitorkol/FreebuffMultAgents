@@ -1,0 +1,71 @@
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as TableStories from './table.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={TableStories} />
+
+# Table
+
+Tabela semântica para exibição de dados estruturados. O uso recomendado no Biome é declarativo via `columns` + `rows` (plug and play), mantendo os primitivos para cenários avançados.
+
+<ComponentOverviewCard
+  category="Exibição de Dados"
+  file="src/components/ui/table/table.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Table
+  caption="Usuários"
+  columns={[
+    { key: "name", header: "Nome" },
+    { key: "email", header: "Email" },
+  ]}
+  rows={[
+    { name: "Maria", email: "maria@exemplo.com" },
+    { name: "João", email: "joao@exemplo.com" },
+  ]}
+/>
+```
+
+<DoRule>Prefira `columns` e `rows` para telas de produto. A API declarativa reduz código repetido e mantém consistência.</DoRule>
+
+<SectionHeader title="Com Legenda" />
+
+<Canvas of={TableStories.WithCaption} />
+
+<SectionHeader title="Composição avançada" description="Use apenas quando precisar controle fino da marcação HTML da tabela." />
+
+<Canvas of={TableStories.ComposicaoAvancada} />
+
+<SectionHeader title="Anatomia (modo avançado)" />
+
+- **Table** — Wrapper da tabela semântica
+- **TableHeader** — Seção de cabeçalho
+- **TableBody** — Conteúdo do corpo
+- **TableFooter** — Seção de rodapé (ex: totais)
+- **TableRow** — Container de linha
+- **TableHead** — Célula de cabeçalho (`th`)
+- **TableCell** — Célula de dados (`td`)
+- **TableCaption** — Legenda opcional para leitores de tela
+
+<SectionHeader title="Acessibilidade" />
+
+- Usa HTML semântico (`table`, `thead`, `tbody`, `tfoot`, `th`, `td`)
+- Uso correto de `th`/`td` para cabeçalhos de coluna e linha
+- Use `TableCaption` para descrever a tabela para leitores de tela
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use TableCaption para resumir o conteúdo da tabela.</DoRule>
+<DoRule>Use TableHead para cabeçalhos de coluna com escopo apropriado.</DoRule>
+<DoRule>Mantenha tabelas focadas em dados tabulares estruturados.</DoRule>
+
+<DontRule>Não use tabelas para layout — use CSS Grid ou Flexbox.</DontRule>
+<DontRule>Não omita cabeçalhos — toda tabela deve ter cabeçalhos claros de coluna/linha.</DontRule>

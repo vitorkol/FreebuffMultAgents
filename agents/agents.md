@@ -9,12 +9,16 @@
 1. **Revisor** lê o resumo e grava `meeting-summary-reviewed.md`.
 2. **ANR** lê o resumo revisado e grava `requirements.md` e `user-stories.md`.
 3. **Revisor** revisa `user-stories.md` e registra correções no próprio artefato.
-4. **Tech Leader** lê a história aprovada e grava `technical-refinement.md`.
-5. **ANR** revisa o refinamento e registra a priorização da sprint.
-6. **Developer** implementa a história e seus testes.
-7. **QA** executa o plano de testes e grava `test-evidence.md`.
-8. Se houver falha, QA atualiza `bugs.md` e o fluxo retorna ao Developer.
-9. Se aprovado, QA encaminha as evidências ao ANR para aprovação final.
+4. **ANR** aprova a user story (gate) e, em seguida, **aciona o Designer**.
+5. **Designer** recebe a história aprovada e, obrigatoriamente: a) verifica os critérios de aceite (CA); b) verifica as RN, RF e RNF; c) verifica os cenários BDD. Gera o protótipo fundamentado no design system (Biome DS), salva os artefatos em `docs/product/prototype/` e registra o handoff em `docs/product/prototype.md`. Ao concluir, **informa o ANR**.
+6. **ANR** valida o protótipo (gate) e **aciona o Tech Leader**.
+7. **Tech Leader** estima a atividade de desenvolvimento (abordagem, riscos, dependências e tarefas) e grava `technical-refinement.md`; em seguida, **devolve ao ANR**.
+8. **ANR** prioriza a atividade no backlog da sprint e grava `sprint-prioritization.md` (gate de priorização).
+9. **Sprint ativa**: com a sprint iniciada e a atividade priorizada, as tarefas são **liberadas para o Developer** programar (código e testes).
+10. **Developer**, ao concluir, **aciona o QA**.
+11. **QA** executa o plano de testes e grava `test-evidence.md`.
+12. Se houver falha, QA atualiza `bugs.md` e o fluxo retorna ao Developer.
+13. Se aprovado, QA encaminha as evidências ao ANR para aprovação final.
 
 ## Contrato de handoff
 

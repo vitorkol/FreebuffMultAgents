@@ -1,0 +1,72 @@
+{/* dropdown-menu.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as DropdownMenuStories from './dropdown-menu.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule, DocsCallout } from '../../../docs/components'
+
+<Meta of={DropdownMenuStories} />
+
+# Dropdown Menu
+
+Menu contextual acionado por um botão que exibe uma lista de ações ou opções. O uso recomendado no Biome é declarativo via `trigger` + `items` + `onAction`, mantendo composição avançada para casos especiais.
+
+<ComponentOverviewCard
+  category="Ações"
+  file="src/components/ui/dropdown-menu/dropdown-menu.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<DropdownMenu
+  trigger={<Button variant="outline">Open Menu</Button>}
+  label="My Account"
+  items={[
+    { id: "profile", label: "Profile", icon: "user" },
+    { id: "settings", label: "Settings", icon: "settings" },
+    { id: "logout", label: "Logout", icon: "log-out", destructive: true, separatorBefore: true },
+  ]}
+  onAction={(id) => console.log(id)}
+/>
+```
+
+<DoRule>Prefira a API declarativa para manter consistência de interação e acessibilidade em produto.</DoRule>
+
+<SectionHeader title="Com Atalhos" description="Exiba atalhos de teclado ao lado dos itens do menu para usuários avançados." />
+
+<Canvas of={DropdownMenuStories.WithShortcuts} />
+
+<DoRule>Atalhos também fazem parte da API declarativa via <code>items[].shortcut</code>.</DoRule>
+
+<SectionHeader title="Com Checkboxes" description="Itens checkbox para alternar configurações diretamente no menu." />
+
+<Canvas of={DropdownMenuStories.WithCheckboxes} />
+
+<DocsCallout type="info" title="Escape hatch avançado">
+  Checkboxes, radios e submenus continuam disponíveis via composição avançada para cenários específicos.
+</DocsCallout>
+
+<SectionHeader title="Composição avançada" description="Use apenas quando precisar montar estrutura customizada além do padrão declarativo." />
+
+<Canvas of={DropdownMenuStories.ComposicaoAvancada} />
+
+<SectionHeader title="Acessibilidade" />
+
+- **Roles** — O menu usa `role="menu"` e cada item usa `role="menuitem"` (ou `role="menuitemcheckbox"` para itens checkbox), seguindo o padrão WAI-ARIA de menu.
+- **Navegação por teclado** — Setas movem o foco entre itens, `Enter` ou `Space` ativa o item focado, e `Escape` fecha o menu retornando o foco ao trigger.
+- **Captura de foco** — Enquanto o menu está aberto, o foco fica preso dentro dele para que `Tab` não saia do menu.
+- **Trigger** — O botão trigger recebe `aria-haspopup="menu"` e `aria-expanded` automaticamente via Radix.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Agrupe ações relacionadas usando DropdownMenuSeparator e DropdownMenuLabel para clareza.</DoRule>
+<DoRule>Mostre atalhos de teclado via DropdownMenuShortcut quando a ação possui hotkey global.</DoRule>
+<DoRule>Use DropdownMenuCheckboxItem para configurações togglable que se aplicam imediatamente.</DoRule>
+
+<DontRule>Não use DropdownMenu para seleção de campo de formulário — use o componente Select.</DontRule>
+<DontRule>Não aninhe submenus em mais de um nível — aninhamento profundo prejudica a descoberta e usabilidade mobile.</DontRule>
+<DontRule>Não posicione ações destrutivas sem diferenciação visual — use cor de perigo ou grupo separado.</DontRule>

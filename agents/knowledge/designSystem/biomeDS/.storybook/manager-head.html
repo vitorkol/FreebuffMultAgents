@@ -1,0 +1,41 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* Sidebar root title branding */
+  .sidebar-header {
+    padding: 16px 20px 12px !important;
+  }
+
+  .sidebar-header a {
+    color: #4c4d4d !important; /* --text-primary */
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Brand accent on active sidebar items */
+  [class*="ListItem"] button[aria-selected="true"],
+  [class*="ListItem"] a[aria-selected="true"] {
+    border-left: 3px solid #264c37 !important;
+  }
+
+  /* Typography in docs panels */
+  .sbdocs-wrapper {
+    font-family: 'Roboto', system-ui, sans-serif !important;
+  }
+
+  .sbdocs-wrapper h1,
+  .sbdocs-wrapper h2,
+  .sbdocs-wrapper h3 {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  /* Code blocks */
+  .sbdocs-wrapper pre,
+  .sbdocs-wrapper code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  }
+</style>

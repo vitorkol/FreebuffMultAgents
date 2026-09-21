@@ -6,6 +6,7 @@
     { "name": "anr", "path": "agents/analista_requisitos", "role": "Analista de Negócios e Requisitos" },
     { "name": "tech-leader", "path": "agents/tech_leader", "role": "Tech Leader" },
     { "name": "developer", "path": "agents/developer", "role": "Developer" },
+    { "name": "designer", "path": "agents/designer", "role": "Designer" },
     { "name": "qa", "path": "agents/qa", "role": "QA" }
   ],
   "orchestrators": [

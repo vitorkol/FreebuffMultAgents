@@ -1,0 +1,11 @@
+{
+  "name": "eslint-plugin-biome-ds",
+  "version": "0.1.0",
+  "description": "ESLint rules for Biome Design System consumers (SEMAD)",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "keywords": ["eslint", "eslintplugin", "biome", "design-system", "tailwind", "typography"],
+  "peerDependencies": {
+    "eslint": ">=8.57.0"
+  }
+}

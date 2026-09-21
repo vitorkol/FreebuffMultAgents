@@ -1,0 +1,129 @@
+{/* Layout.mdx / Dimensionamento */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, TokenTable, DoRule, DontRule, ZIndexStack } from './components'
+
+<Meta title="Fundações/Dimensionamento" />
+
+<DocsPageHeader
+  title="Dimensionamento"
+  badge="Fundações"
+  description="O sistema de dimensionamento do Biome padroniza larguras, alturas, contêineres e breakpoints para garantir consistência visual, responsividade e alinhamento com as interfaces da SEMAD."
+/>
+
+<SectionHeader title="Contêiner de Página" description="Padrão de largura máxima e padding horizontal responsivo." />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', background: '#fff' }}>
+  <div style={{ padding: '20px 20px 0', borderBottom: '1px solid #f5f5f5' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+      <code style={{ fontSize: 12, background: '#e9f4ee', color: '#264c37', padding: '2px 8px', borderRadius: 4 }}>max-w-7xl</code>
+      <span style={{ fontSize: 13, color: '#737373' }}>= 80rem = 1280px</span>
+      <code style={{ fontSize: 11, color: '#9f9f9f', background: '#f5f5f5', padding: '2px 6px', borderRadius: 4 }}>--container-max-width</code>
+    </div>
+    <div style={{ position: 'relative', height: 48, background: '#f5f9f7', borderRadius: 8, marginBottom: 16, border: '2px solid #264c37', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', left: 16, top: 0, bottom: 0, borderLeft: '2px dashed #92b123' }} />
+      <div style={{ position: 'absolute', right: 16, top: 0, bottom: 0, borderRight: '2px dashed #92b123' }} />
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#264c37', fontWeight: 500 }}>
+        conteúdo · px-4 sm:px-6 lg:px-8
+      </div>
+    </div>
+  </div>
+  <TokenTable
+    rows={[
+      { token: 'max-w-7xl',  tailwind: 'max-w-7xl',  value: '1280px', usage: 'Largura máxima do contêiner' },
+      { token: 'px-4',       tailwind: 'px-4',        value: '16px',   usage: 'Padding horizontal — mobile' },
+      { token: 'sm:px-6',    tailwind: 'sm:px-6',     value: '24px',   usage: 'Padding horizontal — tablet' },
+      { token: 'lg:px-8',    tailwind: 'lg:px-8',     value: '32px',   usage: 'Padding horizontal — desktop' },
+      { token: 'py-15',      tailwind: 'py-15',        value: '60px',   usage: 'Padding vertical — mobile (section)' },
+      { token: 'md:py-30',   tailwind: 'md:py-30',    value: '120px',  usage: 'Padding vertical — desktop (section)' },
+    ]}
+  />
+</div>
+
+```tsx
+// ✅ Padrão de seção de página
+<section className="bg-background">
+  <div className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-15 md:py-30">
+    {/* conteúdo */}
+  </div>
+</section>
+```
+
+<SectionHeader title="Header" description="Altura e comportamento do header fixo da aplicação." />
+
+<TokenTable
+  rows={[
+    { token: '--header-height',         tailwind: 'h-16', value: '64px',  usage: 'Altura do header — mobile' },
+    { token: '--header-height-desktop', tailwind: 'h-20', value: '80px',  usage: 'Altura do header — desktop' },
+    { token: '--z-sticky',              tailwind: 'z-200', value: '200',  usage: 'Z-index do header sticky' },
+    { token: '--shadow-header',         tailwind: '—',    value: '0px 1px 4px rgba(0,0,0,0.10)', usage: 'Sombra direcional do header' },
+  ]}
+/>
+
+<SectionHeader title="Breakpoints" description="Sistema mobile-first com 6 pontos de quebra. Sempre aplique estilos base para mobile e sobreponha para telas maiores." />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', background: '#fff', padding: 16 }}>
+  {[
+    { prefix: 'xs',  px: 375,  color: '#e9f4ee', textColor: '#166534', desc: 'Smartphones pequenos' },
+    { prefix: 'sm',  px: 640,  color: '#dbeafe', textColor: '#1d4ed8', desc: 'Tablets portrait' },
+    { prefix: 'md',  px: 768,  color: '#fef9c3', textColor: '#854d0e', desc: 'Tablets landscape' },
+    { prefix: 'lg',  px: 1024, color: '#fce7f3', textColor: '#9d174d', desc: 'Notebooks' },
+    { prefix: 'xl',  px: 1280, color: '#f5f5f5', textColor: '#525252', desc: 'Desktops' },
+    { prefix: '2xl', px: 1536, color: '#ede9fe', textColor: '#6d28d9', desc: 'Telas grandes' },
+  ].map(({ prefix, px, color, textColor, desc }, i, arr) => (
+    <div key={prefix} style={{
+      display: 'grid',
+      gridTemplateColumns: '50px 80px 1fr 120px',
+      gap: 12,
+      alignItems: 'center',
+      padding: '10px 0',
+      borderBottom: i < arr.length - 1 ? '1px solid #f5f5f5' : 'none',
+    }}>
+      <code style={{ fontSize: 12, background: color, color: textColor, padding: '2px 6px', borderRadius: 4, fontWeight: 700, textAlign: 'center' }}>
+        {prefix}:
+      </code>
+      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'right' }}>{px}px</span>
+      <div style={{ background: color, height: 8, borderRadius: 4, width: `${(px / 1536) * 100}%`, opacity: 0.8 }} />
+      <span style={{ fontSize: 12, color: '#737373' }}>{desc}</span>
+    </div>
+  ))}
+</div>
+
+```tsx
+// ✅ Mobile-first sempre
+<div className="flex-col sm:flex-row gap-4 md:gap-8">
+  <nav className="w-full md:w-64 hidden sm:flex">...</nav>
+  <main className="flex-1">...</main>
+</div>
+```
+
+<SectionHeader title="Sobreposição (Z-Index)" description="Stack de camadas semântico. Nunca use valores arbitrários como z-[9999]." />
+
+<ZIndexStack
+  rows={[
+    { token: '--z-dropdown', value: 100, tailwind: 'z-100', element: 'Menus dropdown, selects' },
+    { token: '--z-sticky',   value: 200, tailwind: 'z-200', element: 'Header fixo, sticky' },
+    { token: '--z-overlay',  value: 300, tailwind: 'z-300', element: 'Overlay/backdrop de modal' },
+    { token: '--z-modal',    value: 400, tailwind: 'z-400', element: 'Painel de modal' },
+    { token: '--z-popover',  value: 500, tailwind: 'z-500', element: 'Popovers complexos' },
+    { token: '--z-toast',    value: 600, tailwind: 'z-600', element: 'Toasts / notificações' },
+    { token: '--z-tooltip',  value: 700, tailwind: 'z-700', element: 'Tooltips simples' },
+  ]}
+/>
+
+<SectionHeader title="Animações e Transições" />
+
+<TokenTable
+  rows={[
+    { token: '--transition-fast', tailwind: 'duration-150', value: '150ms ease', usage: 'Hover states, toggles' },
+    { token: '--transition-base', tailwind: 'duration-200', value: '200ms ease', usage: 'Transições padrão' },
+    { token: '--transition-slow', tailwind: 'duration-300', value: '300ms ease', usage: 'Modais, sheets, slides' },
+  ]}
+/>
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Sempre construa mobile-first: defina o estilo base para mobile e sobreponha para telas maiores.</DoRule>
+<DoRule>Use o padrão de contêiner (<code>max-w-7xl mx-auto px-4 sm:px-6 lg:px-8</code>) em todas as seções de página.</DoRule>
+<DoRule>Use os tokens de z-index semânticos — <code>z-400</code> para modais, <code>z-200</code> para sticky.</DoRule>
+<DontRule>Não use <code>z-[9999]</code> — use sempre o token semântico correspondente.</DontRule>
+<DontRule>Não construa desktop-first — requer <code>max-sm:</code> para sobrescrever e aumenta complexidade.</DontRule>

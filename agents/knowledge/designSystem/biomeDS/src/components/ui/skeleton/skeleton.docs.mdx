@@ -1,0 +1,47 @@
+{/* skeleton.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as SkeletonStories from './skeleton.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={SkeletonStories} />
+
+# Skeleton
+
+Componente de placeholder que imita o formato do conteúdo durante o carregamento. Fornece feedback visual enquanto dados assíncronos são buscados, prevenindo mudanças bruscas de layout (layout shift).
+
+<ComponentOverviewCard
+  category="Feedback"
+  file="src/components/ui/skeleton/skeleton.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Skeleton de Card" description="Combine múltiplos Skeletons para representar avatares, títulos e descrições em um card." />
+
+<Canvas of={SkeletonStories.CardSkeleton} />
+
+<SectionHeader title="Skeleton de Tabela" description="Replique a estrutura de cabeçalho e linhas de uma tabela durante o carregamento dos dados." />
+
+<Canvas of={SkeletonStories.TableSkeleton} />
+
+<SectionHeader title="Skeleton de Formulário" description="Simule campos de entrada, labels e botões de um formulário enquanto o conteúdo carrega." />
+
+<Canvas of={SkeletonStories.FormSkeleton} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Utilize `aria-busy="true"` no contêiner pai enquanto o conteúdo estiver carregando.
+- Inclua um texto acessível como `<span className="sr-only">Carregando...</span>` para que leitores de tela anunciem o estado.
+- Quando o conteúdo real for carregado, remova o Skeleton do DOM completamente — não apenas oculte visualmente.
+- Evite animações excessivas que possam causar desconforto a usuários sensíveis a movimento (respeite `prefers-reduced-motion`).
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Combine os formatos do Skeleton com o layout real do conteúdo para manter consistência visual.</DoRule>
+<DoRule>Use múltiplos Skeletons para representar layouts complexos como cards, tabelas e formulários.</DoRule>
+
+<DontRule>Não use Skeleton para operações muito rápidas (abaixo de 300ms) — causa flicker e prejudica a experiência.</DontRule>
+<DontRule>Não esqueça de substituir os Skeletons quando os dados forem carregados — Skeletons permanentes indicam um bug.</DontRule>

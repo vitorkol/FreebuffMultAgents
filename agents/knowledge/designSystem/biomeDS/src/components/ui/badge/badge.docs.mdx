@@ -1,0 +1,60 @@
+{/* badge.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as BadgeStories from './badge.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+Indicador visual compacto para comunicar status, contagens ou rótulos categóricos. Suporta variantes semânticas (success, warning, danger), indicador de status (dot), ícones customizados e ação de dispensar.
+
+<ComponentOverviewCard
+  category="Data Display"
+  file="src/components/ui/badge/badge.tsx"
+  darkMode="Automático via tokens surface"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Variantes" description="10 variantes disponíveis, cada uma com significado semântico ou contexto de produto específico." />
+
+<Canvas of={BadgeStories.Variants} />
+
+<SectionHeader title="Tamanhos" description="4 escalas de tamanho: xs, sm, md e lg." />
+
+<Canvas of={BadgeStories.Sizes} />
+
+<SectionHeader title="Com Indicador de Status" description="Use a prop dot para adicionar um ponto de cor antes do rótulo, reforçando visualmente o status." />
+
+<Canvas of={BadgeStories.WithDot} />
+
+<SectionHeader title="Com Ícone" description="Adicione ícones para reforçar o significado semântico do badge." />
+
+<Canvas of={BadgeStories.WithIcon} />
+
+<SectionHeader title="Dispensável" description="Forneça onDismiss para exibir um botão de fechar, útil para tags removíveis em filtros e formulários." />
+
+<Canvas of={BadgeStories.Dismissible} />
+
+<SectionHeader title="Variantes de Status (Surface Tokens)" description="Variantes de status usam tokens CSS de surface — dark mode funciona automaticamente." />
+
+<Canvas of={BadgeStories.StatusVariants} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Badges são tipicamente decorativos — certifique-se de que a informação que eles transmitem também esteja disponível em texto ou via `aria-label` no elemento pai.
+- Quando um badge é a única indicação de status (ex: "Online"), adicione contexto textual acessível como `aria-label` ou texto visually-hidden.
+- Badges dispensáveis possuem um botão de fechar com `aria-label` adequado para ativação por teclado.
+- Não dependa apenas de cor para transmitir significado — o texto do rótulo e/ou ícone devem ser suficientes.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use variantes semânticas (success, warning, danger) que correspondam ao significado real do status.</DoRule>
+<DoRule>Mantenha o texto do badge curto — idealmente 1-2 palavras.</DoRule>
+
+<DontRule>Não dependa exclusivamente de cor para comunicar informação — combine com texto e/ou ícones.</DontRule>
+<DontRule>Não sobrecarregue uma única view com muitos badges — isso reduz o impacto visual de cada um.</DontRule>

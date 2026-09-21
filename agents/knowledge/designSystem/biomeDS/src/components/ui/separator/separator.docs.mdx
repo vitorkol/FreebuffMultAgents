@@ -1,0 +1,47 @@
+{/* separator.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as SeparatorStories from './separator.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={SeparatorStories} />
+
+# Separator
+
+Divisor visual utilizado para separar seções de conteúdo. Suporta orientação horizontal e vertical. Construído sobre o Radix UI Separator.
+
+<ComponentOverviewCard
+  category="Layout"
+  file="src/components/ui/separator/separator.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Horizontal" description="Orientação padrão — separa blocos de conteúdo empilhados verticalmente." />
+
+<Canvas of={SeparatorStories.Horizontal} />
+
+<SectionHeader title="Vertical" description="Útil em toolbars, menus inline e layouts com itens lado a lado." />
+
+<Canvas of={SeparatorStories.Vertical} />
+
+<SectionHeader title="Em Contexto" description="Exemplo dentro de um card com header, body e footer separados visualmente." />
+
+<Canvas of={SeparatorStories.InContent} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Utiliza `role="separator"` por padrão, comunicando a divisão semântica para leitores de tela.
+- Para separadores puramente decorativos, defina a prop `decorative` como `true` — isso remove o role da árvore de acessibilidade.
+- Separadores verticais utilizam `aria-orientation="vertical"` automaticamente.
+- Não exige interação do usuário — é um elemento não-focável.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use para criar ritmo visual entre seções de conteúdo dentro de cards, listas e painéis.</DoRule>
+<DoRule>Use a orientação vertical em toolbars e layouts inline para separar ações adjacentes.</DoRule>
+
+<DontRule>Não abuse de separadores — espaçamento em branco (white space) pode ser suficiente para criar hierarquia visual.</DontRule>
+<DontRule>Não use como substituto estrutural para containers de layout — separadores são elementos visuais, não organizacionais.</DontRule>

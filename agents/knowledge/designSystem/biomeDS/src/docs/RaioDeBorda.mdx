@@ -1,0 +1,95 @@
+{/* RaioDeBorda.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, TokenTable, DoRule, DontRule } from './components'
+import { RadiusGrid } from './components'
+
+<Meta title="Fundações/Raio de Borda" />
+
+<DocsPageHeader
+  title="Raio de Borda"
+  badge="Fundações"
+  description="O sistema de raio de borda do Biome foi desenvolvido para promover suavidade nas interfaces, consistência visual entre componentes e alinhamento com a identidade moderna da SEMAD."
+/>
+
+<DocsCallout type="info" title="Conversão">
+  Todos os valores assumem tamanho de fonte raiz 16px, que é o padrão da maioria dos navegadores.
+</DocsCallout>
+
+<SectionHeader title="Escala Visual" description="Cada token mostrado como forma real — da ausência de arredondamento ao círculo perfeito." />
+
+<RadiusGrid
+  items={[
+    { token: '--radius-xs',   value: '4px',    tailwind: 'rounded-sm',    radiusPx: 4,    usage: 'Badges XS, tooltips' },
+    { token: '--radius-sm',   value: '6px',    tailwind: 'rounded-md',    radiusPx: 6,    usage: 'Inputs, selects, btn SM' },
+    { token: '--radius-md',   value: '8px',    tailwind: 'rounded-lg',    radiusPx: 8,    usage: 'Botões padrão, cards compactos' },
+    { token: '--radius-lg',   value: '12px',   tailwind: 'rounded-xl',    radiusPx: 12,   usage: 'Cards, modais, sheets' },
+    { token: '--radius-xl',   value: '16px',   tailwind: 'rounded-2xl',   radiusPx: 16,   usage: 'Cards de destaque' },
+    { token: '--radius-2xl',  value: '24px',   tailwind: 'rounded-3xl',   radiusPx: 24,   usage: 'Avatares, ilustrações' },
+    { token: '--radius-full', value: '9999px', tailwind: 'rounded-full',  radiusPx: 9999, usage: 'Badges pill, avatares' },
+  ]}
+/>
+
+<SectionHeader title="Tabela de Referência" description="Valores exatos em rem e px." />
+
+<TokenTable
+  rows={[
+    { token: '--radius-xs',   tailwind: 'rounded-sm',   value: '0.25rem (4px)',    usage: 'Badges XS, chips compactos, tooltips' },
+    { token: '--radius-sm',   tailwind: 'rounded-md',   value: '0.375rem (6px)',   usage: 'Inputs, selects, botões SM' },
+    { token: '--radius-md',   tailwind: 'rounded-lg',   value: '0.5rem (8px)',     usage: 'Botões padrão, inputs padrão' },
+    { token: '--radius-lg',   tailwind: 'rounded-xl',   value: '0.75rem (12px)',   usage: 'Cards, modais, sheets, painéis' },
+    { token: '--radius-xl',   tailwind: 'rounded-2xl',  value: '1rem (16px)',      usage: 'Cards de destaque, hero banners' },
+    { token: '--radius-2xl',  tailwind: 'rounded-3xl',  value: '1.5rem (24px)',    usage: 'Avatares, ilustrações, decorativo' },
+    { token: '--radius-full', tailwind: 'rounded-full', value: '9999px',           usage: 'Badges pill, avatares circulares' },
+  ]}
+/>
+
+<SectionHeader title="Mapa por Componente" />
+
+<TokenTable
+  rows={[
+    { token: 'Button SM',        tailwind: 'rounded-md (6px)',  usage: 'Compacto, alinha com inputs' },
+    { token: 'Button MD/LG/XL',  tailwind: 'rounded-lg (8px)',  usage: 'Padrão de botão' },
+    { token: 'Input / Select',   tailwind: 'rounded-lg (8px)',  usage: 'Alinha com botão' },
+    { token: 'Badge (não pill)',  tailwind: 'rounded-sm (4px)',  usage: 'Etiqueta compacta' },
+    { token: 'Badge pill / Chip',tailwind: 'rounded-full',      usage: 'Forma pill clássica' },
+    { token: 'Card / Modal',     tailwind: 'rounded-xl (12px)', usage: 'Superfície elevada' },
+    { token: 'Avatar circular',  tailwind: 'rounded-full',      usage: 'Círculo perfeito' },
+  ]}
+/>
+
+<SectionHeader title="Padrões de Código" />
+
+```tsx
+// ✅ Botão padrão
+<button className="h-9 px-4 rounded-lg bg-primary text-white text-sm font-medium">
+  Enviar
+</button>
+
+// ✅ Card
+<div className="bg-card border border-border rounded-xl shadow-sm p-6">
+  <h3>Título do Card</h3>
+</div>
+
+// ✅ Badge pill (status)
+<span className="bg-success-surface text-success-on-surface text-xs px-2.5 py-0.5 rounded-full border border-success-surface-border">
+  Concluído
+</span>
+
+// ✅ Input + Botão alinhados (mesmo rounded-lg)
+<div className="flex gap-2">
+  <input className="flex-1 h-9 rounded-lg border px-3 text-sm" />
+  <button className="h-9 px-4 rounded-lg bg-primary text-white text-sm">
+    Buscar
+  </button>
+</div>
+```
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Use <code>rounded-lg</code> (8px) como raio padrão para botões e inputs.</DoRule>
+<DoRule>Use <code>rounded-xl</code> (12px) para superfícies de conteúdo — cards, modais, sheets.</DoRule>
+<DoRule>Use <code>rounded-full</code> para badges pill, chips e avatares circulares.</DoRule>
+<DoRule>Elementos em grupo visual devem usar o mesmo raio — input e botão juntos, ambos <code>rounded-lg</code>.</DoRule>
+<DontRule>Não misture raios diferentes dentro do mesmo componente sem razão estrutural.</DontRule>
+<DontRule>Não use valores arbitrários como <code>rounded-[7px]</code> — use sempre um token da escala.</DontRule>
+<DontRule>Não use <code>rounded-none</code> em componentes que participam de grupos com borda arredondada.</DontRule>

@@ -1,0 +1,78 @@
+{/* select.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as SelectStories from './select.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={SelectStories} />
+
+# Select
+
+Campo de seleção única pronto para uso em produtos, com API de alto nível alinhada ao padrão de campo do `Input` (`label`, `size`, `startIcon`, `endIcon`, `helperText`, `hasError`, `items/options`). Também expõe primitivos composicionais para cenários avançados.
+
+<ComponentOverviewCard
+  category="Form Controls"
+  file="src/components/ui/select/select.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Select
+  label="Categoria"
+  placeholder="Selecione uma opção"
+  items={[
+    { value: "service", label: "Serviço" },
+    { value: "support", label: "Suporte" },
+  ]}
+/>
+```
+
+<DoRule>Prefira <code>items</code> (ou <code>options</code>) no uso diário. O Biome já monta trigger e lista com acessibilidade.</DoRule>
+
+<SectionHeader title="Tamanhos" description="Variações de altura seguindo o mesmo padrão do Input (sm, md, lg, xl)." />
+
+<Canvas of={SelectStories.Sizes} />
+
+<SectionHeader title="Com Ícones" description="Ícones opcionais à esquerda e à direita, mantendo o chevron do Select." />
+
+<Canvas of={SelectStories.WithIcons} />
+
+<SectionHeader title="Estado de Erro" description="Mesmo padrão visual de validação usado em Input e Textarea." />
+
+<Canvas of={SelectStories.WithError} />
+
+<SectionHeader title="Com Placeholder" description="Exiba uma dica antes de qualquer seleção ser feita." />
+
+<Canvas of={SelectStories.WithPlaceholder} />
+
+<SectionHeader title="Desabilitado" description="Estado desabilitado para quando a seleção não está disponível." />
+
+<Canvas of={SelectStories.Disabled} />
+
+<SectionHeader title="Conteúdo Longo" description="Listas extensas com scroll e opções de texto mais longo." />
+
+<Canvas of={SelectStories.LongContent} />
+
+<SectionHeader title="Primitivos Composicionais" description="Use apenas em cenários avançados, quando precisar de uma estrutura fora do padrão plug and play." />
+
+<Canvas of={SelectStories.CompositionalPrimitives} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Navegação completa por teclado: setas para cima/baixo navegam entre opções, Enter seleciona, Escape fecha o dropdown.
+- Utiliza roles ARIA apropriados (`listbox`, `option`) gerenciados automaticamente pelo Radix UI.
+- O gerenciamento de foco é feito pelo Radix — o foco retorna ao trigger ao fechar.
+- Associe a um `<label>` para garantir que leitores de tela identifiquem o propósito do campo.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Forneça um placeholder claro que indique o tipo de seleção esperada.</DoRule>
+<DoRule>Mantenha o texto das opções conciso. Agrupe com separadores quando a lista for extensa.</DoRule>
+
+<DontRule>Não use para menos de 3 opções — prefira Radio para listas curtas.</DontRule>
+<DontRule>Não use para cenários de seleção múltipla — o Select é exclusivamente para seleção única.</DontRule>

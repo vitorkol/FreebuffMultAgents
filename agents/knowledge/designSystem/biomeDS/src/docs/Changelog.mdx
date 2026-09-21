@@ -1,0 +1,86 @@
+{/* Changelog.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout } from './components'
+import { BIOME_VERSION_TAG } from './biome-metadata'
+
+<Meta title="Começar/Changelog" />
+
+<DocsPageHeader
+  title="Changelog"
+  badge="Começar"
+  description="Histórico de versões e mudanças do Biome Design System (estado atual + releases anteriores)."
+/>
+
+<div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 10, marginBottom: 24 }}>
+  <span style={{ fontSize: 20 }}>🎉</span>
+  <div>
+    <strong style={{ color: '#166534', fontSize: 14 }}>{BIOME_VERSION_TAG} — Atual</strong>
+    <p style={{ color: '#166534', margin: '2px 0 0', fontSize: 12 }}>Versão corrente do pacote publicada para consumidores internos.</p>
+  </div>
+</div>
+
+<SectionHeader title={`${BIOME_VERSION_TAG} — Atualizações principais`} />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 24 }}>
+  {[
+    { name: 'Plug-and-play', cat: 'Governança', desc: 'Mandato formalizado como padrão obrigatório para componentes de consumo em app.' },
+    { name: 'Breadcrumb', cat: 'Navegação', desc: 'API declarativa com `items` e `separator`, mantendo composição manual como escape hatch.' },
+    { name: 'Tooltip', cat: 'Overlay', desc: 'API declarativa ampliada com `side` para posicionamento sem composição manual no caso comum.' },
+    { name: 'Sheet', cat: 'Overlay', desc: 'Retorno à superfície pública com `SheetPanel` declarativo e primitives para composição avançada.' },
+    { name: 'DropdownMenu', cat: 'Ações', desc: 'Atalhos e fluxo recomendado priorizados em API declarativa (`items[].shortcut`).' },
+    { name: 'Table', cat: 'Dados', desc: 'Stories com paginação funcional e estilo alinhado aos tokens do design system.' },
+    { name: 'Documentação', cat: 'Storybook', desc: 'Páginas de Introdução, Instalação, Contribuição e Governança atualizadas para refletir o README e o estado atual do Biome.' },
+  ].map(({ name, cat, desc }) => (
+    <div key={name} style={{ display: 'flex', gap: 14, padding: '12px 16px', border: '1px solid #e5e5e5', borderRadius: 10, background: '#fff', alignItems: 'flex-start' }}>
+      <div style={{ flexShrink: 0, paddingTop: 2 }}>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <code style={{ fontSize: 13, fontWeight: 700, color: '#264c37' }}>{name}</code>
+          <span style={{ fontSize: 10, background: '#f5f5f5', color: '#737373', padding: '1px 7px', borderRadius: 100, whiteSpace: 'nowrap' }}>{cat}</span>
+        </div>
+      </div>
+      <p style={{ fontSize: 12, color: '#737373', margin: 0, lineHeight: 1.6 }}>{desc}</p>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Escopo atual da superfície pública" />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 24 }}>
+  {[
+    { name: 'Ativos', change: 'Componentes exportados pelo pacote e documentados em Storybook para consumo em produto.' },
+    { name: 'Temporariamente fora de escopo', change: 'Card e Typography não estão expostos na API pública nesta fase.' },
+    { name: 'Compatibilidade', change: 'React 18 ou 19 como peer dependency, conforme contrato do pacote.' },
+  ].map(({ name, change }) => (
+    <div key={name} style={{ display: 'flex', gap: 14, padding: '12px 16px', border: '1px solid #e5e5e5', borderRadius: 10, background: '#fff', alignItems: 'flex-start' }}>
+      <code style={{ fontSize: 13, fontWeight: 700, color: '#264c37', flexShrink: 0, minWidth: 80 }}>{name}</code>
+      <p style={{ fontSize: 12, color: '#737373', margin: 0, lineHeight: 1.6 }}>{change}</p>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Release e publicação" />
+
+<DocsCallout type="warning" title="Publicação controlada por pipeline">
+  Releases devem seguir bump manual semver e publicação exclusiva via pipeline do GitLab CI com tag `v*.*.*`.
+</DocsCallout>
+
+<SectionHeader title="Histórico" />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px', background: '#fff' }}>
+  <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10 }}>
+    <span style={{ fontSize: 14 }}>🧱</span>
+    <div>
+      <strong style={{ fontSize: 14, color: 'var(--text-primary)' }}>v0.1.0</strong>
+      <span style={{ fontSize: 11, color: '#737373', background: '#f5f5f5', padding: '1px 8px', borderRadius: 100, marginLeft: 8 }}>Release inicial estável</span>
+    </div>
+  </div>
+  <p style={{ fontSize: 12, color: '#737373', margin: 0, lineHeight: 1.6 }}>
+    Primeira consolidação dos componentes e fundações do design system.
+  </p>
+</div>
+
+<div style={{ marginTop: 24, padding: '14px 16px', background: '#fafafa', borderRadius: 10, border: '1px solid #e5e5e5' }}>
+  <span style={{ fontSize: 13, color: '#737373' }}>
+    Quer contribuir? Veja o <a href="/?path=/docs/começar-guia-de-contribuição--docs" style={{ color: '#264c37', fontWeight: 600 }}>Guia de Contribuição</a> para entender como adicionar componentes, tokens e documentação ao Biome.
+  </span>
+</div>

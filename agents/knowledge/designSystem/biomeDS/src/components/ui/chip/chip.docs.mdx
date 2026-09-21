@@ -1,0 +1,53 @@
+{/* chip.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as ChipStories from './chip.stories.tsx'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={ChipStories} />
+
+# Chip
+
+Elemento interativo compacto utilizado para filtragem, tags ou seleção de opções. Suporta estado selecionado, ícones e variantes de tamanho — ideal para barras de filtro multi-seleção e interfaces baseadas em tags.
+
+<ComponentOverviewCard
+  category="Controles de Formulário"
+  file="src/components/ui/chip/chip.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Tamanhos" description="Três opções de tamanho para diferentes contextos de densidade visual." />
+
+<Canvas of={ChipStories.Sizes} />
+
+<SectionHeader title="Estados" description="Feedback visual para combinações: não selecionado, selecionado, desabilitado e desabilitado-selecionado." />
+
+<Canvas of={ChipStories.States} />
+
+<SectionHeader title="Grupo de Filtros" description="Padrão multi-seleção usando ChipGroup para filtragem por categorias." />
+
+<Canvas of={ChipStories.FilterGroup} />
+
+<SectionHeader title="Com Ícones" description="Ícones iniciais e finais para contexto visual adicional." />
+
+<Canvas of={ChipStories.WithIcons} />
+
+<SectionHeader title="Acessibilidade" />
+
+- **Role** — Cada chip renderiza como `button`, garantindo suporte nativo de teclado e leitores de tela.
+- **Estado selecionado** — O chip selecionado comunica seu estado via `aria-pressed`, para que tecnologias assistivas anunciem "pressionado" ou "não pressionado".
+- **Navegação por teclado** — Chips são acessíveis via `Tab` e alternados com `Enter` ou `Space`.
+- **ChipGroup** — O wrapper `ChipGroup` usa `role="group"` com um `label` acessível para descrever o conjunto de chips.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use chips para grupos de filtros e cenários de multi-seleção onde o usuário alterna opções.</DoRule>
+<DoRule>Mantenha os rótulos dos chips concisos — uma ou duas palavras são ideais para escaneabilidade.</DoRule>
+<DoRule>Use ChipGroup com a prop label descritiva para que leitores de tela entendam o contexto.</DoRule>
+
+<DontRule>Não use chips para navegação — use links ou tabs.</DontRule>
+<DontRule>Não exiba mais de duas linhas de chips sem um container rolável ou padrão "Mostrar mais".</DontRule>
+<DontRule>Não use chips como substituto de Radio ou Checkbox quando há envio de formulário — chips são para filtragem leve.</DontRule>

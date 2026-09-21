@@ -1,0 +1,114 @@
+{/* Espacamento.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, TokenTable, DoRule, DontRule } from './components'
+import { SpacingScale } from './components'
+
+<Meta title="Fundações/Espaçamentos" />
+
+<DocsPageHeader
+  title="Espaçamentos"
+  badge="Fundações"
+  description="O sistema de espaçamento do Biome é baseado em uma grade de 4px. Todos os valores de margin, padding, gap e posicionamento derivam desta grade, garantindo ritmo visual consistente."
+/>
+
+<DocsCallout type="info" title="Grade de 4px">
+  Todos os espaçamentos são múltiplos de 4px (0.25rem). Valores como <code>gap-[5px]</code> ou <code>p-[3px]</code> quebram o ritmo visual — evite-os.
+</DocsCallout>
+
+<SectionHeader title="Escala Numérica" description="Escala completa de 1px até 64px, mapeada para utilitários Tailwind." />
+
+<SpacingScale
+  items={[
+    { tailwind: 'p-px',  value: '1px',    px: 1,   cssVar: '--space-px', usage: 'Bordas finas' },
+    { tailwind: 'p-1',   value: '0.25rem', px: 4,  cssVar: '--space-1',  usage: 'Icon + text gap' },
+    { tailwind: 'p-2',   value: '0.5rem',  px: 8,  cssVar: '--space-2',  usage: 'Elementos compactos' },
+    { tailwind: 'p-3',   value: '0.75rem', px: 12, cssVar: '--space-3',  usage: 'Gap de lista' },
+    { tailwind: 'p-4',   value: '1rem',    px: 16, cssVar: '--space-4',  usage: 'Padding padrão de card' },
+    { tailwind: 'p-5',   value: '1.25rem', px: 20, cssVar: '--space-5',  usage: 'Gap entre campos' },
+    { tailwind: 'p-6',   value: '1.5rem',  px: 24, cssVar: '--space-6',  usage: 'Padding de modais' },
+    { tailwind: 'p-8',   value: '2rem',    px: 32, cssVar: '--space-8',  usage: 'Cards grandes, seções' },
+    { tailwind: 'p-10',  value: '2.5rem',  px: 40, cssVar: '--space-10', usage: 'Blocos de conteúdo' },
+    { tailwind: 'p-12',  value: '3rem',    px: 48, cssVar: '--space-12', usage: 'Seções compactas' },
+    { tailwind: 'p-16',  value: '4rem',    px: 64, cssVar: '--space-16', usage: 'Seções maiores' },
+  ]}
+/>
+
+<SectionHeader title="Tokens Semânticos" description="Espaçamentos com significado de layout — padding vertical de seções de página." />
+
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+  {[
+    { token: '--space-section-y', value: '3.75rem (60px)', tailwind: 'py-15', description: 'Padding vertical de seções — mobile' },
+    { token: '--space-section-y-desktop', value: '7.5rem (120px)', tailwind: 'md:py-30', description: 'Padding vertical de seções — desktop (md+)' },
+  ].map((item) => (
+    <div key={item.token} style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+      <code style={{ fontSize: 12, fontWeight: 700, color: '#264c37', display: 'block', marginBottom: 4 }}>{item.token}</code>
+      <code style={{ fontSize: 11, background: '#e9f4ee', color: '#264c37', padding: '1px 6px', borderRadius: 4 }}>{item.tailwind}</code>
+      <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-primary)', margin: '10px 0 4px' }}>{item.value}</div>
+      <p style={{ fontSize: 12, color: '#737373', margin: 0 }}>{item.description}</p>
+    </div>
+  ))}
+</div>
+
+```tsx
+// ✅ Padrão de seção de página
+<section className="bg-background py-15 md:py-30">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* conteúdo */}
+  </div>
+</section>
+```
+
+<SectionHeader title="Tamanhos de Componente" description="Altura padrão para botões, inputs e elementos interativos." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+  {[
+    { token: '--size-sm', value: '32px', tailwind: 'h-8',  label: 'SM', usage: 'Botão SM, input compacto' },
+    { token: '--size-md', value: '36px', tailwind: 'h-9',  label: 'MD', usage: 'Botão MD (padrão)' },
+    { token: '--size-lg', value: '40px', tailwind: 'h-10', label: 'LG', usage: 'Botão LG, input grande' },
+    { token: '--size-xl', value: '48px', tailwind: 'h-12', label: 'XL', usage: 'Botão XL, destaque' },
+  ].map(({ token, value, tailwind, label, usage }) => (
+    <div key={token} style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff', textAlign: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
+        <div style={{
+          background: '#264c37',
+          borderRadius: 6,
+          width: '100%',
+          height: parseInt(value),
+          opacity: 0.8,
+        }} />
+      </div>
+      <code style={{ fontSize: 12, fontWeight: 700, color: '#264c37', display: 'block' }}>{tailwind}</code>
+      <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', margin: '4px 0 2px' }}>{value}</div>
+      <p style={{ fontSize: 11, color: '#9f9f9f', margin: 0 }}>{usage}</p>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="Padrões de Uso" />
+
+```tsx
+// ✅ Padding de card padrão
+<div className="rounded-lg border p-6">...</div>
+
+// ✅ Padding de card compacto
+<div className="rounded-lg border p-4">...</div>
+
+// ✅ Gap entre campos de formulário
+<div className="flex flex-col gap-5">
+  <Input label="Nome" />
+  <Input label="E-mail" />
+</div>
+
+// ✅ Gap em listas de items
+<div className="flex flex-col gap-3">
+  {items.map(item => <AttendanceCard key={item.id} {...item} />)}
+</div>
+```
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Prefira sempre um valor da escala — evite classes arbitrárias como <code>gap-[18px]</code>.</DoRule>
+<DoRule>Use tokens semânticos (<code>py-15 md:py-30</code>) para seções de página.</DoRule>
+<DoRule>Mantenha consistência: se cards usam <code>p-6</code>, todos os cards do mesmo tipo devem usar <code>p-6</code>.</DoRule>
+<DontRule>Não use valores ímpares (<code>p-[5px]</code>, <code>gap-[3px]</code>) — quebram a grade visual.</DontRule>
+<DontRule>Não misture escalas de componente na mesma tela sem razão justificada.</DontRule>

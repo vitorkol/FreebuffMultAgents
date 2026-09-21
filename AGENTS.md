@@ -17,6 +17,7 @@ Também foi criada a pasta `docs/product/meetings/` para permitir que o Revisor 
 - **Tech Leader**: avalia riscos, arquitetura, estimativas e tarefas técnicas.
 - **Developer**: implementa somente histórias aprovadas e executa testes automatizados.
 - **QA**: valida critérios de aceite, registra evidências e abre bugs quando necessário.
+- **Designer**: cria prototipos com base na especificação da história de usuário, fundamentado no design system definidos pelo arquiteto de soluções e líder técnico.
 
 ## Regras de segurança e qualidade
 

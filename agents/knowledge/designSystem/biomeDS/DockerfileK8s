@@ -1,0 +1,22 @@
+# DockerfileK8s — imagem de runtime para o cluster SEMAD.
+#
+# Usa a MESMA imagem base que o DockerfileK8s do pseg-ui
+# (dockerhub.meioambiente.mg.gov.br/runtimes/k8s-frontend-node:20-alpine),
+# garantindo que o cache de camadas no cluster seja reaproveitado.
+#
+# O artefato storybook-static/ e montado previamente pelo job
+# build:storybook do pipeline — este Dockerfile NAO executa npm install.
+
+FROM dockerhub.meioambiente.mg.gov.br/runtimes/k8s-frontend-node:20-alpine
+
+WORKDIR /app
+
+COPY storybook-static ./storybook-static/
+COPY docker/serve.mjs ./serve.mjs
+
+ENV PORT=80
+ENV STORYBOOK_STATIC_DIR=/app/storybook-static
+
+EXPOSE 80
+
+CMD ["node", "serve.mjs"]

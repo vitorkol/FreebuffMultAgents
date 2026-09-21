@@ -1,0 +1,88 @@
+{/* carousel.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as CarouselStories from './carousel.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={CarouselStories} />
+
+# Carousel
+
+Contêiner deslizante para navegar por um conjunto de painéis de conteúdo com controles de navegação. O uso recomendado no Biome é declarativo via prop `items`, com composição manual apenas para cenários avançados.
+
+<ComponentOverviewCard
+  category="Data Display"
+  file="src/components/ui/carousel/carousel.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Carousel
+  items={[
+    <div className="p-6">Slide 1</div>,
+    <div className="p-6">Slide 2</div>,
+    <div className="p-6">Slide 3</div>,
+  ]}
+/>
+```
+
+<DoRule>Prefira `items` para uso em produto. O Biome já resolve estrutura e controles padrão.</DoRule>
+<DoRule>O layout visual é único em todos os modos: botões no topo à direita, dots centralizados e resumo no rodapé.</DoRule>
+
+<SectionHeader title="Com Controles" description="Adicione CarouselPrevious e CarouselNext para navegação explícita entre slides." />
+
+<Canvas of={CarouselStories.WithControls} />
+
+<SectionHeader title="Com Paginação" description="Use dots para navegar diretamente entre páginas/itens." />
+
+<Canvas of={CarouselStories.WithPagination} />
+
+<SectionHeader title="Regra eco-ui" description="Agrupa itens por página (ex: 8 por vez), com dots + resumo 'Mostrando X a Y de Z'." />
+
+<Canvas of={CarouselStories.EcoUiRule} />
+
+<SectionHeader title="Orientação Vertical" description='Use orientation="vertical" para criar um carousel com rolagem de cima para baixo.' />
+
+<Canvas of={CarouselStories.Vertical} />
+
+<SectionHeader title="Composição avançada" description="Use apenas quando precisar montar slides e controles manualmente." />
+
+<Canvas of={CarouselStories.ComposicaoAvancada} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Botões de navegação (anterior/próximo) devem possuir `aria-label` descritivos como "Slide anterior" e "Próximo slide".
+- Considere fornecer indicadores visuais da posição atual do slide (ex: dots ou contagem "2 de 5") para orientar o usuário.
+- O conteúdo do carousel deve ser acessível por teclado — o usuário pode navegar entre slides usando os botões de controle focáveis.
+- Evite rotação automática; se implementada, forneça um botão de pausa acessível.
+
+<SectionHeader title="API de paginação" />
+
+```tsx
+<Carousel
+  items={items}
+  showPagination
+  itemsPerView={4}
+  summaryItemLabel="reuniões"
+/>
+
+<Carousel
+  items={items}
+  paginationRule="eco-ui"
+  itemsPerPage={8}
+  summaryItemLabel="reuniões"
+/>
+```
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Forneça controles claros de anterior/próximo para navegação explícita. Use para galerias de mídia e fluxos de onboarding.</DoRule>
+<DoRule>Indique visualmente a posição atual do slide para que o usuário saiba quantos itens existem e onde está.</DoRule>
+
+<DontRule>Não use rotação automática sem controles de pausa — isso prejudica usuários com dificuldades motoras ou cognitivas.</DontRule>
+<DontRule>Não coloque conteúdo crítico exclusivamente dentro de um carousel — o usuário pode não percorrer todos os slides.</DontRule>

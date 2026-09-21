@@ -1,0 +1,117 @@
+{/* Alert.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as AlertStories from './alert.stories'
+import { ComponentOverviewCard, PropsTable, DocsCallout, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={AlertStories} />
+
+# Alert
+
+Banner de feedback contextual que comunica informações importantes ao usuário inline — sem interromper o fluxo com um modal.
+
+<ComponentOverviewCard
+  category="Feedback"
+  aria='role="alert"'
+  file="src/components/ui/alert/alert.tsx"
+  darkMode="Automático via tokens surface"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Quando Usar" />
+
+<DoRule>Para confirmar que uma ação foi bem-sucedida (registro de protocolo, envio de avaliação).</DoRule>
+<DoRule>Para avisar sobre consequências antes de uma ação irreversível (reabertura de atendimento).</DoRule>
+<DoRule>Para exibir erros de validação ou falhas de API de forma prominente dentro do formulário.</DoRule>
+<DoRule>Para fornecer dicas contextuais que ajudam o usuário a completar uma tarefa.</DoRule>
+
+<SectionHeader title="Quando Não Usar" />
+
+<DontRule>Para erros de campo individual — use a mensagem de erro inline do Input.</DontRule>
+<DontRule>Para notificações transientes que aparecem e somem — use um Toast.</DontRule>
+<DontRule>Para informações que exigem ação imediata e impedem a navegação — use um Dialog.</DontRule>
+<DontRule>Para conteúdo longo e navegável — use uma seção de página ou callout.</DontRule>
+
+<SectionHeader title="Intents" description="5 intents disponíveis, cada um usando o track completo de tokens surface para contraste automático em dark mode." />
+
+<Canvas of={AlertStories.Intents} />
+
+<SectionHeader title="Variações de Conteúdo" />
+
+**Sem Título** — use quando a mensagem é curta e o intent já é autoexplicativo.
+
+<Canvas of={AlertStories.WithoutTitle} />
+
+**Sem Ícone** — use `icon={null}` quando o contexto já está claro.
+
+<Canvas of={AlertStories.WithoutIcon} />
+
+**Ícone Customizado** — substitua o ícone padrão por um ícone específico do contexto.
+
+<Canvas of={AlertStories.WithCustomIcon} />
+
+<SectionHeader title="Estado Dispensável" description="Forneça onDismiss para exibir o botão de fechar. Gerencie a visibilidade com useState." />
+
+<Canvas of={AlertStories.Dismissible} />
+
+<SectionHeader title="Contexto Real do Produto" description="Exemplos de uso real — os 4 padrões de Alert identificados em auditorias de produto." />
+
+<Canvas of={AlertStories.ProductContext} />
+
+<SectionHeader title="Acessibilidade" />
+
+<DocsCallout type="info" title="role=alert">
+  O contêiner usa <code>role="alert"</code>, garantindo que leitores de tela anunciem o conteúdo automaticamente quando o componente é renderizado. Para mensagens não urgentes, use <code>role="status"</code> via <code>className</code>.
+</DocsCallout>
+
+- Botão fechar possui `aria-label="Fechar"` — acessível por teclado (`Tab` + `Enter`/`Space`)
+- Ícone decorativo usa `aria-hidden="true"` — o intent é comunicado por cor, título e texto
+- Cores de texto sobre backgrounds de surface cumprem **mínimo 4.5:1** de contraste (WCAG AA)
+
+<SectionHeader title="Props" />
+
+<PropsTable
+  rows={[
+    { prop: 'intent',    type: '"success" | "warning" | "info" | "destructive" | "neutral"', default: '"neutral"', description: 'Intent semântico — controla cores e ícone padrão' },
+    { prop: 'title',     type: 'string',                                                     description: 'Rótulo em negrito acima da descrição' },
+    { prop: 'icon',      type: 'IconName | null',                                            default: 'ícone do intent', description: 'Nome de ícone Lucide em kebab-case. Use null para ocultar' },
+    { prop: 'onDismiss', type: '() => void',                                                 description: 'Quando fornecido, exibe o botão fechar' },
+    { prop: 'children',  type: 'ReactNode',                                                  description: 'Conteúdo do corpo do alerta' },
+    { prop: 'className', type: 'string',                                                     description: 'Classes adicionais aplicadas ao contêiner' },
+  ]}
+/>
+
+<SectionHeader title="Boas Práticas" />
+
+```tsx
+// ✅ Combine título + corpo para mensagens complexas
+<Alert intent="warning" title="Atenção">
+  Ao reabrir o atendimento, um novo protocolo será gerado.
+</Alert>
+
+// ✅ Use intents consistentemente na mesma tela
+// success para confirmar → destructive para falha (não misture danger de Badge)
+
+// ✅ Posicione próximo ao conteúdo relacionado
+// Alert de erro de formulário deve aparecer no topo do formulário
+```
+
+```tsx
+// ❌ Não use para erros de campo individual
+<Alert intent="destructive">CPF é obrigatório</Alert>
+<Input name="cpf" />
+
+// ✅ Correto
+<Input label="CPF" hasError helperText="CPF é obrigatório" />
+```
+
+```tsx
+// ❌ Não use success para informações neutras
+<Alert intent="success">Preencha todos os campos obrigatórios</Alert>
+
+// ✅ Correto
+<Alert intent="info">Preencha todos os campos obrigatórios</Alert>
+```

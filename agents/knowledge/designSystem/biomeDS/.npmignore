@@ -1,0 +1,19 @@
+# Safety net — "files" in package.json already controls what ships.
+# This file exists to guarantee we never publish source, stories, docs,
+# Storybook output, IDE metadata or the local pnpm store.
+src
+.storybook
+storybook-static
+.pnpm-store
+node_modules
+.github
+.gitlab-ci.yml
+.DS_Store
+*.log
+coverage
+.turbo
+.cache
+tsconfig.json
+postcss.config.cjs
+pnpm-workspace.yaml
+pnpm-lock.yaml

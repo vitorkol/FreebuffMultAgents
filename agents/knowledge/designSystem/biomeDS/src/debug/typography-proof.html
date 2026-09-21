@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Biome DS — typography proof (runtime)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Roboto:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CSS compilado: pnpm build:css ou pnpm build → dist/styles.css (caminho relativo a este ficheiro) -->
+    <link rel="stylesheet" href="../../dist/styles.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 2rem;
+        max-width: 56rem;
+      }
+      .proof-row {
+        margin: 1.25rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e5e5e5;
+      }
+      .proof-row code.sem {
+        display: block;
+        margin-top: 0.35rem;
+        font: 12px/1.4 ui-monospace, monospace;
+        color: #737373;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-foreground">
+    <main id="proof-root">
+      <h1 class="text-display-2xl proof-row" data-proof="text-display-2xl">Display 2XL</h1>
+      <h1 class="text-display-xl proof-row" data-proof="text-display-xl">Display XL</h1>
+      <h1 class="text-heading-xl proof-row" data-proof="text-heading-xl">Heading XL</h1>
+      <h1 class="text-heading-m proof-row" data-proof="text-heading-m">Heading M</h1>
+      <p class="text-body-m proof-row" data-proof="text-body-m">Body M</p>
+      <span class="text-meta-xs proof-row text-muted-foreground block" data-proof="text-meta-xs">Meta XS</span>
+    </main>
+
+    <script>
+      ;(function () {
+        var els = [].slice.call(document.querySelectorAll("[data-proof]"))
+
+        els.forEach(function (el) {
+          var proofName = el.getAttribute("data-proof") || ""
+          var s = getComputedStyle(el)
+          console.log({
+            classe: proofName,
+            text: el.innerText,
+            fontSize: s.fontSize,
+            fontFamily: s.fontFamily,
+            fontWeight: s.fontWeight,
+            lineHeight: s.lineHeight,
+            letterSpacing: s.letterSpacing,
+          })
+        })
+
+        function px(remOrPx) {
+          return parseFloat(remOrPx)
+        }
+
+        function firstFace(family) {
+          var t = family.trim()
+          var m = t.match(/^"([^"]+)"|^'([^']+)'|^([^,]+)/)
+          return ((m && (m[1] || m[2] || m[3])) || t.split(",")[0]).trim()
+        }
+
+        var sizesPx = els.map(function (el) {
+          return px(getComputedStyle(el).fontSize)
+        })
+
+        var escadaOk = sizesPx.every(function (v, i) {
+          if (i === 0) return true
+          return sizesPx[i - 1] > sizesPx[i]
+        })
+
+        var poppinsFirstThreeOk = els
+          .slice(0, 3)
+          .every(function (el) {
+            return /^Poppins$/i.test(firstFace(getComputedStyle(el).fontFamily))
+          })
+
+        var robotoLastThreeOk = els.slice(3).every(function (el) {
+          return /^Roboto$/i.test(firstFace(getComputedStyle(el).fontFamily))
+        })
+
+        console.log("[typography-proof] Auditoria rápida", {
+          escadaDeTamanhosDecrescente: escadaOk,
+          displayEUHeadingAltoSaoPoppins: poppinsFirstThreeOk,
+          headingM_body_metaSaoRoboto: robotoLastThreeOk,
+          pxPorNível: els.map(function (el, i) {
+            return { classe: els[i].getAttribute("data-proof"), fontSizePx: sizesPx[i] }
+          }),
+        })
+
+        if (!escadaOk) {
+          console.warn(
+            "[typography-proof] Cada nível deve ter font-size estritamente menor que o anterior nesta página."
+          )
+        }
+        if (!poppinsFirstThreeOk) {
+          console.warn('[typography-proof] Os 3 primeiros blocos esperam "Poppins" como primeira família.')
+        }
+        if (!robotoLastThreeOk) {
+          console.warn(
+            '[typography-proof] Os 3 últimos blocos esperam "Roboto" como primeira família (sem fallback primeiro).'
+          )
+        }
+      })()
+    </script>
+  </body>
+</html>

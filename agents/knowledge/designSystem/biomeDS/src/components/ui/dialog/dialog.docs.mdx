@@ -1,0 +1,246 @@
+{/* Dialog.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as DialogStories from './dialog.stories'
+import { ComponentOverviewCard, PropsTable, DocsCallout, SectionHeader, DoRule, DontRule, DialogAnatomy, KeyboardShortcuts } from '../../../docs/components'
+
+<Meta of={DialogStories} />
+
+# Dialog
+
+Modal acessível baseado em Radix UI. Oferece dois níveis de API: `DialogModal` (wrapper de conveniência para o caso de uso mais comum) e primitivos composicionais para layouts customizados.
+
+<ComponentOverviewCard
+  category="Overlay"
+  aria="Gerenciamento automático de foco (focus trap)"
+  file="src/components/ui/dialog/dialog.tsx"
+  darkMode="Automático via tokens"
+/>
+
+- **Primitivo base** — `@radix-ui/react-dialog`.
+- **Foco** — armadilha de foco automática (focus trap).
+- **Scroll** — bloqueio de scroll do `body` enquanto aberto.
+- **Fechamento** — suporta `Escape`, overlay e botão de fechar.
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Dois Níveis de API" />
+
+#### `DialogModal` — Wrapper de Conveniência
+
+Para 90% dos casos: formulários, confirmações, detalhes de item, visualização de conteúdo.
+
+```tsx
+<DialogModal
+  trigger={<Button>Abrir</Button>}
+  title="Confirmar ação"
+  description="Deseja prosseguir?"
+  size="md"
+  footer={
+    <>
+      <DialogClose asChild><Button variant="outline">Cancelar</Button></DialogClose>
+      <Button>Confirmar</Button>
+    </>
+  }
+>
+  <p>Conteúdo do modal...</p>
+</DialogModal>
+```
+
+#### Primitivos — Composição Customizada
+
+Para casos que exigem layout não padrão (ex: modal multi-view, modal com tabs).
+
+```tsx
+<Dialog open={open} onOpenChange={setOpen}>
+  <DialogContent size="lg">
+    <DialogHeader divided>
+      <DialogTitle>Título</DialogTitle>
+      <DialogDescription>Subtítulo</DialogDescription>
+    </DialogHeader>
+    <DialogBody>...</DialogBody>
+    <DialogFooter divided>...</DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+---
+
+<SectionHeader title="Quando Usar" />
+
+<DoRule>Para fluxos que requerem confirmação do usuário antes de uma ação destrutiva ou irreversível.</DoRule>
+<DoRule>Para exibir detalhes de um item da lista sem navegar para outra página.</DoRule>
+<DoRule>Para formulários de criação/edição que não justificam uma página própria.</DoRule>
+<DoRule>Para conteúdo contextual longo (termos, acessibilidade, tutoriais).</DoRule>
+
+<SectionHeader title="Quando Não Usar" />
+
+<DontRule>Para mensagens simples de confirmação sem formulário — considere um Alert com onDismiss.</DontRule>
+<DontRule>Para navegação principal — o modal é um overlay, não uma página.</DontRule>
+<DontRule>Para menus dropdown — use Sheet ou Popover.</DontRule>
+<DontRule>Modais dentro de modais — evite nesting. Use um Sheet lateral ou steps dentro do mesmo modal.</DontRule>
+
+---
+
+<SectionHeader title="Anatomia" />
+
+<DialogAnatomy />
+
+---
+
+---
+
+<SectionHeader title="Tamanhos" />
+
+<Canvas of={DialogStories.Sizes} />
+
+- `sm` (`384px`) — confirmações simples e alertas com ação.
+- `md` (`512px`) — formulários simples e detalhes de item (padrão).
+- `lg` (`672px`) — formulários complexos e modais de atendimento.
+- `xl` (`768px`) — conteúdo tabular e múltiplos campos.
+- `full` (`100vw - 2rem`) — editores e dashboards.
+
+---
+
+<SectionHeader title="Com Alert Interno" />
+
+Combinação frequente no produto: modal + Alert de aviso antes de ação crítica.
+
+<Canvas of={DialogStories.WithAlert} />
+
+---
+
+<SectionHeader title="Composição com Primitivos" />
+
+<Canvas of={DialogStories.WithPrimitives} />
+
+---
+
+<SectionHeader title="Estado de Loading" />
+
+Padrão de 3 estados dentro do mesmo modal: conteúdo → carregando → feedback.
+
+<Canvas of={DialogStories.LoadingState} />
+
+---
+
+<SectionHeader title="Contexto Real — AttendanceModal" />
+
+Migração de um `AttendanceModal.tsx` legado (que usa Radix Dialog mas constrói toda a anatomia manualmente) para os primitivos padronizados do Biome:
+
+<Canvas of={DialogStories.ServiceContext} />
+
+---
+
+<SectionHeader title="Acessibilidade" />
+
+#### Foco
+
+- Quando aberto, o foco move automaticamente para o primeiro elemento focável dentro do `DialogContent` (Radix gerencia isso).
+- O foco fica preso dentro do modal enquanto estiver aberto (focus trap) — `Tab` e `Shift+Tab` cicla apenas pelos elementos internos.
+- Quando fechado, o foco retorna ao elemento que ativou o modal (o trigger).
+
+#### ARIA
+
+- `DialogTitle` é obrigatório — ele é referenciado por `aria-labelledby` no contêiner do modal.
+- `DialogDescription` é opcional mas recomendado — referenciado por `aria-describedby`.
+- O overlay usa `aria-hidden="true"` no conteúdo de fundo ao abrir o modal.
+- O `role="dialog"` e `aria-modal="true"` são aplicados automaticamente pelo Radix.
+
+**Teclado:**
+
+<KeyboardShortcuts shortcuts={[
+  { key: 'Escape', action: 'Fecha o modal' },
+  { key: 'Tab', action: 'Move para o proximo elemento focavel' },
+  { key: 'Shift + Tab', action: 'Move para o elemento focavel anterior' },
+  { key: 'Enter / Space', action: 'Ativa o elemento focado (botoes, checkboxes)' },
+]} />
+
+#### Scroll do body
+
+O Radix bloqueia o scroll do `<body>` automaticamente enquanto o modal estiver aberto, evitando scroll acidental do conteúdo por trás.
+
+---
+
+<SectionHeader title="Props — DialogModal" />
+
+<PropsTable
+  rows={[
+    { prop: 'title',        type: 'string',                         required: true, description: 'Título do modal' },
+    { prop: 'description',  type: 'string',                         description: 'Subtítulo abaixo do título' },
+    { prop: 'trigger',      type: 'ReactNode',                      description: 'Elemento que abre o modal' },
+    { prop: 'open',         type: 'boolean',                        description: 'Controle externo do estado aberto/fechado' },
+    { prop: 'onOpenChange', type: '(open: boolean) => void',        description: 'Callback de mudança de estado' },
+    { prop: 'size',         type: '"sm" | "md" | "lg" | "xl" | "full"', default: '"md"', description: 'Largura do painel' },
+    { prop: 'hideClose',    type: 'boolean',                        default: 'false', description: 'Oculta o botão fechar (×)' },
+    { prop: 'footer',       type: 'ReactNode',                      description: 'Conteúdo do rodapé' },
+    { prop: 'children',     type: 'ReactNode',                      description: 'Conteúdo do corpo' },
+  ]}
+/>
+
+<SectionHeader title="Props — DialogContent" />
+
+<PropsTable
+  rows={[
+    { prop: 'size',      type: '"sm" | "md" | "lg" | "xl" | "full"', default: '"md"', description: 'Largura máxima do painel' },
+    { prop: 'hideClose', type: 'boolean', default: 'false', description: 'Oculta o botão fechar (×)' },
+  ]}
+/>
+
+<SectionHeader title="Props — DialogHeader / DialogFooter" />
+
+<PropsTable
+  rows={[
+    { prop: 'divided', type: 'boolean', default: 'false', description: 'Exibe borda separadora entre header/body/footer' },
+  ]}
+/>
+
+---
+
+<SectionHeader title="Boas Práticas" />
+
+**✅ Sempre inclua `DialogTitle`**
+
+Mesmo que invisível, o título é necessário para acessibilidade. Use `className="sr-only"` se não quiser exibi-lo visualmente.
+
+**✅ Use `DialogClose asChild` para o botão cancelar**
+```tsx
+<DialogClose asChild>
+  <Button variant="outline">Cancelar</Button>
+</DialogClose>
+```
+
+**✅ Gerencie estados de loading dentro do modal sem fechar e reabrir**
+```tsx
+// Mantenha o modal aberto durante loading, mostre Spinner + mensagem de sucesso inline
+{loading ? <Spinner /> : done ? <Alert intent="success">Enviado!</Alert> : <FormContent />}
+```
+
+**✅ Para modais multi-step, use state interno para navegar entre views**
+
+Evite abrir um modal dentro de outro. Use uma variável `view: 'list' | 'details' | 'evaluate'` para alternar o conteúdo do mesmo modal.
+
+---
+
+<SectionHeader title="Anti-Padrões" />
+
+**❌ Não use portais customizados quando Dialog resolve o problema**
+```tsx
+// Errado — modais customizados legados (RegisterModal, ForgotPasswordModal,
+// AccessibilityModal, TermsModal) usam createPortal sem Radix, perdendo
+// focus trap, aria-modal e fechamento por Escape
+ReactDOM.createPortal(<div className="fixed inset-0 ...">...</div>, document.body)
+
+// Correto
+<DialogModal title="Criar Conta" ...>...</DialogModal>
+```
+
+**❌ Não use `hideClose={true}` sem fornecer outra forma de fechar**
+
+Se o botão fechar for ocultado, garanta que o Escape funcione e que haja um botão "Cancelar" no footer.
+
+**❌ Não abra modais programaticamente sem manter o foco gerenciado**
+
+Se você usar `open` controlado, certifique-se de que o elemento que ativou o modal ainda exista no DOM ao fechar — do contrário o foco não retornará corretamente.

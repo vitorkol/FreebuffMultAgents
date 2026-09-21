@@ -1,0 +1,4 @@
+include:
+  - project: 'governanca/gov-pipelines'
+    ref: main
+    file: 'apps/biome/k8s-biome-storybook-gitlab-ci.yml'

@@ -1,0 +1,56 @@
+{/* checkbox.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as CheckboxStories from './checkbox.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+Controle de seleção que permite ao usuário alternar um valor booleano. Suporta rótulo, texto auxiliar, estado de erro, estado indeterminado e múltiplos tamanhos — ideal para formulários com opções não exclusivas.
+
+<ComponentOverviewCard
+  category="Form Controls"
+  aria="htmlFor, aria-describedby"
+  file="src/components/ui/checkbox/checkbox.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Tamanhos" description="4 escalas disponíveis: sm, md, lg e xl." />
+
+<Canvas of={CheckboxStories.Sizes} />
+
+<SectionHeader title="Estados" description="Todos os estados visuais do checkbox: padrão, marcado, indeterminado, com erro e desabilitado." />
+
+<Canvas of={CheckboxStories.States} />
+
+<SectionHeader title="Com Texto Auxiliar" description="Use helperText para orientação adicional ou mensagens de erro contextuais." />
+
+<Canvas of={CheckboxStories.WithHelperText} />
+
+<SectionHeader title="Seleção Aninhada" description="Combine o estado indeterminate com checkboxes filhos para criar padrões de seleção 'marcar todos'." />
+
+<Canvas of={CheckboxStories.NestedSelection} />
+
+<SectionHeader title="Formulário de Aceite" description="Exemplo real de uso em formulários com termos obrigatórios e preferências opcionais." />
+
+<Canvas of={CheckboxStories.AcceptanceForm} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Utiliza semântica nativa de `<input type="checkbox">` — funcionalidade completa de teclado sem JavaScript adicional.
+- O rótulo é associado via `htmlFor`, garantindo que clicar no texto também alterne o checkbox.
+- Mensagens de erro e texto auxiliar são vinculados via `aria-describedby` para leitores de tela.
+- A tecla `Space` alterna o estado do checkbox quando focado. A navegação entre checkboxes é feita com `Tab`.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Sempre forneça um rótulo visível. Use helperText para orientação adicional quando necessário.</DoRule>
+<DoRule>Agrupe checkboxes relacionados com um fieldset e legend para contexto semântico.</DoRule>
+
+<DontRule>Não use checkbox para opções mutuamente exclusivas — utilize Radio para esse caso.</DontRule>
+<DontRule>Não oculte o rótulo do checkbox — ele é essencial para acessibilidade e usabilidade.</DontRule>

@@ -33,6 +33,7 @@ Os arquivos de reunião são conhecidos por todos os agentes, mas não passam pe
 - Dr. Fernando Almeida — Diretor Geral
 
 ## Resumo
+O Kimi Academy é uma plataforma institucional de gestão do conhecimento escolar, com foco em conteúdo organizado, avaliação e acompanhamento pedagógico. O trabalho começou com Lean Inception e, em seguida, com os dois kickoffs do MVP. Nas reuniões, participaram representantes de diretoria, coordenação pedagógica, TI, professores e alunos.
 
 1. Lean Inception definiu visão, objetivos e limites do Kimi Academy: plataforma institucional de gestão de aulas, avaliações e acompanhamento pedagógico, com adoção docente como foco prioritário.
 2. O sistema terá 3 perfis no MVP: Admin, Professor, Aluno. Coordenador usa perfil de Professor com acesso ampliado a relatórios.
@@ -50,6 +51,12 @@ Os arquivos de reunião são conhecidos por todos os agentes, mas não passam pe
 - Exportação de relatórios é desejável no MVP, mas não bloqueante para o fluxo deles.
 
 ## Dúvidas
+1. Qual será o critério exato de UX aceitável para “publicar uma aula em até 10 minutos”? Isso é tempo real medido em qual condição?
+2. Quais modelos de e-mail/notificação serão usados no MVP: transacionais, resumo diário ou ambos por padrão?
+3. Qual será o formato definitivo do cadastro do professor: exclusivamente por admin ou com opção de auto-cadastro aprovado por admin?
+4. Quais planilhas e colunas serão aceitas na migração da secretaria?
+5. Qual será a estratégia de fallback para links externos de vídeo em caso de indisponibilidade?
+6. Qual permissão de acesso e regra de edição de aula já publicada será adotada quando o primeiro aluno acessar?
 
 - Quais requisitos são bloqueantes para o MVP versus desejáveis?
 - Qual a ordem prioritária das próximas implementações da equipe?

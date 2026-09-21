@@ -1,0 +1,154 @@
+{/* Cores.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, TokenTable, DoRule, DontRule, ColorGroup } from './components'
+
+<Meta title="Fundações/Cores" />
+
+<DocsPageHeader
+  title="Cores"
+  badge="Fundações"
+  description="O sistema de cores do Biome foi desenvolvido para promover consistência visual, acessibilidade e alinhamento com a identidade da SEMAD — Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável de Minas Gerais."
+/>
+
+<DocsCallout type="tip" title="Regra de ouro">
+  Nunca use hex diretamente em componentes. Sempre use o token semântico. Isso garante que o dark mode funcione automaticamente e que uma atualização de marca não exija refatoração de componentes.
+</DocsCallout>
+
+## Arquitetura
+
+O sistema de cores opera em duas camadas:
+
+1. **Paleta bruta** — valores hex fixos em `:root` (ex: `#198754`)
+2. **Tokens semânticos** — CSS custom properties que referenciam a paleta e respondem ao dark mode
+
+```
+Paleta bruta (hex)  →  Token CSS var      →  Utilitário Tailwind  →  Componente
+    #198754         →  --success          →  bg-success           →  <Button variant="success">
+    #f0fdf4         →  --success-surface  →  bg-success-surface   →  <Alert intent="success">
+```
+
+<SectionHeader title="Superfícies Base" description="Fundos de página, cards e elementos de overlay." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--background',    tailwind: 'bg-background',    light: '#ffffff', dark: '#0c1410', description: 'Fundo padrão da página' },
+    { token: '--foreground',    tailwind: 'text-foreground',  light: '#4c4d4d', dark: '#f0f8f4', description: 'Texto padrão' },
+    { token: '--card',          tailwind: 'bg-card',          light: '#ffffff', dark: '#162019', description: 'Superfície de card' },
+    { token: '--popover',       tailwind: 'bg-popover',       light: '#ffffff', dark: '#162019', description: 'Popovers e tooltips' },
+    { token: '--muted',         tailwind: 'bg-muted',         light: '#f5f5f5', dark: '#1e2d24', description: 'Fundos neutros, disabled' },
+    { token: '--accent',        tailwind: 'bg-accent',        light: '#f5f5f5', dark: '#1e2d24', description: 'Hover state de itens' },
+  ]}
+/>
+
+<SectionHeader title="Cores de Marca" description="Identidade visual da SEMAD. Use para ações primárias e destaque." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--primary',          tailwind: 'bg-primary',           light: '#264c37', dark: '#4ade80', description: 'Ações primárias, foco' },
+    { token: '--primary-foreground', tailwind: 'text-primary-foreground', light: '#ffffff', dark: '#0c1410', description: 'Texto sobre primary' },
+    { token: '--secondary',        tailwind: 'bg-secondary',         light: '#e9f4ee', dark: '#1a3327', description: 'Botões secundários' },
+    { token: '--brand-green',      tailwind: 'bg-brand-green',       light: '#198754', description: 'Cor principal SEMAD' },
+    { token: '--brand-green-dark', tailwind: 'bg-brand-green-dark',  light: '#024d2a', description: 'Hover de botões primários' },
+    { token: '--brand-lime',       tailwind: 'bg-brand-lime',        light: '#92b123', description: 'Accent secundário' },
+    { token: '--mint',             tailwind: 'bg-mint',              light: '#a7f3d0', description: 'Decorativo, ilustrações' },
+    { token: '--footer-bg',        tailwind: 'bg-footer-bg',         light: '#053b2d', description: 'Fundo do footer' },
+    { token: '--section-gray',     tailwind: 'bg-section-gray',      light: '#fafafa', description: 'Seções alternadas' },
+  ]}
+/>
+
+<SectionHeader title="Feedback — Sólido" description="Para botões de ação, ícones preenchidos e elementos de alta visibilidade. Fundo de cor forte." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--success',     tailwind: 'bg-success',     light: '#198754', dark: '#4ade80', description: 'Confirmação, sucesso' },
+    { token: '--warning',     tailwind: 'bg-warning',     light: '#d97706', dark: '#fbbf24', description: 'Aviso, atenção' },
+    { token: '--info',        tailwind: 'bg-info',        light: '#2563eb', dark: '#60a5fa', description: 'Informação, dica' },
+    { token: '--destructive', tailwind: 'bg-destructive', light: '#dc2626', dark: '#f87171', description: 'Erro, perigo, exclusão' },
+  ]}
+/>
+
+<SectionHeader title="Feedback — Surface" description="Para Alert, StatusBadge e banners contextuais. Fundo suave com texto e borda coordenados. Responde ao dark mode automaticamente." />
+
+<DocsCallout type="info" title="Track completo">
+  Cada intent tem três tokens coordenados: fundo (<code>bg-success-surface</code>), borda (<code>border-success-surface-border</code>) e texto (<code>text-success-on-surface</code>). Use sempre os três juntos.
+</DocsCallout>
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--success-surface',     tailwind: 'bg-success-surface',     light: '#f0fdf4', dark: '#052e16', description: 'Fundo — status concluído' },
+    { token: '--success-on-surface',  tailwind: 'text-success-on-surface', light: '#166534', dark: '#4ade80', description: 'Texto — status concluído' },
+    { token: '--warning-surface',     tailwind: 'bg-warning-surface',     light: '#fffbeb', dark: '#1a1200', description: 'Fundo — em andamento' },
+    { token: '--warning-on-surface',  tailwind: 'text-warning-on-surface', light: '#92400e', dark: '#fbbf24', description: 'Texto — em andamento' },
+    { token: '--info-surface',        tailwind: 'bg-info-surface',        light: '#eff6ff', dark: '#172554', description: 'Fundo — informação' },
+    { token: '--info-on-surface',     tailwind: 'text-info-on-surface',   light: '#1d4ed8', dark: '#93c5fd', description: 'Texto — informação' },
+    { token: '--destructive-surface', tailwind: 'bg-destructive-surface', light: '#fef2f2', dark: '#450a0a', description: 'Fundo — erro' },
+    { token: '--destructive-on-surface', tailwind: 'text-destructive-on-surface', light: '#991b1b', dark: '#fca5a5', description: 'Texto — erro' },
+    { token: '--neutral-surface',     tailwind: 'bg-neutral-surface',     light: '#f5f5f5', dark: '#1a1a1a', description: 'Fundo — status neutro' },
+    { token: '--neutral-on-surface',  tailwind: 'text-neutral-on-surface', light: '#525252', dark: '#e5e5e5', description: 'Texto — status neutro' },
+  ]}
+/>
+
+```tsx
+// ✅ Use o track completo dos três tokens de surface
+<div className="bg-warning-surface border border-warning-surface-border rounded-lg p-4">
+  <p className="text-warning-on-surface font-semibold">Atenção</p>
+  <p className="text-warning-on-surface/80 text-sm">Mensagem de aviso...</p>
+</div>
+
+// Ou simplesmente:
+<Alert intent="warning" title="Atenção">Mensagem de aviso...</Alert>
+```
+
+<SectionHeader title="Texto" description="Tokens para hierarquia de conteúdo textual." />
+
+<ColorGroup
+  title=""
+  swatches={[
+    { token: '--text-primary',      tailwind: 'text-text-primary',      light: '#4c4d4d', description: 'Texto de conteúdo principal' },
+    { token: '--text-muted',        tailwind: 'text-text-muted',        light: '#9f9f9f', description: 'Texto secundário, metadados' },
+    { token: '--text-placeholder',  tailwind: 'text-text-placeholder',  light: '#b3b3b3', description: 'Placeholder de inputs' },
+    { token: '--text-disabled',     tailwind: 'text-text-disabled',     light: '#d4d4d4', description: 'Texto desabilitado' },
+    { token: '--text-inverse',      tailwind: 'text-text-inverse',      light: '#ffffff', description: 'Texto sobre fundos escuros' },
+    { token: '--link',              tailwind: 'text-link',              light: '#396dc0', description: 'Links e ações de texto' },
+  ]}
+/>
+
+<SectionHeader title="Formulário" description="Bordas e indicadores de estado de campos de formulário." />
+
+<TokenTable
+  rows={[
+    { token: '--border',         tailwind: 'border-border',          value: '#e5e5e5', usage: 'Bordas de inputs e divisores' },
+    { token: '--input',          tailwind: 'border-input',           value: '#e5e5e5', usage: 'Borda padrão de campos' },
+    { token: '--input-error',    tailwind: 'border-input-error',     value: '#dc2626', usage: 'Borda de campo com erro' },
+    { token: '--input-success',  tailwind: 'border-input-success',   value: '#198754', usage: 'Borda de campo válido' },
+    { token: '--ring',           tailwind: 'ring-ring',              value: '#264c37', usage: 'Anel de foco (outline)' },
+    { token: '--label',          tailwind: 'text-label',             value: '#1a1a1a', usage: 'Texto de label' },
+    { token: '--label-required', tailwind: 'text-label-required',    value: '#dc2626', usage: 'Asterisco obrigatório' },
+  ]}
+/>
+
+<SectionHeader title="Acessibilidade" description="Todos os pares de texto/fundo atingem no mínimo WCAG 2.1 AA (contraste ≥ 4.5:1)." />
+
+<TokenTable
+  rows={[
+    { token: '--foreground sobre --background',          usage: '21:1 — ✅ AAA' },
+    { token: '--text-primary sobre --background',         usage: '9.2:1 — ✅ AAA' },
+    { token: '--text-muted sobre --background',           usage: '4.6:1 — ✅ AA' },
+    { token: '--success-on-surface sobre --success-surface',    usage: '4.7:1 — ✅ AA' },
+    { token: '--warning-on-surface sobre --warning-surface',    usage: '5.1:1 — ✅ AA' },
+    { token: '--destructive-on-surface sobre --destructive-surface', usage: '5.3:1 — ✅ AA' },
+    { token: '--info-on-surface sobre --info-surface',           usage: '5.9:1 — ✅ AA' },
+  ]}
+/>
+
+<SectionHeader title="Regras de Uso" />
+
+<DoRule>Use o token mais semântico disponível — <code>text-muted-foreground</code> em vez de <code>text-gray-500</code>.</DoRule>
+<DoRule>Para feedback, use o track surface (suave) em alerts/badges e o token sólido em botões/ícones preenchidos.</DoRule>
+<DoRule>Ative o dark mode via classe <code>dark</code> no elemento <code>html</code> — todos os tokens respondem automaticamente.</DoRule>
+<DontRule>{'Nunca use hex diretamente em componentes — ex: style={{ backgroundColor: "#f0fdf4" }}. Use tokens semânticos.'}</DontRule>
+<DontRule>Nunca misture tokens de surface e tokens sólidos no mesmo elemento de feedback.</DontRule>

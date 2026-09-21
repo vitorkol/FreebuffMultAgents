@@ -1,0 +1,63 @@
+{/* accordion.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as AccordionStories from './accordion.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+Conjunto de painéis expansíveis empilhados verticalmente que permite ao usuário revelar ou ocultar seções de conteúdo relacionado. O uso recomendado no Biome é declarativo via prop `items` (sem necessidade de montar Header/Trigger/Content manualmente). Também suporta modo de composição avançada quando necessário.
+
+<ComponentOverviewCard
+  category="Data Display"
+  aria="aria-expanded, aria-controls"
+  file="src/components/ui/accordion/accordion.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Accordion
+  type="single"
+  collapsible
+  items={[
+    { value: "faq-1", title: "Como funciona?", content: "Texto da resposta..." },
+    { value: "faq-2", title: "É acessível?", content: "Sim, com suporte a teclado e ARIA." },
+  ]}
+/>
+```
+
+<DoRule>Prefira a prop <code>items</code> para uso em produto. O Biome cuida da estrutura interna.</DoRule>
+
+<SectionHeader title="Múltiplos Painéis Abertos" description='Use type="multiple" para permitir que o usuário mantenha vários painéis abertos ao mesmo tempo.' />
+
+<Canvas of={AccordionStories.Multiple} />
+
+<SectionHeader title="Painel Aberto por Padrão" description="Use defaultValue para pré-expandir um painel específico no carregamento inicial." />
+
+<Canvas of={AccordionStories.DefaultOpen} />
+
+<SectionHeader title="Composição avançada" description="Use apenas quando precisar montar manualmente a estrutura com primitivos." />
+
+<Canvas of={AccordionStories.ComposicaoAvancada} />
+
+<SectionHeader title="Acessibilidade" />
+
+- **Navegação por teclado**: setas `ArrowUp` / `ArrowDown` movem o foco entre os triggers; `Home` e `End` vão para o primeiro e último trigger.
+- **Ativação**: `Enter` ou `Space` alternam a expansão do painel focado.
+- Cada trigger usa `aria-expanded` para comunicar seu estado e `aria-controls` para referenciar o painel correspondente.
+- O conteúdo colapsado é removido do fluxo de tabulação, evitando que leitores de tela anunciem conteúdo oculto.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Use para seções de FAQ, divulgação progressiva de informações e organização de formulários longos em etapas colapsáveis.</DoRule>
+<DoRule>Mantenha os rótulos dos triggers curtos e descritivos para facilitar a leitura rápida.</DoRule>
+
+<DontRule>Não aninhe accordions dentro de outros accordions — isso cria uma hierarquia confusa e prejudica a navegação por teclado.</DontRule>
+<DontRule>Não use accordion como navegação principal — para isso, utilize um menu lateral ou breadcrumbs.</DontRule>

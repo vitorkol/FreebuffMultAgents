@@ -1,0 +1,223 @@
+{/* Radio.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as RadioStories from './radio.stories.tsx'
+import { ComponentOverviewCard, PropsTable, DocsCallout, SectionHeader, DoRule, DontRule, KeyboardShortcuts } from '../../../docs/components'
+
+<Meta of={RadioStories} />
+
+# Radio / RadioGroup
+
+Componentes de seleção única. `Radio` é o controle individual; `RadioGroup` gerencia um conjunto de `Radio` dentro de um `<fieldset>` semanticamente correto.
+
+<ComponentOverviewCard
+  category="Formulário"
+  aria='input type="radio" nativo oculto'
+  file="src/components/ui/radio/radio.tsx"
+  darkMode="Automático via tokens"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Quando Usar" />
+
+<DoRule>Para selecionar uma opção de um conjunto pequeno e fixo (2–6 opções visíveis simultaneamente).</DoRule>
+<DoRule>Quando todas as opções precisam estar visíveis ao mesmo tempo para comparação.</DoRule>
+<DoRule>Para perguntas de sim/não ou escolhas binárias.</DoRule>
+
+<SectionHeader title="Quando Não Usar" />
+
+<DontRule>Para selecionar múltiplas opções — use Checkbox.</DontRule>
+<DontRule>Para listas longas (7+ opções) — use Select (dropdown).</DontRule>
+<DontRule>Para ligar/desligar uma configuração binária — use Switch.</DontRule>
+
+<SectionHeader title="Anatomia" />
+
+- **Input nativo** — oculto visualmente (`sr-only`), preserva semântica e foco.
+- **Indicador visual** — anel externo + ponto interno para estado selecionado.
+- **Label** — texto clicável que ativa o `input`.
+- **Helper text** — texto auxiliar ou mensagem de validação.
+
+<SectionHeader title="Anatomia do RadioGroup" />
+
+```
+<fieldset>
+  <legend>[label do grupo]</legend>
+  <Radio />
+  <Radio />
+  <Radio />
+  [mensagem de erro do grupo]
+</fieldset>
+```
+
+<SectionHeader title="Estados" />
+
+<Canvas of={RadioStories.States} />
+
+<SectionHeader title="RadioGroup — Layout Vertical" />
+
+Layout padrão para grupos com labels longos ou que precisam de comparação linha a linha.
+
+<Canvas of={RadioStories.VerticalGroup} />
+
+<SectionHeader title="RadioGroup — Layout Horizontal" />
+
+Use `row` para grupos com 2–4 opções curtas. Ideal para respostas binárias.
+
+<Canvas of={RadioStories.HorizontalGroup} />
+
+<SectionHeader title="RadioGroup — Com Erro" />
+
+<Canvas of={RadioStories.GroupWithError} />
+
+<SectionHeader title="Contexto Real — Avaliação de Atendimento" />
+
+Migração do padrão de botões `<button type="button">` com toggle de borda usado em `EvaluationForm` e `ReopenForm` para `Radio`/`RadioGroup` com semântica correta:
+
+<Canvas of={RadioStories.EvaluationContext} />
+
+**Antes (EvaluationForm legado):**
+```tsx
+<button
+  type="button"
+  onClick={() => setAttendantRating(option)}
+  className={`px-4 py-3 rounded-lg border-2 text-sm font-medium transition-all
+    ${attendantRating === option
+      ? "border-brand-green bg-brand-green/10 text-brand-green"
+      : "border-gray-200 text-text-primary"
+    }`}
+>
+  {ATTENDANT_RATING_LABELS[option]}
+</button>
+```
+
+**Depois (Biome):**
+```tsx
+<RadioGroup legend="Como você avalia o atendimento recebido? *" row>
+  {ratingOptions.map(opt => (
+    <Radio
+      key={opt}
+      name="rating"
+      value={opt}
+      label={ATTENDANT_RATING_LABELS[opt]}
+      checked={rating === opt}
+      onChange={() => setRating(opt)}
+    />
+  ))}
+</RadioGroup>
+```
+
+<SectionHeader title="Contexto Real — Seleção de E-mail (ForgotPasswordModal)" />
+
+<Canvas of={RadioStories.EmailContext} />
+
+<SectionHeader title="Acessibilidade" />
+
+### Radio individual
+
+- O input nativo `<input type="radio">` é preservado com `sr-only`, garantindo:
+  - Navegação por teclado nativa do browser
+  - Suporte completo a tecnologias assistivas
+  - Grupos de rádio com `name` compartilhado gerenciam seleção exclusiva automaticamente
+- O label usa `htmlFor` conectado ao `id` do input → clicar no label ativa o controle
+- `aria-invalid` é definido quando `hasError` está ativo
+- `aria-describedby` conecta o input ao `helperText`
+
+### RadioGroup
+
+- Usa `<fieldset>` + `<legend>` para agrupar controles relacionados semanticamente
+- Leitores de tela anunciam: *"[legend]: [label da opção] — 1 de 4 rádios"*
+- O erro do grupo usa `aria-describedby` no fieldset
+
+**Navegação por teclado:**
+
+<KeyboardShortcuts shortcuts={[
+  { key: 'Tab', action: 'Foca no grupo de radios' },
+  { key: 'Seta cima / Seta esquerda', action: 'Seleciona o radio anterior' },
+  { key: 'Seta baixo / Seta direita', action: 'Seleciona o proximo radio' },
+  { key: 'Space', action: 'Seleciona o radio focado' },
+]} />
+
+---
+
+<SectionHeader title="Props — Radio" />
+
+<PropsTable
+  rows={[
+    { prop: 'label',        type: 'ReactNode',  description: 'Texto visível ao lado do controle' },
+    { prop: 'helperText',   type: 'string',     description: 'Texto auxiliar ou mensagem de validação abaixo do label' },
+    { prop: 'hasError',     type: 'boolean',    default: 'false', description: 'Ativa estilos de erro e atributos ARIA' },
+    { prop: 'disabled',     type: 'boolean',    default: 'false', description: 'Desabilita o controle' },
+    { prop: 'checked',      type: 'boolean',    description: 'Estado controlado' },
+    { prop: 'defaultChecked', type: 'boolean',  description: 'Estado inicial não controlado' },
+    { prop: 'name',         type: 'string',     description: 'Agrupa rádios para seleção exclusiva' },
+    { prop: 'value',        type: 'string',     description: 'Valor submetido no formulário' },
+    { prop: 'id',           type: 'string',     default: 'Auto (useId)', description: 'ID do input' },
+    { prop: 'wrapperClassName', type: 'string', description: 'Classes adicionais no wrapper externo' },
+  ]}
+/>
+
+<SectionHeader title="Props — RadioGroup" />
+
+<PropsTable
+  rows={[
+    { prop: 'legend',     type: 'ReactNode', description: 'Label do grupo (renderizado como legend)' },
+    { prop: 'helperText', type: 'string',   description: 'Texto auxiliar ou mensagem de erro do grupo' },
+    { prop: 'hasError',   type: 'boolean',  default: 'false', description: 'Ativa estilo de erro no texto auxiliar do grupo' },
+    { prop: 'row',        type: 'boolean',  default: 'false', description: 'Layout em linha horizontal' },
+    { prop: 'className',  type: 'string',   description: 'Classes adicionais no fieldset' },
+  ]}
+/>
+
+<SectionHeader title="Boas Práticas" />
+
+**✅ Sempre use `RadioGroup` para dois ou mais rádios relacionados**
+```tsx
+// Evite rádios soltos sem fieldset
+<RadioGroup legend="Tipo de solicitação">
+  <Radio name="tipo" value="denuncia" label="Denúncia" />
+  <Radio name="tipo" value="consulta" label="Consulta" />
+</RadioGroup>
+```
+
+**✅ Use o mesmo `name` para todos os rádios de um grupo**
+
+Isso garante que o browser selecione apenas um por vez e que o valor correto seja enviado no `<form>`.
+
+**✅ Integre com react-hook-form via register**
+```tsx
+const { register } = useForm()
+// ...
+<RadioGroup legend="Avaliação *">
+  {options.map(opt => (
+    <Radio key={opt} value={opt} label={opt} {...register('rating')} />
+  ))}
+</RadioGroup>
+```
+
+<SectionHeader title="Anti-Padrões" />
+
+**❌ Não use `<button>` para simular seleção exclusiva**
+```tsx
+// Errado — botões com toggle de borda não são semânticos
+<button onClick={() => setSelected("A")} className={selected === "A" ? "border-brand-green" : ""}>
+  Opção A
+</button>
+
+// Correto
+<Radio name="opcao" value="A" label="Opção A"
+  checked={selected === "A"} onChange={() => setSelected("A")} />
+```
+
+**❌ Não use Radio para 7+ opções**
+```tsx
+// Errado — muitas opções em rádio são difíceis de escanear
+<RadioGroup legend="Estado *">
+  {estadosBrasileiros.map(e => <Radio key={e} ... />)}
+</RadioGroup>
+
+// Correto
+<Select label="Estado *" options={estadosBrasileiros} />
+```

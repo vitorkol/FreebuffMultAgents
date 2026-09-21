@@ -1,0 +1,62 @@
+{/* breadcrumb.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as BreadcrumbStories from './breadcrumb.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={BreadcrumbStories} />
+
+# Breadcrumb
+
+Navegação hierárquica que mostra a localização atual do usuário dentro da estrutura da aplicação. Construído com HTML semântico (`<nav>`) e atributos ARIA para acessibilidade completa.
+
+<ComponentOverviewCard
+  category="Navigation"
+  aria='nav aria-label="breadcrumb"'
+  file="src/components/ui/breadcrumb/breadcrumb.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Uso recomendado (API simples)" />
+
+```tsx
+<Breadcrumb
+  items={[
+    { id: "home", label: "Home", href: "/" },
+    { id: "components", label: "Components", href: "/components" },
+    { id: "breadcrumb", label: "Breadcrumb", current: true },
+  ]}
+/>
+```
+
+<DoRule>Prefira a API declarativa com <code>items</code> para o caso comum de navegação hierárquica.</DoRule>
+
+<SectionHeader title="Com Reticências" description="Use BreadcrumbEllipsis para hierarquias profundas, ocultando níveis intermediários e mantendo a navegação limpa." />
+
+<Canvas of={BreadcrumbStories.WithEllipsis} />
+
+<SectionHeader title="Separador Customizado" description="Substitua o separador padrão (chevron) por qualquer ícone, como uma barra diagonal." />
+
+<Canvas of={BreadcrumbStories.CustomSeparator} />
+
+<SectionHeader title="Composição avançada" description="Use apenas quando precisar controlar manualmente todos os slots do breadcrumb." />
+
+<Canvas of={BreadcrumbStories.ComposicaoAvancada} />
+
+<SectionHeader title="Acessibilidade" />
+
+- O componente é envolvido em um elemento `<nav>` com `aria-label="breadcrumb"` para identificação por leitores de tela.
+- A página atual utiliza `aria-current="page"`, indicando ao usuário de tecnologia assistiva onde ele está.
+- Todos os links são focáveis por teclado e seguem a ordem natural de tabulação.
+- Separadores são decorativos e utilizam `aria-hidden="true"` para não serem anunciados por leitores de tela.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Mostre o caminho completo quando possível; use reticências apenas para hierarquias com mais de 4 níveis.</DoRule>
+<DoRule>Sempre inclua a página atual como último item do breadcrumb, sem ser um link clicável.</DoRule>
+
+<DontRule>Não use breadcrumbs como navegação principal da aplicação — eles são um auxílio complementar de orientação.</DontRule>
+<DontRule>Não torne a página atual um link — o último item deve ser texto estático indicando onde o usuário está.</DontRule>

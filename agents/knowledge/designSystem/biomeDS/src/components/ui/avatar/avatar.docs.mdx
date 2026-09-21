@@ -1,0 +1,47 @@
+{/* avatar.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as AvatarStories from './avatar.stories'
+import { ComponentOverviewCard, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={AvatarStories} />
+
+# Avatar
+
+Representação visual de um usuário ou entidade, exibindo uma imagem de perfil com fallback automático para iniciais quando a imagem não está disponível ou falha ao carregar.
+
+<ComponentOverviewCard
+  category="Data Display"
+  file="src/components/ui/avatar/avatar.tsx"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Com Imagem" description="Quando uma URL de imagem válida é fornecida, o avatar exibe a foto do usuário." />
+
+<Canvas of={AvatarStories.WithImage} />
+
+<SectionHeader title="Tamanhos" description="Aplique classes de largura e altura para criar variações de tamanho consistentes." />
+
+<Canvas of={AvatarStories.Sizes} />
+
+<SectionHeader title="Grupo de Avatares" description="Sobreponha avatares com espaçamento negativo para representar equipes ou listas de participantes." />
+
+<Canvas of={AvatarStories.Group} />
+
+<SectionHeader title="Acessibilidade" />
+
+- Avatares puramente decorativos (ao lado do nome do usuário) devem usar `alt=""` para serem ignorados por leitores de tela.
+- Quando o avatar é a única indicação visual do usuário, forneça um `alt` descritivo (ex: `alt="Foto de Maria Silva"`).
+- O fallback de iniciais garante que a informação visual permaneça disponível mesmo sem imagem.
+- O componente usa `<span>` semântico — se o avatar precisar ser interativo, envolva-o em um `<button>` ou `<a>`.
+
+<SectionHeader title="Boas Práticas" />
+
+<DoRule>Sempre forneça um fallback com iniciais para quando a imagem falhar ao carregar.</DoRule>
+<DoRule>Use tamanhos consistentes dentro do mesmo contexto (ex: todos os avatares em uma lista devem ter o mesmo tamanho).</DoRule>
+
+<DontRule>Não use o avatar como botão sem envolvê-lo em um elemento interativo — ele é apenas um indicador visual.</DontRule>
+<DontRule>Não exiba estados de imagem quebrada — o fallback de iniciais deve sempre estar presente como alternativa.</DontRule>

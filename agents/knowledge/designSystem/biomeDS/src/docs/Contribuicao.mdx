@@ -1,0 +1,362 @@
+{/* Contribuicao.mdx */}
+import { Meta } from '@storybook/blocks'
+import { DocsPageHeader, SectionHeader, DocsCallout, DoRule, DontRule, ProjectStructure, ComponentFolderExample } from './components'
+
+<Meta title="Começar/Guia de Contribuição" />
+
+<DocsPageHeader
+  title="Guia de Contribuição"
+  badge="Começar"
+  description="Como adicionar, modificar e documentar componentes no Biome. Siga estas diretrizes para manter consistência e qualidade do design system."
+/>
+
+<DocsCallout type="info" title="Este guia é sobre implementação">
+  Aqui você encontra **estrutura de pastas**, **convenções**, **checklists técnicos** e **fluxo de contribuição**. Decisões arquiteturais — alto nível vs. primitivos, superfície pública, tipagem no pacote, consumo em projetos consumidores — estão em **Começar → Governança**. O padrão **Input / Textarea / Select** está detalhado em **Começar → Família de campos**.
+</DocsCallout>
+
+<DocsCallout type="danger" title="Regra obrigatória de entrega">
+  Todo componente novo (ou refatorado) deve sair **plug-and-play** para o app consumidor: uso por props declarativas, sem exigir construção do zero para o cenário comum.
+</DocsCallout>
+
+<SectionHeader title="📁 Estrutura de Pastas" description="Visão geral da organização do projeto e a estrutura recomendada para componentes." />
+
+<ProjectStructure />
+
+<ComponentFolderExample />
+
+<SectionHeader title="📝 Convenções de Nomenclatura" />
+
+**Arquivos:**
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', marginBottom: 16 }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '140px 180px 1fr', gap: 0, background: '#f5f5f5', padding: '8px 16px' }}>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tipo</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Convenção</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exemplo</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '140px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fff', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Componente</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>kebab-case.tsx</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>status-badge.tsx</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '140px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fafafa', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Stories</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>kebab-case.stories.tsx</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>status-badge.stories.tsx</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '140px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fff', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Documentação</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>kebab-case.docs.mdx</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>status-badge.docs.mdx</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '140px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fafafa', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Tipos auxiliares</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>kebab-case.types.ts</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>button.types.ts</code>
+  </div>
+</div>
+
+**Componentes React:**
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', marginBottom: 16 }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '160px 180px 1fr', gap: 0, background: '#f5f5f5', padding: '8px 16px' }}>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Elemento</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Convenção</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exemplo</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '160px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fff', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Componente</span>
+    <span style={{ fontSize: 12, color: '#264c37', fontWeight: 600 }}>PascalCase</span>
+    <code style={{ fontSize: 12, color: '#737373' }}>StatusBadge, DialogModal</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '160px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fafafa', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Props interface</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>ComponentNameProps</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>StatusBadgeProps, ButtonProps</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '160px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fff', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Variantes CVA</span>
+    <span style={{ fontSize: 12, color: '#264c37', fontWeight: 600 }}>camelCase</span>
+    <code style={{ fontSize: 12, color: '#737373' }}>buttonVariants, badgeVariants</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '160px 180px 1fr', gap: 0, padding: '10px 16px', background: '#fafafa', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Ref forwarding</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>forwardRef + tipo</code>
+    <code style={{ fontSize: 12, color: '#737373', wordBreak: 'break-all' }}>React.forwardRef&lt;HTMLButtonElement, ButtonProps&gt;</code>
+  </div>
+</div>
+
+**Design Tokens:**
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden', marginBottom: 24 }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '120px 160px 160px 1fr', gap: 0, background: '#f5f5f5', padding: '8px 16px' }}>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tipo</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Convenção</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exemplo CSS</span>
+    <span style={{ fontSize: 11, fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exemplo TS</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '120px 160px 160px 1fr', gap: 0, padding: '10px 16px', background: '#fff', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Token CSS</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>--kebab-case</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>--success-surface</code>
+    <span style={{ fontSize: 12, color: '#9f9f9f' }}>—</span>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '120px 160px 160px 1fr', gap: 0, padding: '10px 16px', background: '#fafafa', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Token TS</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>camelCase</code>
+    <span style={{ fontSize: 12, color: '#9f9f9f' }}>—</span>
+    <code style={{ fontSize: 12, color: '#737373' }}>successSurface</code>
+  </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '120px 160px 160px 1fr', gap: 0, padding: '10px 16px', background: '#fff', borderTop: '1px solid #f5f5f5', alignItems: 'center' }}>
+    <span style={{ fontSize: 13, color: '#4c4d4d' }}>Classe Tailwind</span>
+    <code style={{ fontSize: 12, color: '#264c37' }}>kebab-case</code>
+    <code style={{ fontSize: 12, color: '#737373' }}>bg-success-surface</code>
+    <span style={{ fontSize: 12, color: '#9f9f9f' }}>—</span>
+  </div>
+</div>
+
+<SectionHeader title="🧱 Como Criar um Novo Componente" />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 24 }}>
+  {[
+    { step: '1', title: 'Valide a necessidade', desc: 'Use o checklist em Começar → Governança (superfície pública, canônicos, produto). Só então implemente aqui.' },
+    { step: '2', title: 'Crie a pasta do componente', desc: 'src/components/ui/my-component/ — crie a pasta com kebab-case' },
+    { step: '3', title: 'Implemente o componente', desc: 'my-component.tsx — use CVA para variantes, forwardRef, cn() utility, tokens do sistema' },
+    { step: '4', title: 'Crie o barrel export', desc: 'index.ts — export * from "./my-component"' },
+    { step: '5', title: 'Exporte pelo index raiz', desc: 'src/index.ts — export * from "./components/ui/my-component"' },
+    { step: '6', title: 'Crie as Stories', desc: 'my-component.stories.tsx — Playground, Variants, States' },
+    { step: '7', title: 'Crie a documentação MDX', desc: 'my-component.docs.mdx — obrigatório: visão geral, playground, variantes, acessibilidade, boas práticas' },
+  ].map(({ step, title, desc }) => (
+    <div key={step} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '12px 16px', border: '1px solid #e5e5e5', borderRadius: 10, background: '#fff' }}>
+      <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#264c37', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>{step}</div>
+      <div>
+        <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: 14, marginBottom: 3 }}>{title}</div>
+        <p style={{ fontSize: 12, color: '#737373', margin: 0, lineHeight: 1.5 }}>{desc}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+**Template: componente.tsx** (CVA interno; props públicas com literais exportados — ver Governança → Tipagem pública)
+
+```tsx
+import * as React from "react"
+import { cva } from "class-variance-authority"
+import { cn } from "../../../utils/cn"
+
+const myComponentVariants = cva(
+  "inline-flex items-center rounded-md font-medium transition-colors",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground",
+        outline: "border border-border bg-transparent",
+      },
+      size: {
+        sm: "h-8 px-3 text-xs",
+        md: "h-9 px-4 text-sm",
+        lg: "h-10 px-5 text-base",
+      },
+    },
+    defaultVariants: { variant: "default", size: "md" },
+  }
+)
+
+export type MyComponentVariant = "default" | "outline"
+export type MyComponentSize = "sm" | "md" | "lg"
+
+export interface MyComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: MyComponentVariant
+  size?: MyComponentSize
+}
+
+const MyComponent = React.forwardRef<HTMLDivElement, MyComponentProps>(
+  ({ className, variant, size, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(myComponentVariants({ variant, size }), className)}
+      {...props}
+    />
+  )
+)
+MyComponent.displayName = "MyComponent"
+
+export { MyComponent, myComponentVariants }
+```
+
+<SectionHeader title="✅ Checklist de Qualidade" description="Antes de submeter um componente, verifique cada item." />
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12, marginBottom: 24 }}>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+    <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 13, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+      <span style={{ fontSize: 16 }}>⚙️</span> Implementação
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {['Usa forwardRef para expor o ref do elemento DOM', 'Espalha ...props para permitir extensões', 'Aceita className como override', 'Usa tokens do sistema (bg-primary) — não hex direto'].map(item => (
+        <div key={item} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 12, color: '#4c4d4d' }}>
+          <span style={{ color: '#264c37', flexShrink: 0, marginTop: 1 }}>☐</span>
+          <span style={{ lineHeight: 1.4 }}>{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+    <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 13, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+      <span style={{ fontSize: 16 }}>♿</span> Acessibilidade
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {['Elementos interativos têm papel semântico correto', 'Estados desabilitados têm disabled ou aria-disabled', 'Ícones decorativos têm aria-hidden="true"', 'Ícones funcionais têm aria-label', 'Erros têm aria-describedby', 'Operável via teclado'].map(item => (
+        <div key={item} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 12, color: '#4c4d4d' }}>
+          <span style={{ color: '#264c37', flexShrink: 0, marginTop: 1 }}>☐</span>
+          <span style={{ lineHeight: 1.4 }}>{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff' }}>
+    <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 13, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+      <span style={{ fontSize: 16 }}>📖</span> Stories e Docs
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {['Story Playground com args configurados', 'Story para cada variante visual relevante', 'Story ContextoProduto baseado em cenário real', 'Arquivo .docs.mdx criado (obrigatório)', 'Seções de Acessibilidade e Boas Práticas', 'Props table gerada (Controls ou manual)'].map(item => (
+        <div key={item} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 12, color: '#4c4d4d' }}>
+          <span style={{ color: '#264c37', flexShrink: 0, marginTop: 1 }}>☐</span>
+          <span style={{ lineHeight: 1.4 }}>{item}</span>
+        </div>
+      ))}
+      {['API declarativa pronta para uso (plug-and-play) para o caso comum'].map(item => (
+        <div key={item} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 12, color: '#4c4d4d' }}>
+          <span style={{ color: '#264c37', flexShrink: 0, marginTop: 1 }}>☐</span>
+          <span style={{ lineHeight: 1.4 }}>{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<SectionHeader title="📐 Estilo de API na implementação" description="Convenções de código. Política de alto nível vs. primitivos está em Governança." />
+
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 24 }}>
+  <div>
+    <DoRule>Props semânticas — <code>intent="success"</code> em vez de <code>color="green"</code></DoRule>
+    <DoRule>Booleans sem prefixo <code>is</code> — <code>disabled</code>, <code>loading</code>, <code>fullWidth</code></DoRule>
+    <DoRule><code>children</code> para conteúdo principal; props para metadados curtos</DoRule>
+    <DoRule>Exporte tipos literais (<code>MyComponentSize</code>, etc.) para props que o produto digita no dia a dia</DoRule>
+  </div>
+  <div>
+    <DontRule>Não use cores hex cruas — use tokens (<code>bg-success-surface</code>, …)</DontRule>
+    <DontRule>Não use <code>isDisabled</code> / <code>isLoading</code> — use <code>disabled</code> / <code>loading</code></DontRule>
+    <DontRule>Não coloque textos longos em props se <code>children</code> resolve melhor</DontRule>
+    <DontRule>Expor <code>Pick&lt;VariantProps&lt;…&gt;&gt;</code> sozinho na interface pública sem materializar literais no <code>dist</code></DontRule>
+  </div>
+</div>
+
+```tsx
+// ✅ Props semânticas
+intent="success" | "warning" | "destructive"
+
+// ✅ Children para conteúdo
+<Alert title="Atenção" intent="warning">
+  O formulário não foi salvo.
+</Alert>
+
+// ✅ Composição (quando a governança permitir primitivos para o caso)
+<Dialog>
+  <DialogTrigger><Button>Open</Button></DialogTrigger>
+  <DialogContent>
+    <DialogHeader>Title</DialogHeader>
+    <DialogBody>Custom body</DialogBody>
+  </DialogContent>
+</Dialog>
+```
+
+<SectionHeader title="🔀 Fluxo técnico sugerido" description="Antes de abrir o PR." />
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+  {[
+    { step: '1', text: 'Branch a partir da política acordada; commits com mensagens claras.' },
+    { step: '2', text: 'Rodar typecheck: npx tsc --noEmit' },
+    { step: '3', text: 'Rodar build do pacote e do Storybook quando alterar componentes ou docs.' },
+    { step: '4', text: 'PR descrevendo mudança de API (se houver), impacto no produto e link para Governança quando for decisão arquitetural.' },
+  ].map(({ step, text }) => (
+    <div key={step} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '12px 16px', border: '1px solid #e5e5e5', borderRadius: 10, background: '#fafafa' }}>
+      <span style={{ fontWeight: 700, color: '#264c37' }}>{step}</span>
+      <span style={{ fontSize: 13, color: '#4c4d4d', lineHeight: 1.5 }}>{text}</span>
+    </div>
+  ))}
+</div>
+
+<SectionHeader title="📚 Leitura complementar" />
+
+<div style={{ border: '1px solid #e5e5e5', borderRadius: 10, padding: 16, background: '#fff', marginBottom: 8 }}>
+  <p style={{ margin: 0, fontSize: 14, color: '#4c4d4d', lineHeight: 1.6 }}>
+    <strong>Governança</strong> — alto nível vs. primitivos, família de campos em resumo, tipagem pública, forwardRef, asChild, ícones, consumo em projetos consumidores, checklist de decisão.<br />
+    <strong>Família de campos</strong> — contrato compartilhado de <code>Input</code>, <code>Textarea</code> e <code>Select</code>, diferenças permitidas e exemplos.<br />
+    <strong>Introdução</strong> — visão geral do Biome e da base no produto.
+  </p>
+</div>
+
+<SectionHeader title="Versionamento e Publicação" />
+
+A lib segue **Semantic Versioning** (semver) com bump manual e publish automático via pipeline.
+
+### Por que bump manual?
+
+- O mantenedor decide conscientemente o tipo de mudança (patch, minor, major)
+- Evita versões acidentais por merge de qualquer commit
+- Garante que o CHANGELOG e a comunicação com consumidores sejam intencionais
+- A pipeline só publica se todos os checks passarem (typecheck, governance, testes, build)
+
+### Fluxo de release
+
+<DocsCallout type="warning" title="Publicação somente via GitLab CI">
+  A publicação de novas versões deve acontecer exclusivamente via pipeline do GitLab CI.
+  Não execute <code>pnpm publish</code> manualmente na máquina local.
+</DocsCallout>
+
+```bash
+# 1. Faça suas alterações e commite normalmente na branch main
+git add . && git commit -m "feat: novo componente Card"
+
+# 2. Quando estiver pronto pra release, faça o bump
+pnpm version patch   # 0.1.0 → 0.1.1 (bugfix)
+pnpm version minor   # 0.1.0 → 0.2.0 (nova feature, retrocompatível)
+pnpm version major   # 0.1.0 → 1.0.0 (breaking change)
+
+# 3. Push com a tag — isso dispara o publish no Nexus
+git push origin main --tags
+```
+
+### O que cada tipo de bump significa
+
+| Tipo | Quando usar | Exemplo |
+|------|-------------|---------|
+| `patch` | Correção de bug, ajuste visual, fix de tipografia | `vX.Y.(Z+1)` |
+| `minor` | Novo componente, nova prop, nova variante | `vX.(Y+1).0` |
+| `major` | Remoção de componente, mudança de API, breaking change | `v(X+1).0.0` |
+
+### Pipeline (automático)
+
+A tag `v*.*.*` dispara a pipeline completa:
+
+1. Publica a lib no Nexus (`@biome/design-system@<versão>`)
+2. Builda o Storybook estático
+3. Builda a imagem Docker do Storybook
+4. Deploya o Storybook no K8s
+
+Push na branch `main` roda apenas validação (typecheck, governance, testes, build), sem publicar.
+
+### Infraestrutura
+
+| Recurso | Localização |
+|---------|-------------|
+| Manifestos K8s | `gov-k8s/apps/biome/storybook/` |
+| Pipeline CI/CD | `gov-pipelines/apps/biome/k8s-biome-storybook-gitlab-ci.yml` |
+| Storybook (dev) | `https://dev.ecosistemas.meioambiente.mg.gov.br/biome/` |
+| Nexus (npm) | `https://nexus.meioambiente.mg.gov.br/repository/npm-hosted/` |
+
+### Variáveis CI/CD necessárias (GitLab)
+
+| Variável | Descrição | Flags |
+|----------|-----------|-------|
+| `NEXUS_AUTH` | Base64 de `gitlabci_user:senha` | Protected, Masked |

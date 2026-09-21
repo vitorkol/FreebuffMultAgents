@@ -1,0 +1,114 @@
+{/* Spinner.docs.mdx */}
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks'
+import * as SpinnerStories from './spinner.stories'
+import { ComponentOverviewCard, PropsTable, DocsCallout, SectionHeader, DoRule, DontRule } from '../../../docs/components'
+
+<Meta of={SpinnerStories} />
+
+# Spinner
+
+Indicador visual de carregamento. Sinaliza ao usuário que uma operação está em andamento e que ele deve aguardar.
+
+<ComponentOverviewCard
+  category="Feedback / Primitivo"
+  aria='role="status" + aria-label'
+  file="src/components/ui/spinner/spinner.tsx"
+  darkMode="Herda currentColor — adapta-se automaticamente"
+/>
+
+<SectionHeader title="Playground" />
+
+<Primary />
+<Controls />
+
+<SectionHeader title="Quando Usar" />
+
+<DoRule>Dentro de botões durante envio de formulário — use a prop loading do Button.</DoRule>
+<DoRule>Como substituto de conteúdo ainda não carregado (inline dentro de um parágrafo).</DoRule>
+<DoRule>Centralizado em um contêiner enquanto dados são buscados da API.</DoRule>
+<DoRule>Como estado de transição entre views dentro de um modal.</DoRule>
+
+<SectionHeader title="Quando Não Usar" />
+
+<DontRule>Para indicar progresso mensurável — use uma barra de progresso.</DontRule>
+<DontRule>Para substituir todo o esqueleto de uma página — use Skeleton.</DontRule>
+<DontRule>Como ornamento decorativo sem uma operação real em andamento.</DontRule>
+
+<SectionHeader title="Tamanhos" description="5 tamanhos disponíveis para diferentes contextos de uso." />
+
+<Canvas of={SpinnerStories.Sizes} />
+
+- `xs` (`12px`) — Inline em texto e indicadores compactos.
+- `sm` (`16px`) — Dentro de botões (`Button` com `loading`).
+- `md` (`20px`) — Uso padrão em seções de conteúdo.
+- `lg` (`24px`) — Cabeçalhos de seção e cards de carregamento.
+- `xl` (`32px`) — Estados de carregamento de página inteira.
+
+<SectionHeader title="Cores por Contexto" description="A cor é controlada pela propriedade CSS color via currentColor. Use classes Tailwind de texto." />
+
+<Canvas of={SpinnerStories.Colors} />
+
+<SectionHeader title="Em Botões" />
+
+<DocsCallout type="tip">
+  O <code>Button</code> com <code>loading</code> usa o Spinner internamente (tamanho <code>sm</code>). Nunca adicione um Spinner manualmente dentro de um botão.
+</DocsCallout>
+
+<Canvas of={SpinnerStories.InButtons} />
+
+<SectionHeader title="Loading Inline" />
+
+<Canvas of={SpinnerStories.LoadingInline} />
+
+<SectionHeader title="Contexto Real do Produto" />
+
+<Canvas of={SpinnerStories.ProductContext} />
+
+<SectionHeader title="Acessibilidade" />
+
+<DocsCallout type="info" title="role=status">
+  O SVG usa <code>role="status"</code> para que leitores de tela anunciem a mensagem sem interromper o fluxo. Quando o carregamento terminar, <strong>remova o Spinner do DOM</strong> — não apenas oculte com opacity.
+</DocsCallout>
+
+- `aria-label` padrão é `"Carregando..."`. Forneça um label contextual quando relevante:
+  ```tsx
+  <Spinner label="Buscando seus atendimentos..." />
+  ```
+- Para carregamentos de página inteira, mova o foco para o conteúdo carregado após a conclusão.
+
+<SectionHeader title="Props" />
+
+<PropsTable
+  rows={[
+    { prop: 'size',      type: '"xs" | "sm" | "md" | "lg" | "xl"', default: '"md"',             description: 'Escala de diâmetro do spinner' },
+    { prop: 'label',     type: 'string',                            default: '"Carregando..."',  description: 'Label acessível para leitores de tela' },
+    { prop: 'className', type: 'string',                            description: 'Classes adicionais (ex: text-brand-green, text-white)' },
+  ]}
+/>
+
+<SectionHeader title="Boas Práticas" />
+
+```tsx
+// ✅ Sempre forneça um label contextual quando possível
+<Spinner label="Enviando avaliação..." />
+
+// ✅ Use classe de texto correta para o contexto
+<Spinner className="text-white" />          // em fundo escuro
+<Spinner className="text-destructive" />    // em estado de erro
+<Spinner className="text-brand-green" size="xl" /> // loading de página
+
+// ✅ Compose com texto para estados de carregamento ricos
+<div className="flex items-center gap-2 text-muted-foreground">
+  <Spinner size="sm" />
+  <span>Verificando CPF...</span>
+</div>
+
+// ❌ Não adicione Spinner manualmente dentro de Button
+<Button>
+  <Spinner size="sm" />  {/* Errado — Button já gerencia isso */}
+  Enviando
+</Button>
+
+// ✅ Use a prop loading
+<Button loading>Enviando</Button>
+```
