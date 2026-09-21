@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01 · Login — Protótipo Sprint 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#ffffff; --foreground:#4c4d4d; --card:#ffffff;
+  --primary:#264c37; --primary-foreground:#ffffff;
+  --secondary:#e9f4ee; --secondary-foreground:#264c37;
+  --muted:#f5f5f5; --muted-foreground:#737373;
+  --destructive:#dc2626; --destructive-surface:#fef2f2; --destructive-surface-border:#fecaca; --destructive-on-surface:#b91c1c;
+  --success:#198754; --success-surface:#f0fdf4; --success-surface-border:#bbf7d0; --success-on-surface:#15803d;
+  --warning:#d97706; --warning-surface:#fefce8; --warning-surface-border:#fde68a; --warning-on-surface:#a16207;
+  --border:#e5e5e5; --label:#1a1a1a; --text-muted:#9f9f9f; --link:#396dc0; --input-focus:#264c37; --ring:#264c37;
+  --brand-green-dark:#024d2a; --brand-lime:#92b123; --mint:#a7f3d0; --footer-bg:#053b2d; --section-gray:#fafafa;
+  --font-sans:"Roboto",sans-serif; --font-display:"Poppins",sans-serif;
+  --radius-md:8px; --radius-lg:12px; --radius-full:9999px;
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.10),0 4px 6px -4px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--foreground);background:var(--section-gray);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--primary);color:var(--primary-foreground);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-family:var(--font-display);font-size:18px;font-weight:600}
+header a{color:var(--mint);font-size:12px;text-decoration:none}
+header a:hover{text-decoration:underline}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 16px}
+.shell{display:grid;grid-template-columns:1fr;gap:24px;max-width:960px;width:100%}
+@media(min-width:48rem){.shell{grid-template-columns:1fr 1fr;align-items:center}}
+.hero{display:none}
+@media(min-width:48rem){.hero{display:block}}
+.hero h2{font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--brand-green-dark);line-height:1.2;letter-spacing:-.01em}
+.hero p{margin-top:12px;color:var(--muted-foreground);font-size:16px}
+.hero ul{margin-top:20px;list-style:none;display:grid;gap:12px}
+.hero li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--foreground)}
+.dot{width:8px;height:8px;border-radius:var(--radius-full);background:var(--brand-lime);flex:none}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:32px}
+.card h2{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--brand-green-dark)}
+.card > p.sub{margin-top:4px;font-size:14px;color:var(--muted-foreground)}
+form{margin-top:24px;display:grid;gap:16px}
+.field label{display:block;font-size:14px;font-weight:500;color:var(--label);margin-bottom:6px}
+.field input{width:100%;height:40px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius-md);font:inherit;font-size:16px;background:var(--card);color:var(--foreground)}
+.field input:focus{outline:none;border-color:var(--input-focus);box-shadow:0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent)}
+.field input:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.field .hint{margin-top:4px;font-size:12px;color:var(--text-muted)}
+.field.error input{border-color:var(--destructive)}
+.field.error .msg{display:flex;gap:6px;margin-top:4px;font-size:12px;color:var(--destructive-on-surface)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 20px;border-radius:var(--radius-md);font:inherit;font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{background:var(--brand-green-light)}
+.btn-primary:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.btn-ghost{background:transparent;color:var(--link);border-color:var(--border);text-decoration:none}
+.btn-ghost:hover{background:var(--muted)}
+.helper{display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.helper a{color:var(--link);text-decoration:none}
+.helper a:hover{text-decoration:underline}
+.alert{display:flex;gap:10px;padding:12px 16px;border-radius:var(--radius-md);font-size:14px;border:1px solid}
+.alert-error{background:var(--destructive-surface);border-color:var(--destructive-surface-border);color:var(--destructive-on-surface)}
+.alert-warning{background:var(--warning-surface);border-color:var(--warning-surface-border);color:var(--warning-on-surface)}
+.alert-success{background:var(--success-surface);border-color:var(--success-surface-border);color:var(--success-on-surface)}
+.alert .title{font-weight:700;display:block}
+.states{display:grid;gap:24px;max-width:960px;width:100%;margin:0 auto;padding:0 16px 48px}
+.state h3{font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--brand-green-dark);margin:0 0 8px}
+.state{max-width:480px}
+footer{background:var(--footer-bg);color:var(--mint);padding:16px 32px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Protótipo · Login</h1>
+  <a href="index.html">← Voltar ao índice</a>
+</header>
+
+<main>
+  <div class="shell">
+    <section class="hero" aria-hidden="true">
+      <h2>Acesso ao sistema</h2>
+      <p>Plataforma pedagógica para professores, alunos e coordenação.</p>
+      <ul>
+        <li><span class="dot"></span> Perfis de acesso: professor, aluno e administrador</li>
+        <li><span class="dot"></span> Conta bloqueada temporariamente após 5 tentativas incorretas</li>
+        <li><span class="dot"></span> Recuperação de senha por e-mail</li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="t-login">
+      <h2 id="t-login">Entrar</h2>
+      <p class="sub">Use suas credenciais institucionais.</p>
+      <form aria-describedby="form-desc">
+        <p id="form-desc" class="visually-hidden" style="position:absolute;left:-9999px">Formulário de login com e-mail e senha</p>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="username" placeholder="nome@instituicao.gov.br" required>
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <input id="senha" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required aria-describedby="senha-hint">
+          <p class="hint" id="senha-hint">Após 5 tentativas incorretas, a conta é bloqueada por 30 minutos.</p>
+        </div>
+        <div class="helper">
+          <a href="02-recuperacao-senha.html">Esqueci minha senha</a>
+        </div>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<section class="states" aria-label="Estados do formulário">
+  <div class="state">
+    <h3>Estado 2 — Credenciais inválidas (CA-3)</h3>
+    <div class="alert alert-error" role="alert">
+      <span aria-hidden="true">⚠</span>
+      <span><span class="title">Credenciais inválidas.</span> Verifique e-mail e senha e tente novamente. Restam 3 tentativas antes do bloqueio.</span>
+    </div>
+  </div>
+  <div class="state">
+    <h3>Estado 3 — Conta bloqueada (CA-4 · BDD “Bloqueio após tentativas incorretas”)</h3>
+    <div class="alert alert-warning" role="alert">
+      <span aria-hidden="true">🔒</span>
+      <span><span class="title">Conta bloqueada temporariamente.</span> Você errou a senha 5 vezes. Tente novamente às <strong>14:37</strong> (bloqueio por 30 minutos). Você também pode recuperar o acesso pelo e-mail institucional.</span>
+    </div>
+  </div>
+  <div class="state">
+    <h3>Estado 4 — Sucesso (BDD “Login válido de professor”)</h3>
+    <div class="alert alert-success" role="status">
+      <span aria-hidden="true">✓</span>
+      <span><span class="title">Login autorizado.</span> Token de sessão emitido. Redirecionando para o dashboard…</span>
+    </div>
+</section>
+
+<footer>
+  <span>CA-3 · CA-4 · BDD (login válido / bloqueio) · Biome DS</span>
+  <span>Agent Designer · 2026-09-21</span>
+</footer>
+</body>
+</html>

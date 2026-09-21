@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protótipos — Sprint 1 · Autenticação e cadastro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#ffffff; --foreground:#4c4d4d; --card:#ffffff;
+  --primary:#264c37; --primary-foreground:#ffffff;
+  --secondary:#e9f4ee; --secondary-foreground:#264c37;
+  --muted:#f5f5f5; --muted-foreground:#737373;
+  --destructive:#dc2626; --destructive-surface:#fef2f2; --destructive-surface-border:#fecaca; --destructive-on-surface:#b91c1c;
+  --success:#198754; --success-surface:#f0fdf4; --success-surface-border:#bbf7d0; --success-on-surface:#15803d;
+  --info:#2563eb; --info-surface:#eff6ff; --info-surface-border:#bfdbfe; --info-on-surface:#1d4ed8;
+  --border:#e5e5e5; --label:#1a1a1a; --text-muted:#9f9f9f; --link:#396dc0;
+  --brand-green:#198754; --brand-green-dark:#024d2a; --brand-green-light:#157347; --brand-lime:#92b123; --mint:#a7f3d0;
+  --footer-bg:#053b2d; --section-gray:#fafafa;
+  --font-sans:"Roboto",sans-serif; --font-display:"Poppins",sans-serif;
+  --radius-md:8px; --radius-lg:12px; --radius-xl:16px; --radius-full:9999px;
+  --shadow-sm:0 1px 3px 0 rgba(0,0,0,.10),0 1px 2px -1px rgba(0,0,0,.10);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.10),0 2px 4px -2px rgba(0,0,0,.10);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.10),0 4px 6px -4px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--foreground);background:var(--section-gray);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--primary);color:var(--primary-foreground);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:.025em}
+header span{font-size:12px;opacity:.85}
+main{flex:1;max-width:80rem;width:100%;margin:0 auto;padding:48px 16px}
+.intro{margin-bottom:32px}
+.intro h2{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--brand-green-dark);letter-spacing:-.01em;line-height:1.2}
+.intro p{margin-top:8px;color:var(--muted-foreground);font-size:14px;max-width:56rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+a.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow-sm);transition:box-shadow 150ms ease,transform 150ms ease}
+a.card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+a.card:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.card .num{font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--brand-lime);letter-spacing:.05em;text-transform:uppercase}
+.card h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--brand-green-dark)}
+.card p{font-size:14px;color:var(--muted-foreground)}
+.card .cas{font-size:12px;color:var(--info-on-surface);background:var(--info-surface);border:1px solid var(--info-surface-border);border-radius:var(--radius-full);padding:2px 12px;align-self:flex-start}
+footer{background:var(--footer-bg);color:var(--mint);padding:24px 32px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Protótipos — Sprint 1</h1>
+  <span>Biome DS · WCAG 2.1 AA · 2026-09-21</span>
+</header>
+<main>
+  <section class="intro" aria-labelledby="t-intro">
+    <h2 id="t-intro">Autenticação e cadastro</h2>
+    <p>Protótipos navegáveis da História 1 — <strong>“Como administrador, quero importar e cadastrar usuários, para que professores e alunos possam acessar o sistema com seus perfis corretos.”</strong> Cobre CA-1 a CA-6 e os cenários BDD (login válido e bloqueio por tentativas). Todos os estilos usam exclusivamente os tokens do Biome DS.</p>
+  </section>
+  <nav class="grid" aria-label="Lista de protótipos">
+    <a class="card" href="01-login.html"><span class="num">Tela 01</span><h3>Login</h3><p>E-mail + senha, erro de credenciais e bloqueio de 30 minutos após 5 tentativas.</p><span class="cas">CA-3 · CA-4 · BDD</span></a>
+    <a class="card" href="02-recuperacao-senha.html"><span class="num">Tela 02</span><h3>Recuperação de senha</h3><p>Solicitação de link com token válido por 1 hora.</p><span class="cas">CA-6</span></a>
+    <a class="card" href="03-definicao-senha.html"><span class="num">Tela 03</span><h3>Definir / redefinir senha</h3><p>Ativação via e-mail e redefinição com regras de complexidade.</p><span class="cas">CA-2 · CA-5 · CA-6</span></a>
+    <a class="card" href="04-importacao-usuarios.html"><span class="num">Tela 04</span><h3>Importação de usuários (CSV)</h3><p>Importação pelo administrador criando usuários inativos.</p><span class="cas">CA-1</span></a>
+    <a class="card" href="05-dashboard.html"><span class="num">Tela 05</span><h3>Dashboard pós-login</h3><p>Destino do fluxo BDD “login válido”: o professor vê seu dashboard.</p><span class="cas">BDD · CA-3</span></a>
+  </nav>
+</main>
+<footer>
+  <span>Fontes: agents/knowledge/designSystem/biomeDS (tokens.css) · docs/product/user-stories.md</span>
+  <span>Gerado pelo agent Designer · 2026-09-21</span>
+</footer>
+</body>
+</html>

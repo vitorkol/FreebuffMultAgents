@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 · Importação de usuários (CSV) — Protótipo Sprint 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#ffffff; --foreground:#4c4d4d; --card:#ffffff;
+  --primary:#264c37; --primary-foreground:#ffffff;
+  --secondary:#e9f4ee; --secondary-foreground:#264c37;
+  --muted:#f5f5f5; --muted-foreground:#737373;
+  --destructive:#dc2626; --destructive-surface:#fef2f2; --destructive-surface-border:#fecaca; --destructive-on-surface:#b91c1c;
+  --success:#198754; --success-surface:#f0fdf4; --success-surface-border:#bbf7d0; --success-on-surface:#15803d;
+  --warning:#d97706; --warning-surface:#fefce8; --warning-surface-border:#fde68a; --warning-on-surface:#a16207;
+  --border:#e5e5e5; --label:#1a1a1a; --text-muted:#9f9f9f; --link:#396dc0; --input-focus:#264c37; --ring:#264c37;
+  --brand-green-dark:#024d2a; --brand-lime:#92b123; --mint:#a7f3d0; --footer-bg:#053b2d; --section-gray:#fafafa;
+  --font-sans:"Roboto",sans-serif; --font-display:"Poppins",sans-serif;
+  --radius-md:8px; --radius-lg:12px; --radius-full:9999px;
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.10),0 2px 4px -2px rgba(0,0,0,.10);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.10),0 4px 6px -4px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--foreground);background:var(--section-gray);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--primary);color:var(--primary-foreground);padding:12px 32px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-family:var(--font-display);font-size:16px;font-weight:600}
+header a{color:var(--mint);font-size:12px;text-decoration:none}
+.layout{flex:1;display:grid;grid-template-columns:240px 1fr;min-height:0}
+@media(max-width:64rem){.layout{grid-template-columns:1fr}}
+aside{background:var(--card);border-right:1px solid var(--border);padding:24px 16px}
+aside h2{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground);margin:0 0 12px;padding-left:12px}
+aside ul{list-style:none;display:grid;gap:4px}
+aside a{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-md);color:var(--foreground);text-decoration:none;font-size:14px}
+aside a:hover{background:var(--muted)}
+aside a[aria-current="page"]{background:var(--secondary);color:var(--secondary-foreground);font-weight:500}
+main{padding:32px;max-width:80rem;width:100%;margin:0 auto}
+main h2{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--brand-green-dark)}
+main > p.sub{margin-top:4px;font-size:14px;color:var(--muted-foreground);margin-bottom:24px}
+.steps{display:flex;gap:8px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-foreground)}
+.step .n{width:24px;height:24px;border-radius:var(--radius-full);background:var(--muted);color:var(--muted-foreground);display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:12px}
+.step.active .n{background:var(--primary);color:var(--primary-foreground)}
+.step.active{color:var(--brand-green-dark);font-weight:500}
+.step .sep{width:24px;height:1px;background:var(--border)}
+.dropzone{border:2px dashed var(--border);border-radius:var(--radius-lg);padding:48px 24px;text-align:center;background:var(--card)}
+.dropzone .icon{width:48px;height:48px;border-radius:var(--radius-full);background:var(--secondary);color:var(--secondary-foreground);display:inline-flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px}
+.dropzone h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--brand-green-dark)}
+.dropzone p{margin-top:4px;font-size:14px;color:var(--muted-foreground)}
+.dropzone p strong{color:var(--foreground)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 20px;border-radius:var(--radius-md);font:inherit;font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent;text-decoration:none}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{background:var(--brand-green-light)}
+.btn-primary:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.btn-ghost{background:transparent;color:var(--link);border-color:var(--border)}
+.btn-ghost:hover{background:var(--muted)}
+.actions{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+caption{text-align:left;font-size:12px;color:var(--muted-foreground);padding:0 0 8px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground);background:var(--muted);padding:10px 16px;border-bottom:1px solid var(--border)}
+td{padding:10px 16px;font-size:14px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+.badge{display:inline-flex;align-items:center;height:22px;padding:0 10px;border-radius:var(--radius-full);font-size:12px;font-weight:500}
+.badge-inactive{background:var(--warning-surface);border:1px solid var(--warning-surface-border);color:var(--warning-on-surface)}
+.badge-error{background:var(--destructive-surface);border:1px solid var(--destructive-surface-border);color:var(--destructive-on-surface)}
+.badge-ok{background:var(--success-surface);border:1px solid var(--success-surface-border);color:var(--success-on-surface)}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:grid;gap:4px}
+.tile .v{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--brand-green-dark)}
+.tile .l{font-size:12px;color:var(--muted-foreground)}
+.tile.ok .v{color:var(--success-on-surface)}
+.tile.err .v{color:var(--destructive-on-surface)}
+footer{background:var(--footer-bg);color:var(--mint);padding:16px 32px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Protótipo · Importação de usuários</h1>
+  <a href="index.html">← Voltar ao índice</a>
+</header>
+
+<div class="layout">
+  <aside>
+    <h2>Administração</h2>
+    <ul>
+      <li><a href="#" aria-current="page">👥 Importar usuários</a></li>
+      <li><a href="#">🏫 Turmas e disciplinas</a></li>
+      <li><a href="#">⚙️ Configurações</a></li>
+    </ul>
+  </aside>
+  <main>
+    <h2>Importar usuários</h2>
+    <p class="sub">Envie um arquivo CSV para criar usuários inativos; cada pessoa receberá um e-mail de ativação.</p>
+
+    <div class="steps" aria-label="Etapas da importação">
+      <span class="step active"><span class="n">1</span> Upload do CSV</span>
+      <span class="step"><span class="sep"></span><span class="n">2</span> Validação</span>
+      <span class="step"><span class="sep"></span><span class="n">3</span> Confirmação</span>
+    </div>
+
+    <div class="dropzone">
+      <span class="icon" aria-hidden="true">⬆</span>
+      <h3>Arraste o arquivo CSV aqui</h3>
+      <p>ou <strong>selecione no seu computador</strong> · formato exigido: <code>name;email;role</code> (separador “;”)</p>
+      <div class="actions">
+        <button class="btn btn-primary">Selecionar arquivo</button>
+        <a class="btn btn-ghost" href="#">Baixar modelo</a>
+      </div>
+    </div>
+
+    <h2 style="margin-top:32px;font-size:18px">Pré-visualização da validação</h2>
+    <p class="sub">Exemplo do estado 2 — linhas prontas para importação.</p>
+    <div class="summary">
+      <div class="tile"><span class="v">42</span><span class="l">Linhas no arquivo</span></div>
+      <div class="tile ok"><span class="v">39</span><span class="l">Válidas (usuários inativos)</span></div>
+      <div class="tile err"><span class="v">3</span><span class="l">Com erro</span></div>
+    </div>
+    <table>
+      <caption>Prévia das linhas do CSV (estado 2 — validação)</caption>
+      <thead>
+        <tr><th scope="col">Linha</th><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">Perfil</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2</td><td>Maria Silva</td><td>maria.silva@escola.gov.br</td><td>teacher</td><td><span class="badge badge-ok">Válida</span></td></tr>
+        <tr><td>3</td><td>João Souza</td><td>joao.souza@escola.gov.br</td><td>student</td><td><span class="badge badge-ok">Válida</span></td></tr>
+        <tr><td>4</td><td>Ana Lima</td><td>maria.silva@escola.gov.br</td><td>student</td><td><span class="badge badge-error">E-mail duplicado</span></td></tr>
+        <tr><td>5</td><td>Carlos Nunes</td><td>carlos.nunes@</td><td>teacher</td><td><span class="badge badge-error">E-mail inválido</span></td></tr>
+        <tr><td>6</td><td>Paula Rocha</td><td>paula.rocha@escola.gov.br</td><td>student</td><td><span class="badge badge-ok">Válida</span></td></tr>
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<footer>
+  <span>CA-1 · usuários criados como inativos + e-mail de ativação (CA-2) · Biome DS</span>
+  <span>Agent Designer · 2026-09-21</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05 · Dashboard — Protótipo Sprint 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#ffffff; --foreground:#4c4d4d; --card:#ffffff;
+  --primary:#264c37; --primary-foreground:#ffffff;
+  --secondary:#e9f4ee; --secondary-foreground:#264c37;
+  --muted:#f5f5f5; --muted-foreground:#737373;
+  --destructive:#dc2626; --destructive-surface:#fef2f2; --destructive-surface-border:#fecaca; --destructive-on-surface:#b91c1c;
+  --success:#198754; --success-surface:#f0fdf4; --success-surface-border:#bbf7d0; --success-on-surface:#15803d;
+  --info:#2563eb; --info-surface:#eff6ff; --info-surface-border:#bfdbfe; --info-on-surface:#1d4ed8;
+  --border:#e5e5e5; --label:#1a1a1a; --text-muted:#9f9f9f; --link:#396dc0; --ring:#264c37;
+  --brand-green-dark:#024d2a; --brand-green-light:#157347; --brand-lime:#92b123; --mint:#a7f3d0; --footer-bg:#053b2d; --section-gray:#fafafa;
+  --font-sans:"Roboto",sans-serif; --font-display:"Poppins",sans-serif;
+  --radius-md:8px; --radius-lg:12px; --radius-full:9999px;
+  --shadow-sm:0 1px 3px 0 rgba(0,0,0,.10),0 1px 2px -1px rgba(0,0,0,.10);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.10),0 2px 4px -2px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--foreground);background:var(--section-gray);min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--primary);color:var(--primary-foreground);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.topbar .brand{font-family:var(--font-display);font-weight:600;font-size:18px;display:flex;align-items:center;gap:10px}
+.logo{width:28px;height:28px;border-radius:var(--radius-full);background:var(--brand-lime);display:inline-flex;align-items:center;justify-content:center;color:var(--brand-green-dark);font-size:14px;font-weight:700}
+.topbar nav{display:flex;gap:4px;align-items:center}
+.topbar nav a{color:var(--mint);text-decoration:none;font-size:14px;padding:8px 12px;border-radius:var(--radius-md)}
+.topbar nav a:hover,.topbar nav a[aria-current="page"]{background:rgba(255,255,255,.12);color:#fff}
+.user{display:flex;align-items:center;gap:10px;font-size:14px}
+.avatar{width:32px;height:32px;border-radius:var(--radius-full);background:var(--mint);color:var(--brand-green-dark);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.layout{flex:1;display:grid;grid-template-columns:240px 1fr}
+@media(max-width:64rem){.layout{grid-template-columns:1fr}}
+aside{background:var(--card);border-right:1px solid var(--border);padding:24px 16px}
+aside h2{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground);margin:0 0 12px;padding-left:12px}
+aside ul{list-style:none;display:grid;gap:4px}
+aside a{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-md);color:var(--foreground);text-decoration:none;font-size:14px}
+aside a:hover{background:var(--muted)}
+aside a[aria-current="page"]{background:var(--secondary);color:var(--secondary-foreground);font-weight:500}
+main{padding:32px;max-width:80rem;width:100%;margin:0 auto}
+main h2{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--brand-green-dark)}
+main > p.sub{margin-top:4px;font-size:14px;color:var(--muted-foreground);margin-bottom:24px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);display:grid;gap:4px}
+.kpi .v{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--brand-green-dark)}
+.kpi .l{font-size:12px;color:var(--muted-foreground);letter-spacing:.025em;text-transform:uppercase;font-weight:500}
+.kpi .d{font-size:12px;color:var(--success-on-surface)}
+.cols{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:64rem){.cols{grid-template-columns:2fr 1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.panel h3{font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--brand-green-dark);padding:16px 20px;border-bottom:1px solid var(--border)}
+.panel .body{padding:20px}
+.list{list-style:none;display:grid;gap:12px}
+.list li{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.list .meta{color:var(--muted-foreground);font-size:12px}
+.badge{display:inline-flex;align-items:center;height:22px;padding:0 10px;border-radius:var(--radius-full);font-size:12px;font-weight:500;white-space:nowrap}
+.badge-info{background:var(--info-surface);border:1px solid var(--info-surface-border);color:var(--info-on-surface)}
+.badge-ok{background:var(--success-surface);border:1px solid var(--success-surface-border);color:var(--success-on-surface)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:var(--radius-md);font:inherit;font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent;text-decoration:none}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{background:var(--brand-green-light)}
+.btn-primary:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.empty{border:1px dashed var(--border);border-radius:var(--radius-lg);padding:24px;text-align:center;font-size:14px;color:var(--muted-foreground)}
+footer{background:var(--footer-bg);color:var(--mint);padding:16px 32px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <span class="brand"><span class="logo">B</span> Plataforma Pedagógica</span>
+  <nav aria-label="Navegação principal">
+    <a href="#" aria-current="page">Dashboard</a>
+    <a href="#">Minhas disciplinas</a>
+    <a href="#">Atividades</a>
+    <a href="#">Avaliações</a>
+  </nav>
+  <div class="user">
+    <span>Maria Silva · Professora</span>
+    <span class="avatar" aria-hidden="true">MS</span>
+  </div>
+</header>
+
+<div class="layout">
+  <aside>
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="#" aria-current="page">🏠 Dashboard</a></li>
+      <li><a href="#">📚 Disciplinas</a></li>
+      <li><a href="#">📝 Atividades</a></li>
+      <li><a href="#">🧪 Avaliações</a></li>
+      <li><a href="#">📊 Relatórios</a></li>
+    </ul>
+  </aside>
+  <main>
+    <h2>Bem-vinda, Maria 👋</h2>
+    <p class="sub">Visão geral do seu período letivo.</p>
+
+    <div class="kpis">
+      <div class="kpi"><span class="v">4</span><span class="l">Turmas ativas</span><span class="d">↳ 96 alunos matriculados</span></div>
+      <div class="kpi"><span class="v">12</span><span class="l">Atividades abertas</span><span class="d">↳ 3 vencem esta semana</span></div>
+      <div class="kpi"><span class="v">86%</span><span class="l">Engajamento</span><span class="d">↳ +2% vs. semana anterior</span></div>
+      <div class="kpi"><span class="v">7</span><span class="l">Correções pendentes</span><span class="d">↳ prazo médio 2 dias</span></div>
+    </div>
+
+    <div class="cols">
+      <section class="panel" aria-labelledby="t-entregas">
+        <h3 id="t-entregas">Entregas recentes</h3>
+        <div class="body">
+          <ul class="list">
+            <li><span>Atividade: <strong>Exercícios de equações</strong> — 9ºA</span><span class="badge badge-ok">28/30 entregues</span></li>
+            <li><span>Atividade: <strong>Redação argumentativa</strong> — 8ºB</span><span class="meta">Prazo: sex, 25/09</span><span class="badge badge-info">Aguardando</span></li>
+            <li><span>Atividade: <strong>Leitura do mês</strong> — 6ºC</span><span class="meta">Prazo: hoje</span><span class="badge badge-info">Aguardando</span></li>
+          </ul>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="t-acoes">
+        <h3 id="t-acoes">Ações rápidas</h3>
+        <div class="body">
+          <ul class="list">
+            <li><a class="btn btn-primary" href="#">Criar atividade</a></li>
+            <li><a class="btn btn-primary" href="#">Publicar aula</a></li>
+            <li><a class="btn btn-primary" href="#">Lançar notas</a></li>
+          </ul>
+          <p class="empty" style="margin-top:16px">Módulos das próximas sprints (conteúdos, atividades e avaliações) aparecem aqui conforme o roadmap.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <span>BDD “Login válido de professor” → o professor vê seu dashboard · CA-3 · Biome DS</span>
+  <span>Agent Designer · 2026-09-21</span>
+</footer>
+</body>
+</html>

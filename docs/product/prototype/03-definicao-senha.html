@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 · Definir / redefinir senha — Protótipo Sprint 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#ffffff; --foreground:#4c4d4d; --card:#ffffff;
+  --primary:#264c37; --primary-foreground:#ffffff;
+  --secondary:#e9f4ee; --secondary-foreground:#264c37;
+  --muted:#f5f5f5; --muted-foreground:#737373;
+  --destructive:#dc2626; --destructive-surface:#fef2f2; --destructive-surface-border:#fecaca; --destructive-on-surface:#b91c1c;
+  --success:#198754; --success-surface:#f0fdf4; --success-surface-border:#bbf7d0; --success-on-surface:#15803d;
+  --border:#e5e5e5; --label:#1a1a1a; --text-muted:#9f9f9f; --link:#396dc0; --input-focus:#264c37; --input-error:#dc2626; --ring:#264c37; --label-required:#dc2626;
+  --brand-green-dark:#024d2a; --brand-lime:#92b123; --mint:#a7f3d0; --footer-bg:#053b2d; --section-gray:#fafafa;
+  --font-sans:"Roboto",sans-serif; --font-display:"Poppins",sans-serif;
+  --radius-md:8px; --radius-lg:12px; --radius-full:9999px;
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.10),0 4px 6px -4px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--foreground);background:var(--section-gray);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--primary);color:var(--primary-foreground);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-family:var(--font-display);font-size:18px;font-weight:600}
+header a{color:var(--mint);font-size:12px;text-decoration:none}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 16px}
+.shell{display:grid;grid-template-columns:1fr;gap:24px;max-width:960px;width:100%}
+@media(min-width:48rem){.shell{grid-template-columns:1fr 1fr;align-items:center}}
+.hero{display:none}
+@media(min-width:48rem){.hero{display:block}}
+.hero h2{font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--brand-green-dark);line-height:1.2;letter-spacing:-.01em}
+.hero p{margin-top:12px;color:var(--muted-foreground);font-size:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:32px}
+.card h2{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--brand-green-dark)}
+.card p.sub{margin-top:4px;font-size:14px;color:var(--muted-foreground)}
+form{margin-top:24px;display:grid;gap:16px}
+.field label{display:block;font-size:14px;font-weight:500;color:var(--label);margin-bottom:6px}
+.field label .req{color:var(--label-required)}
+.field input{width:100%;height:40px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius-md);font:inherit;font-size:16px;background:var(--card);color:var(--foreground)}
+.field input:focus{outline:none;border-color:var(--input-focus);box-shadow:0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent)}
+.field.invalid input{border-color:var(--input-error)}
+.field .hint{margin-top:4px;font-size:12px;color:var(--text-muted)}
+.rules{border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;background:var(--card)}
+.rules h3{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:12px}
+.rules ul{list-style:none;display:grid;gap:8px;font-size:14px}
+.rules li{display:flex;gap:8px;align-items:center}
+.rules li.ok{color:var(--success-on-surface)}
+.rules li.pending{color:var(--text-muted)}
+.check{width:16px;height:16px;border-radius:var(--radius-full);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:10px;flex:none}
+li.ok .check{background:var(--success);border-color:var(--success);color:var(--success-foreground)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 20px;border-radius:var(--radius-md);font:inherit;font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{background:var(--brand-green-light)}
+.btn-primary:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.btn-ghost{background:transparent;color:var(--link);border-color:var(--border);text-decoration:none;display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:var(--radius-md);font-size:14px}
+.btn-ghost:hover{background:var(--muted)}
+.helper{margin-top:8px;font-size:14px}
+.helper a{color:var(--link);text-decoration:none}
+.helper a:hover{text-decoration:underline}
+.alert{display:flex;gap:10px;padding:12px 16px;border-radius:var(--radius-md);font-size:14px;border:1px solid}
+.alert .title{font-weight:700;display:block}
+.alert-success{background:var(--success-surface);border-color:var(--success-surface-border);color:var(--success-on-surface)}
+.alert-error{background:var(--destructive-surface);border-color:var(--destructive-surface-border);color:var(--destructive-on-surface)}
+.states{display:grid;gap:24px;max-width:960px;width:100%;margin:0 auto;padding:0 16px 48px}
+.state{max-width:520px}
+.state h3{font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--brand-green-dark);margin:0 0 8px}
+footer{background:var(--footer-bg);color:var(--mint);padding:16px 32px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Protótipo · Definir / redefinir senha</h1>
+  <a href="index.html">← Voltar ao índice</a>
+</header>
+
+<main>
+  <div class="shell">
+    <section class="hero" aria-hidden="true">
+      <h2>Protegendo sua conta</h2>
+      <p>Defina uma senha forte — ela protege seus dados e os dados dos alunos.</p>
+    </section>
+
+    <section class="card" aria-labelledby="t-def">
+      <h2 id="t-def">Definir senha</h2>
+      <p class="sub">Fluxo de ativação (e-mail de boas-vindas) e de redefinição (link de recuperação).</p>
+      <form>
+        <div class="field">
+          <label for="senha">Nova senha <span class="req" aria-hidden="true">*</span></label>
+          <input id="senha" name="password" type="password" autocomplete="new-password" required aria-describedby="regras-senha">
+        </div>
+        <div class="field">
+          <label for="confirm">Confirmar senha <span class="req" aria-hidden="true">*</span></label>
+          <input id="confirm" name="password_confirmation" type="password" autocomplete="new-password" required>
+        </div>
+        <div class="rules" id="regras-senha" aria-label="Regras de complexidade de senha">
+          <h3>Requisitos de segurança</h3>
+          <ul>
+            <li class="ok"><span class="check" aria-hidden="true">✓</span> Mínimo de 12 caracteres</li>
+            <li class="ok"><span class="check" aria-hidden="true">✓</span> Letras maiúsculas e minúsculas</li>
+            <li class="pending"><span class="check" aria-hidden="true">✓</span> Ao menos um número</li>
+            <li class="pending"><span class="check" aria-hidden="true">✓</span> Ao menos um símbolo (ex.: !@#$%)</li>
+          </ul>
+        </div>
+        <button class="btn btn-primary" type="submit">Salvar senha</button>
+        <p class="helper"><a href="01-login.html">← Voltar para o login</a></p>
+      </form>
+    </section>
+  </div>
+</main>
+
+<section class="states" aria-label="Estados do formulário">
+  <div class="state">
+    <h3>Estado 2 — Senha não atende à complexidade (CA-5)</h3>
+    <div class="alert alert-error" role="alert">
+      <span aria-hidden="true">⚠</span>
+      <span><span class="title">Senha não atende aos requisitos.</span> Use ao menos 12 caracteres com maiúsculas, minúsculas, números e símbolos.</span>
+    </div>
+  </div>
+  <div class="state">
+    <h3>Estado 3 — Senhas não conferem</h3>
+    <div class="alert alert-error" role="alert">
+      <span aria-hidden="true">⚠</span>
+      <span><span class="title">As senhas não conferem.</span> Verifique e tente novamente.</span>
+    </div>
+  </div>
+  <div class="state">
+    <h3>Estado 4 — Sucesso (CA-2 / CA-6)</h3>
+    <div class="alert alert-success" role="status">
+      <span aria-hidden="true">✓</span>
+      <span><span class="title">Senha definida com sucesso.</span> Sua conta está ativa. Você já pode fazer login com e-mail e senha.</span>
+    </div>
+  </div>
+  <div class="state">
+    <h3>Estado 5 — Token expirado (CA-6)</h3>
+    <div class="alert alert-error" role="alert">
+      <span aria-hidden="true">⏱</span>
+      <span><span class="title">Link expirado.</span> O token é válido por 1 hora. Solicite um novo link na tela de recuperação de senha.</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>CA-2 · CA-5 · CA-6 · Biome DS</span>
+  <span>Agent Designer · 2026-09-21</span>
+</footer>
+</body>
+</html>
