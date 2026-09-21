@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronograma de Desenvolvimento — MVP Plataforma Pedagógica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#264c37; --primary-foreground:#ffffff; --secondary:#e9f4ee; --secondary-foreground:#264c37;
+  --brand-green:#198754; --brand-green-dark:#024d2a; --brand-green-light:#157347; --brand-lime:#92b123; --mint:#a7f3d0;
+  --background:#ffffff; --foreground:#4c4d4d; --card:#ffffff; --muted:#f5f5f5; --muted-foreground:#737373;
+  --info:#2563eb; --info-surface:#eff6ff; --info-surface-border:#bfdbfe; --info-on-surface:#1d4ed8;
+  --success:#198754; --success-surface:#f0fdf4; --success-surface-border:#bbf7d0; --success-on-surface:#15803d;
+  --warning:#d97706; --warning-surface:#fefce8; --warning-surface-border:#fde68a; --warning-on-surface:#a16207;
+  --destructive:#dc2626; --destructive-surface:#fef2f2; --destructive-surface-border:#fecaca; --destructive-on-surface:#b91c1c;
+  --border:#e5e5e5; --section-gray:#fafafa; --footer-bg:#053b2d;
+  --font-sans:"Roboto",sans-serif; --font-display:"Poppins",sans-serif;
+  --radius-md:8px; --radius-lg:12px; --radius-xl:16px; --radius-full:9999px;
+  --shadow-sm:0 1px 3px 0 rgba(0,0,0,.10),0 1px 2px -1px rgba(0,0,0,.10);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.10),0 2px 4px -2px rgba(0,0,0,.10);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.10),0 4px 6px -4px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--foreground);background:var(--background)}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--brand-green-dark)}
+.hero{background:linear-gradient(135deg,var(--brand-green-dark) 0%,var(--primary) 55%,var(--brand-green-light) 100%);color:#fff;padding:64px 32px}
+.hero .wrap{max-width:80rem;margin:0 auto}
+.hero .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);font-weight:600}
+.hero h1{font-size:48px;font-weight:700;line-height:1.2;letter-spacing:-.01em;color:#fff;margin-top:8px}
+.hero p.sub{margin-top:12px;font-size:18px;color:var(--mint);max-width:60rem}
+.hero .meta{margin-top:24px;display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mint)}
+nav.toc{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:8px;flex-wrap:wrap}
+nav.toc a{font-size:13px;color:var(--foreground);text-decoration:none;padding:6px 12px;border-radius:var(--radius-full);border:1px solid var(--border)}
+nav.toc a:hover{background:var(--secondary);color:var(--secondary-foreground)}
+section{max-width:80rem;margin:0 auto;padding:56px 32px}
+section > h2{font-size:30px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+section > p.lead{color:var(--muted-foreground);font-size:15px;margin-bottom:32px;max-width:60rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)}
+.card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.card p{font-size:14px;color:var(--muted-foreground)}
+.pill{display:inline-flex;align-items:center;height:24px;padding:0 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600}
+.pill-obrigatorio{background:var(--brand-green-dark);color:#fff}
+.pill-desejavel{background:var(--brand-lime);color:var(--brand-green-dark)}
+.pill-pos{background:var(--muted);color:var(--muted-foreground)}
+.pill-done{background:var(--success-surface);border:1px solid var(--success-surface-border);color:var(--success-on-surface)}
+.pill-active{background:var(--warning-surface);border:1px solid var(--warning-surface-border);color:var(--warning-on-surface)}
+/* Roadmap */
+.roadmap{display:grid;gap:16px}
+.sprint{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:stretch}
+.sprint .rail{display:flex;flex-direction:column;align-items:center}
+.sprint .node{width:40px;height:40px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;color:#fff;background:var(--muted-foreground);flex:none}
+.sprint.done .node{background:var(--success)}
+.sprint.active .node{background:var(--warning)}
+.sprint.mandatory .node{background:var(--brand-green-dark)}
+.sprint.desirable .node{background:var(--brand-green-light)}
+.sprint .line{width:2px;flex:1;background:var(--border);margin:4px 0}
+.sprint:last-child .line{display:none}
+.sprint .box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;box-shadow:var(--shadow-sm);flex:1}
+.sprint.done .box{border-color:var(--success-surface-border)}
+.sprint.active .box{border-color:var(--warning-surface-border);box-shadow:var(--shadow-md)}
+.sprint h3{font-size:16px;font-weight:600;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sprint .epic{font-size:12px;color:var(--muted-foreground);font-weight:400}
+.sprint p.desc{font-size:14px;color:var(--muted-foreground);margin-top:6px}
+.sprint .why{font-size:13px;margin-top:8px;color:var(--foreground)}
+.sprint .why strong{color:var(--brand-green-dark)}
+/* Tabela de histórias */
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground);background:var(--muted);padding:12px 16px}
+td{padding:12px 16px;font-size:14px;border-top:1px solid var(--border);vertical-align:top}
+tr:hover td{background:var(--section-gray)}
+td .us-id{font-family:var(--font-display);font-weight:600;color:var(--brand-green-dark)}
+/* Sprint plan */
+.plan{border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-sm);background:var(--card);margin-bottom:24px}
+.plan-head{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.plan.done .plan-head{background:var(--success-surface)}
+.plan.active .plan-head{background:var(--warning-surface)}
+.plan-head h3{font-size:18px;font-weight:600}
+.plan-head .dates{font-size:13px;color:var(--muted-foreground)}
+.plan-body{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--border)}
+@media(min-width:64rem){.plan-body{grid-template-columns:1fr 1fr}}
+.plan-body > div{padding:20px 24px}
+.plan-body > div + div{border-top:1px solid var(--border)}
+@media(min-width:64rem){.plan-body > div + div{border-top:none;border-left:1px solid var(--border)}}
+.plan-body h4{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:12px}
+.plan-body ul{list-style:none;display:grid;gap:8px;font-size:14px}
+.plan-body li{display:flex;gap:10px}
+.plan-body li .ic{flex:none}
+.goal{padding:16px 24px;background:var(--section-gray);font-size:14px;border-top:1px solid var(--border)}
+.goal strong{color:var(--brand-green-dark)}
+/* Timeline bars */
+.timeline{display:grid;gap:12px}
+.trow{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center}
+@media(max-width:48rem){.trow{grid-template-columns:1fr}}
+.tlabel{font-size:14px;font-weight:500;color:var(--foreground)}
+.tlabel small{display:block;font-weight:400;color:var(--muted-foreground)}
+.tbar{background:var(--muted);border-radius:var(--radius-full);height:28px;position:relative;overflow:hidden}
+.tfill{height:100%;border-radius:var(--radius-full);display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap}
+.tf-done{background:var(--success)}
+.tf-run{background:linear-gradient(90deg,var(--warning) var(--p,60%),var(--muted) var(--p,60%))}
+.tf-mvp{background:var(--brand-green-dark)}
+.tf-pos{background:var(--muted-foreground)}
+footer{background:var(--footer-bg);color:var(--mint);padding:32px;font-size:13px}
+footer .wrap{max-width:80rem;margin:0 auto;display:grid;gap:8px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Produto · Plataforma Pedagógica — MVP</span>
+    <h1>Cronograma de Desenvolvimento</h1>
+    <p class="sub">Roadmap do MVP, épicos, histórias, atividades por sprint e projeção de entrega — consolidado a partir das reuniões de levantamento de requisitos (kickoff, Lean Inception e módulos) realizadas em 16/09/2026.</p>
+    <div class="meta">
+      <span>📅 Elaboração: 2026-09-21</span>
+      <span>🤖 Elaborado pelo pipeline de agentes (ANR → Designer → Tech Leader)</span>
+      <span>📄 Fontes: docs/product/meetings/ · sprint-prioritization.md · user-stories.md</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Índice da apresentação">
+  <a href="#roadmap">Roadmap visual</a>
+  <a href="#epicos">Épicos do MVP</a>
+  <a href="#historias">Histórias e atividades</a>
+  <a href="#sprints">Planejamento por sprint</a>
+  <a href="#prazo">Projeção de entrega</a>
+</nav>
+
+<!-- ===================== ROADMAP ===================== -->
+<section id="roadmap">
+  <h2>1 · Roadmap visual</h2>
+  <p class="lead">Sete sprints planejadas a partir da priorização do ANR (valor pedagógico, risco e dependência técnica). Sprints 1–5 são obrigatórias para o MVP; 6–7 desejáveis; o restante fica para pós-MVP. As atas que originaram cada sprint estão em <code>docs/product/meetings/</code>.</p>
+
+  <div class="roadmap">
+    <div class="sprint done">
+      <div class="rail"><span class="node">S1</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 1 — Autenticação e cadastro <span class="pill pill-done">✓ Concluída</span></h3>
+        <p class="desc epic">Épico 1 · Origem: requisitos_login_2026-09-16.md</p>
+        <p class="desc">Importação CSV de usuários, ativação por e-mail, login com bloqueio e recuperação de senha.</p>
+        <p class="why"><strong>Por que primeiro:</strong> sem login e perfis, nada das outras funcionalidades é acessível.</p>
+      </div>
+    </div>
+
+    <div class="sprint active">
+      <div class="rail"><span class="node">S2</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 2 — Cadastros básicos <span class="pill pill-active">▶ Próxima</span></h3>
+        <p class="desc epic">Épico 2 · Origem: requisitos_cadastros_2026-09-16.md</p>
+        <p class="desc">Turmas, disciplinas, associações professor-disciplina-turma, matrículas e importações CSV.</p>
+        <p class="why"><strong>Por que segundo:</strong> turmas, disciplinas e associações são a espinha dorsal da operação.</p>
+      </div>
+    </div>
+
+    <div class="sprint mandatory">
+      <div class="rail"><span class="node">S3</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 3 — Cursos e conteúdos <span class="pill pill-obrigatorio">Obrigatório MVP</span></h3>
+        <p class="desc epic">Épico 3 · Origem: requisitos_cursos_2026-09-16.md + requisitos_aulas (parcial)</p>
+        <p class="desc">Módulos, aulas com editor rico, anexos, status de publicação e navegação do aluno.</p>
+        <p class="why"><strong>Por que terceiro:</strong> após a base pronta, o professor organiza conteúdo de forma clara — uma das funcionalidades mais visíveis para a adoção docente.</p>
+      </div>
+    </div>
+
+    <div class="sprint mandatory">
+      <div class="rail"><span class="node">S4</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 4 — Atividades e entregas <span class="pill pill-obrigatorio">Obrigatório MVP</span></h3>
+        <p class="desc epic">Épico 4 · Origem: requisitos_aulas_2026-09-16.md</p>
+        <p class="desc">Atividades com prazo e tipo de entrega, reenvio com histórico, atrasos e notificações.</p>
+        <p class="why"><strong>Por que quarto:</strong> entrega de atividades é um dos principais motivos de uso e reduz o trabalho offline atual.</p>
+      </div>
+    </div>
+
+    <div class="sprint mandatory">
+      <div class="rail"><span class="node">S5</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 5 — Provas objetivas e correção automática <span class="pill pill-obrigatorio">Obrigatório MVP</span></h3>
+        <p class="desc epic">Épico 5 · Origem: requisitos_avaliacoes_2026-09-16.md</p>
+        <p class="desc">Provas com timer, salvamento automático, retomada e correção automática de objetivas.</p>
+        <p class="why"><strong>Por que quinto:</strong> estrategicamente importante e de maior complexidade técnica — vem após os módulos anteriores.</p>
+      </div>
+    </div>
+
+    <div class="sprint desirable">
+      <div class="rail"><span class="node">S6</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 6 — Notas, rubricas e regras de avaliação <span class="pill pill-desejavel">Desejável MVP</span></h3>
+        <p class="desc epic">Épico 6 · Origem: requisitos_avaliacoes_2026-09-16.md</p>
+        <p class="desc">Tipos de avaliação, pesos, rubricas, recuperação e segunda chamada; média como referência.</p>
+        <p class="why"><strong>Por que sexto:</strong> relevante, mas o MVP pode simplificar a regra de média; política institucional ainda não consolidada.</p>
+      </div>
+    </div>
+
+    <div class="sprint desirable">
+      <div class="rail"><span class="node">S7</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Sprint 7 — Relatórios e dashboards <span class="pill pill-desejavel">Desejável MVP</span></h3>
+        <p class="desc epic">Épico 7 · Origem: requisitos_relatorios_2026-09-16.md</p>
+        <p class="desc">Dashboards por perfil, alunos em risco, relatórios institucionais e exportações.</p>
+        <p class="why"><strong>Por que sétimo:</strong> dá visibilidade pedagógica à coordenação e diretoria; pode começar com indicadores iniciais.</p>
+      </div>
+    </div>
+
+    <div class="sprint">
+      <div class="rail"><span class="node">+</span><span class="line"></span></div>
+      <div class="box">
+        <h3>Pós-MVP <span class="pill pill-pos">Backlog futuro</span></h3>
+        <p class="desc">Tipos de avaliação avançados, rubricas complexas, regra institucional definitiva de média, relatórios agendados e integrações.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ÉPICOS ===================== -->
+<section id="epicos" style="background:var(--section-gray)">
+  <h2>2 · Épicos do MVP</h2>
+  <p class="lead">Sete épicos derivados das histórias aprovadas (História 1–7) e dos módulos levantados nas reuniões.</p>
+
+  <div class="grid3">
+    <div class="card"><h3>EP-01 · Autenticação e cadastro</h3><p>Admin importa/usuários; ativação por e-mail; login; bloqueio; senhas; recuperação. <strong>19 CA (CA-1..CA-6)</strong></p><span class="pill pill-done">Sprint 1</span></div>
+    <div class="card"><h3>EP-02 · Cadastros básicos</h3><p>Turmas, disciplinas, associações e matrículas com CSV. <strong>13 CA (CA-7..CA-19)</strong></p><span class="pill pill-obrigatorio">Sprint 2</span></div>
+    <div class="card"><h3>EP-03 · Cursos e conteúdos</h3><p>Módulos, aulas, editor, anexos e navegação. <strong>19 CA (CA-20..CA-38)</strong></p><span class="pill pill-obrigatorio">Sprint 3</span></div>
+    <div class="card"><h3>EP-04 · Atividades e entregas</h3><p>Atividades, prazos, arquivos/texto, atrasos e notificações. <strong>9 CA (CA-39..CA-47)</strong></p><span class="pill pill-obrigatorio">Sprint 4</span></div>
+    <div class="card"><h3>EP-05 · Provas objetivas</h3><p>Timer, autosave, retomada, segurança e correção automática. <strong>14 CA (CA-48..CA-61)</strong></p><span class="pill pill-obrigatorio">Sprint 5</span></div>
+    <div class="card"><h3>EP-06 · Notas e rubricas</h3><p>Tipos, pesos, rubricas, recuperação e segunda chamada. <strong>16 CA (CA-62..CA-77)</strong></p><span class="pill pill-desejavel">Sprint 6</span></div>
+    <div class="card"><h3>EP-07 · Relatórios e dashboards</h3><p>KPIs, risco, exportações PDF/CSV e alertas. <strong>18 CA (CA-78..CA-95)</strong></p><span class="pill pill-desejavel">Sprint 7</span></div>
+    <div class="card" style="background:var(--secondary);border-color:var(--brand-green-light)"><h3>Σ Total do MVP</h3><p><strong>95 critérios de aceite</strong> em 7 histórias/épicos, com dependências: Auth → Cadastros → Conteúdos → Atividades → Provas.</p></div>
+  </div>
+</section>
+
+<!-- ===================== HISTÓRIAS ===================== -->
+<section id="historias">
+  <h2>3 · Histórias e atividades</h2>
+  <p class="lead">Histórias aprovadas pelo ANR (2026-09-16) e refinadas pelo Tech Leader. Detalhe completo em <code>docs/product/user-stories.md</code>.</p>
+
+  <table>
+    <thead><tr><th>História</th><th>Épico</th><th>Como (ator)</th><th>Atividades principais</th><th>CA</th><th>Sprint</th></tr></thead>
+    <tbody>
+      <tr><td><span class="us-id">US-01</span> Autenticação e cadastro</td><td>EP-01</td><td>Administrador</td><td>Importar CSV; ativar por e-mail; login; bloqueio; senhas; recuperação</td><td>6</td><td><span class="pill pill-done">S1 ✓</span></td></tr>
+      <tr><td><span class="us-id">US-02</span> Cadastros básicos</td><td>EP-02</td><td>Administrador</td><td>CRUD turmas/disciplinas; associações; matrículas; transferência; CSV</td><td>13</td><td><span class="pill pill-obrigatorio">S2</span></td></tr>
+      <tr><td><span class="us-id">US-03</span> Cursos e conteúdos</td><td>EP-03</td><td>Professor</td><td>Módulos; aulas; editor; anexos; publicação; estatísticas de acesso</td><td>19</td><td><span class="pill pill-obrigatorio">S3</span></td></tr>
+      <tr><td><span class="us-id">US-04</span> Atividades e entregas</td><td>EP-04</td><td>Professor</td><td>Criar atividades; prazos; upload/texto; reenvio; atraso; notificações</td><td>9</td><td><span class="pill pill-obrigatorio">S4</span></td></tr>
+      <tr><td><span class="us-id">US-05</span> Provas objetivas</td><td>EP-05</td><td>Professor</td><td>Montar prova; timer; autosave; retomada; correção automática</td><td>14</td></tr>
+      <tr><td><span class="us-id">US-06</span> Notas e rubricas</td><td>EP-06</td><td>Professor/Coordenador</td><td>Tipos e pesos; rubricas; recuperação; segunda chamada</td><td>16</td><td><span class="pill pill-desejavel">S6</span></td></tr>
+      <tr><td><span class="us-id">US-07</span> Relatórios e dashboards</td><td>EP-07</td><td>Coordenador/Professor/Diretoria</td><td>Dashboards; risco; relatórios; PDF/CSV; alertas</td><td>18</td><td><span class="pill pill-desejavel">S7</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== SPRINTS ===================== -->
+<section id="sprints" style="background:var(--section-gray)">
+  <h2>4 · Planejamento de cada sprint</h2>
+  <p class="lead">Cada sprint segue o pipeline de agentes: ANR valida → Designer prototipa (CA/RN/BDD) → Tech Leader estima → ANR prioriza → Developer implementa → QA valida.</p>
+
+  <div class="plan done">
+    <div class="plan-head"><h3>Sprint 1 — Autenticação e cadastro</h3><span class="dates">16/09 – 21/09 · <strong>concluída</strong></span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">✅</span> Importação CSV de usuários (CA-1)</li>
+          <li><span class="ic">✅</span> Ativação por e-mail com link de senha (CA-2)</li>
+          <li><span class="ic">✅</span> Login com Sanctum + throttle (CA-3)</li>
+          <li><span class="ic">✅</span> Bloqueio 30min/5 tentativas + auditoria (CA-4)</li>
+          <li><span class="ic">✅</span> Complexidade de senha (CA-5)</li>
+          <li><span class="ic">✅</span> Reset com token de 1h (CA-6)</li>
+          <li><span class="ic">✅</span> Frontend: login, recuperação, definir senha, dashboard</li>
+          <li><span class="ic">✅</span> Testes automatizados 21/21 (51 asserções)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Entregas de agentes (artefatos)</h4>
+        <ul>
+          <li><span class="ic">✅</span> user-stories.md, requirements.md, sprint-prioritization.md</li>
+          <li><span class="ic">✅</span> test-plan.md / test-evidence.md (QA)</li>
+          <li><span class="ic">✅</span> Protótipos Biome DS em docs/product/prototype/ (6 telas)</li>
+          <li><span class="ic">✅</span> Ambiente executável (php83.sh, backend 21/21, build front)</li>
+        </ul>
+        <h4 style="margin-top:16px">Status QA</h4>
+        <ul><li><span class="ic">⏳</span> Validação final do QA pendente (próximo gate)</li></ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> professores e alunos acessam o sistema com perfis corretos e segurança (login + bloqueio + recuperação). <strong>Entregue.</strong></div>
+  </div>
+
+  <div class="plan active">
+    <div class="plan-head"><h3>Sprint 2 — Cadastros básicos</h3><span class="dates">22/09 – 03/10 · planejada (2 semanas)</span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">🔲</span> CRUD de turmas com código único e sugestão automática (CA-7..CA-9)</li>
+          <li><span class="ic">🔲</span> Nível/curso e turma homogênea por série (CA-10, CA-11)</li>
+          <li><span class="ic">🔲</span> Exclusão vs. inativação por vínculos (CA-12)</li>
+          <li><span class="ic">🔲</span> CRUD de disciplinas (CA-13)</li>
+          <li><span class="ic">🔲</span> Associações professor-disciplina-turma com titular/substituto (CA-14, CA-15)</li>
+          <li><span class="ic">🔲</span> Importação CSV de associações e matrículas (CA-16)</li>
+          <li><span class="ic">🔲</span> Transferência de turma com histórico (CA-17, CA-18)</li>
+          <li><span class="ic">🔲</span> Matrícula única ativa por ano letivo (CA-19)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Design & testes</h4>
+        <ul>
+          <li><span class="ic">🎨</span> Protótipos: turmas, disciplinas, associações, importação</li>
+          <li><span class="ic">🧪</span> BDD: criação de turma com código único</li>
+          <li><span class="ic">🧪</span> Testes de unidade e feature das regras (CA-8, CA-12, CA-19)</li>
+        </ul>
+        <h4 style="margin-top:16px">Risco</h4>
+        <ul><li><span class="ic">⚠️</span> CSV e associações múltiplas podem revelar diferenças entre a realidade institucional e o modelo simplificado do MVP.</li></ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> base acadêmica pronta para operação (turmas, disciplinas, associações e matrículas).</div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-head"><h3>Sprint 3 — Cursos e conteúdos</h3><span class="dates">06/10 – 17/10 · planejada (2 semanas)</span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">🔲</span> Módulos com título, descrição, ordem e datas (CA-20..CA-24)</li>
+          <li><span class="ic">🔲</span> Status de módulo: publicado/rascunho/agendado (CA-25)</li>
+          <li><span class="ic">🔲</span> Aulas: editor rico, anexos ≤50MB/5 por aula, vídeo, capa (CA-26, CA-29, CA-30)</li>
+          <li><span class="ic">🔲</span> Vínculo atividade/prova à aula (CA-27)</li>
+          <li><span class="ic">🔲</span> Publicação, notificação de edição e exclusão lógica (CA-28, CA-32, CA-33)</li>
+          <li><span class="ic">🔲</span> Navegação aluno disciplina→módulo→aula + "estudada" (CA-34, CA-35)</li>
+          <li><span class="ic">🔲</span> Estatísticas de acesso por aula (CA-36)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Design & testes</h4>
+        <ul>
+          <li><span class="ic">🎨</span> Protótipos: módulos, aulas, editor, visão do aluno</li>
+          <li><span class="ic">🧪</span> BDD: módulo publicado visível ao aluno</li>
+          <li><span class="ic">⚠️</span> Editor simples o suficiente para o MVP, suficiente para uso real</li>
+        </ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> professor organiza o conteúdo com clareza — funcionalidade mais visível para a adoção docente.</div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-head"><h3>Sprint 4 — Atividades e entregas</h3><span class="dates">20/10 – 31/10 · planejada (2 semanas)</span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">🔲</span> Atividade: título, instruções, critérios, prazo, tipo (CA-39, CA-45)</li>
+          <li><span class="ic">🔲</span> Entrega arquivo (PDF/DOC/JPG/PNG ≤20MB) ou texto com rascunho (CA-40..CA-42, CA-46)</li>
+          <li><span class="ic">🔲</span> Reenvio antes do prazo mantendo histórico (BDD + CA-42)</li>
+          <li><span class="ic">🔲</span> Atraso: marcação e aceite/recusa pelo professor (CA-43, CA-44)</li>
+          <li><span class="ic">🔲</span> Notificações 24h antes e no dia do prazo (CA-47)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Design & testes</h4>
+        <ul>
+          <li><span class="ic">🎨</span> Protótipos: atividade, entrega do aluno, correção</li>
+          <li><span class="ic">🧪</span> BDD: reenvio antes do prazo</li>
+          <li><span class="ic">⚠️</span> Comportamento de prazo/atraso precisa de decisão clara</li>
+        </ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> reduzir o trabalho offline — entrega digital com histórico e prazos claros.</div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-head"><h3>Sprint 5 — Provas objetivas e correção automática</h3><span class="dates">03/11 – 14/11 · planejada (2 semanas)</span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">🔲</span> Prova: título, instruções, tempo, janela início/fim (CA-48)</li>
+          <li><span class="ic">🔲</span> Prévia antes de publicar (CA-49)</li>
+          <li><span class="ic">🔲</span> Questões múltipla escolha (2–5 alternativas) e V/F (CA-50, CA-51)</li>
+          <li><span class="ic">🔲</span> Timer regressivo + entrega automática (CA-53, CA-54 · BDD)</li>
+          <li><span class="ic">🔲</span> Autosave por interação + retomada pós-queda (CA-55, CA-56)</li>
+          <li><span class="ic">🔲</span> Segurança: bloqueio copiar/colar + registro de saída de aba (CA-57, CA-58)</li>
+          <li><span class="ic">🔲</span> Correção automática + estatísticas + liberação de gabarito (CA-59..CA-61)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Design & testes</h4>
+        <ul>
+          <li><span class="ic">🎨</span> Protótipos: execução de prova, timer, prévia, estatísticas</li>
+          <li><span class="ic">🧪</span> BDD: tempo expira e prova é entregue</li>
+          <li><span class="ic">⚠️</span> Maior complexidade técnica do MVP — reservar margem</li>
+        </ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> avaliação segura e corrigida automaticamente.</div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-head"><h3>Sprint 6 — Notas, rubricas e regras de avaliação</h3><span class="dates">17/11 – 28/11 · desejável (2 semanas)</span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">🔲</span> Tipos padrão e personalizados de avaliação (CA-62, CA-63)</li>
+          <li><span class="ic">🔲</span> Pesos percentuais e média ponderada como referência (CA-64, CA-65 · decisão registrada)</li>
+          <li><span class="ic">🔲</span> Composição da nota visível ao aluno (BDD + CA-66)</li>
+          <li><span class="ic">🔲</span> Rubricas: critérios, média, comentários, visibilidade (CA-68..CA-71)</li>
+          <li><span class="ic">🔲</span> Recuperação: identificação, criação e substituição de nota (CA-72..CA-74)</li>
+          <li><span class="ic">🔲</span> Segunda chamada autorizada (CA-75..CA-77)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Design & testes</h4>
+        <ul>
+          <li><span class="ic">🎨</span> Protótipos: composição da nota, rubrica, recuperação</li>
+          <li><span class="ic">⚠️</span> Média aritmética simples no MVP; ponderada como referência; regra institucional futura</li>
+        </ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> nota refletindo a política pedagógica com rastreabilidade (serviço isolado de cálculo).</div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-head"><h3>Sprint 7 — Relatórios e dashboards</h3><span class="dates">01/12 – 12/12 · desejável (2 semanas)</span></div>
+    <div class="plan-body">
+      <div>
+        <h4>Atividades de desenvolvimento</h4>
+        <ul>
+          <li><span class="ic">🔲</span> Dashboard coordenador: turmas críticas + KPIs (CA-78, CA-79)</li>
+          <li><span class="ic">🔲</span> Filtros e identificação de risco (média&lt;5 ou 3 pendências) (CA-80..CA-82 · BDD)</li>
+          <li><span class="ic">🔲</span> Dashboard professor: entregas, provas, acesso por aula, comparação (CA-84..CA-87)</li>
+          <li><span class="ic">🔲</span> Dashboard aluno: evolução de notas e engajamento (CA-88, CA-89)</li>
+          <li><span class="ic">🔲</span> Relatórios institucional e para pais + PDF/CSV (CA-90..CA-93)</li>
+          <li><span class="ic">🔲</span> Agendamento de relatórios + alertas automáticos (CA-94, CA-95)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Design & testes</h4>
+        <ul>
+          <li><span class="ic">🎨</span> Protótipos: dashboards por perfil e relatórios</li>
+          <li><span class="ic">⚠️</span> Definir indicadores críticos para evitar ruído de alertas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="goal"><strong>Meta da sprint:</strong> análise pedagógica rápida e acionável para coordenação e diretoria.</div>
+  </div>
+</section>
+
+<!-- ===================== PRAZO ===================== -->
+<section id="prazo">
+  <h2>5 · Projeção de tempo para entrega</h2>
+  <p class="lead">Projeção considerando sprints de 2 semanas (10 dias úteis) por sprint, time de desenvolvimento dedicado e o pipeline de agentes com gates de aprovação. Datas de início estimadas a partir do encerramento da Sprint 1 (21/09/2026).</p>
+
+  <div class="grid3" style="margin-bottom:32px">
+    <div class="card"><h3>MVP obrigatório</h3><p>Sprints 1–5 · <strong>10 semanas</strong> · previsão <strong>28/11/2026</strong></p></div>
+    <div class="card"><h3>MVP completo</h3><p>Sprints 1–7 · <strong>14 semanas</strong> · previsão <strong>26/12/2026</strong></p></div>
+    <div class="card"><h3>Margem de segurança</h3><p>+15% sobre o cronograma (complexidade das provas e política de notas) · previsão com margem <strong>~09/01/2027</strong></p></div>
+  </div>
+
+  <div class="timeline">
+    <div class="trow"><div class="tlabel">Sprint 1 · Auth<small>16–21/09</small></div><div class="tbar"><div class="tfill tf-run" style="--p:100%"><span>✓ 100%</span></div></div></div>
+    <div class="trow"><div class="tlabel">Sprint 2 · Cadastros<small>22/09–03/10</small></div><div class="tbar"><div class="tfill tf-mvp" style="width:18%">S2</div></div></div>
+    <div class="trow"><div class="tlabel">Sprint 3 · Conteúdos<small>06–17/10</small></div><div class="tbar"><div class="tfill tf-mvp" style="width:18%">S3</div></div></div>
+    <div class="trow"><div class="tlabel">Sprint 4 · Atividades<small>20–31/10</small></div><div class="tbar"><div class="tfill tf-mvp" style="width:18%">S4</div></div></div>
+    <div class="trow"><div class="tlabel">Sprint 5 · Provas<small>03–14/11</small></div><div class="tbar"><div class="tfill tf-mvp" style="width:18%">S5</div></div></div>
+    <div class="trow"><div class="tlabel">Sprint 6 · Notas<small>17–28/11</small></div><div class="tbar"><div class="tfill tf-pos" style="width:14%">S6</div></div></div>
+    <div class="trow"><div class="tlabel">Sprint 7 · Relatórios<small>01–12/12</small></div><div class="tbar"><div class="tfill tf-pos" style="width:14%">S7</div></div></div>
+  </div>
+
+  <div class="grid2" style="margin-top:32px">
+    <div class="card">
+      <h3>Marcos (milestones)</h3>
+      <ul style="list-style:none;display:grid;gap:8px;font-size:14px">
+        <li>🟢 <strong>21/09/2026</strong> — Sprint 1 entregue (autenticação completa, 21 testes verdes)</li>
+        <li>🔵 <strong>03/10/2026</strong> — Base acadêmica operando (fim da S2)</li>
+        <li>🔵 <strong>14/11/2026</strong> — MVP obrigatório funcional ponta a ponta (fim da S5)</li>
+        <li>🟡 <strong>12/12/2026</strong> — MVP completo com notas e dashboards (fim da S7)</li>
+        <li>⚪ <strong>2027</strong> — Pós-MVP: rubricas avançadas, regra institucional de média, relatórios agendados</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Pressupostos e riscos</h3>
+      <ul style="list-style:none;display:grid;gap:8px;font-size:14px">
+        <li>📅 Sprints de 2 semanas com review + retrospectiva; protótipos do Designer validados antes da implementação.</li>
+        <li>⚠️ Regras de senha/bloqueio: equilíbrio entre segurança e usabilidade de professores menos familiarizados (S1).</li>
+        <li>⚠️ CSV e associações: diferenças entre realidade institucional e modelo do MVP (S2).</li>
+        <li>⚠️ Provas: timer, autosave e retomada são a maior complexidade técnica (S5) — margem de 15% recomendada.</li>
+        <li>⚠️ Política institucional de média final ainda aberta (S6) — decisão do P.O. necessária antes do fim da S5.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><strong>Cronograma de Desenvolvimento — MVP Plataforma Pedagógica</strong> · gerado em 2026-09-21 pelo pipeline de multi agentes (Freebuff)</span>
+    <span>Fontes: docs/product/meetings/ (10 atas) · sprint-prioritization.md · user-stories.md · technical-refinement.md · tokens do Biome DS</span>
+  </div>
+</footer>
+</body>
+</html>
