@@ -37,4 +37,5 @@ Resolvido após consolidação dos registros de reunião:
 - **Bloqueio de conta (CA-4):** implementado por conta de usuário (`failed_login_attempts` + `locked_until`) com auditoria em `auth_audit_logs`; além disso há throttle de 10 req/min por e-mail/IP na rota de login.
 - **Validade do token de ativação (CA-2):** 48 horas (janela de conveniência); o token de recuperação de senha (CA-6) segue o requisito de 1 hora via `auth.passwords.users.expire`.
 - **Regra de senha (CA-5):** mínimo de 10 caracteres com minúscula, maiúscula, número e caractere especial (espelhada no frontend).
+  - **Atualização 2026-09-21:** decisão do usuário restabelece RF-07 — mínimo de **8 caracteres**. Backend (`min:8`), frontend e protótipo alinhados; teste de fronteira (8 caracteres com complexidade aceitos) adicionado.
 - **Comunicação frontend-backend:** token Sanctum via header `Authorization: Bearer`; em dev o Vite faz proxy de `/api` para `http://localhost:8000`.

@@ -20,7 +20,7 @@
 | CA-2 | E-mail de ativação com link para definir senha | `04` (fluxo pós-importação) + `03-definicao-senha.html` (destino do link, estado de sucesso) |
 | CA-3 | Login com e-mail e senha | `01-login.html`: formulário completo com autocomplete e validação |
 | CA-4 | Bloqueio de 30 min após 5 tentativas | `01-login.html`: estado de bloqueio com horário de liberação + aviso prévio na dica do campo senha |
-| CA-5 | Complexidade de senha | `03-definicao-senha.html`: checklist ao vivo (12+ caracteres, maiúsculas/minúsculas, número, símbolo) |
+| CA-5 | Complexidade de senha | `03-definicao-senha.html`: checklist ao vivo (8+ caracteres, maiúsculas/minúsculas, número, símbolo) |
 | CA-6 | Recuperação com token válido por 1 hora | `02-recuperacao-senha.html` (solicitação) + `03` (estado "link expirado") |
 
 ### b) RN, RF e RNF
@@ -68,4 +68,5 @@
 ## Saída gravada / Status
 
 - Saída: `docs/product/prototype/` (6 arquivos) + este registro.
-- **Status: aprovado pelo Designer — aguardando gate do ANR para acionar o Tech Leader.**
+- **Correção aplicada em 2026-09-21:** divergência da regra de complexidade de senha detectada durante o gate de validação — o protótipo exibia mínimo de 12 caracteres enquanto RF-07 exige 8. Protótipo alinhado a 8 caracteres, em conformidade com RF-07 e com backend/frontend.
+- **Status: aprovado pelo ANR (gate 6 — 2026-09-21).** Validação concluída: a) CA-1 a CA-6 cobertos nas telas 01–05; b) RN/RF/RNF refletidas (mensagem de bloqueio não revela existência da conta, checklist de senha visível durante a digitação, RNF de acessibilidade WCAG 2.1 AA presente); c) cenários BDD "Login válido de professor" e "Bloqueio após tentativas incorretas" representados nos estados das telas 01 e 05. Próximo passo do fluxo: Tech Leader já refinado (etapa 7 registrada em `technical-refinement.md`), Sprint 1 priorizada (etapa 8) e implementação em andamento (etapa 9).

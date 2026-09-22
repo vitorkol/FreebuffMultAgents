@@ -75,6 +75,24 @@ class ActivationAndResetTest extends TestCase
         }
     }
 
+    public function test_eight_character_password_meeting_complexity_is_accepted(): void
+    {
+        $user = User::factory()->create([
+            'activation_token' => 'token-8chars',
+            'activation_expires_at' => now()->addDay(),
+            'is_active' => false,
+        ]);
+
+        // Fronteira da regra RF-07: exatamente 8 caracteres com toda a complexidade exigida.
+        $this->postJson('/api/register/activate', [
+            'token' => 'token-8chars',
+            'password' => 'Abc@1234',
+            'password_confirmation' => 'Abc@1234',
+        ])->assertOk();
+
+        $this->assertTrue($user->fresh()->is_active);
+    }
+
     // ---------- CA-6: recuperação de senha ----------
 
     public function test_forgot_password_always_returns_200(): void

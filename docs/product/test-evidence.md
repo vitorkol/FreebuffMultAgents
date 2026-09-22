@@ -53,6 +53,42 @@
 
 ---
 
+## 2026-09-21 — ajuste da regra de senha (CA-5) para RF-07 = 8 caracteres
+
+- **Motivo:** divergência detectada no gate 6 — protótipo usava 12, código usava 10, RF-07 exige 8. Decisão do usuário: 8 caracteres (registro em `bugs.md` e `open-questions.md`).
+- **Mudanças:** `PasswordController::PASSWORD_RULES` com `min:8`; `ResetPasswordPage.jsx` espelhando 8; protótipo `03-definicao-senha.html` corrigido; novo teste de fronteira.
+- **Comando backend:** `cd backend && ./php83.sh vendor/bin/phpunit`
+- **Resultado backend:** OK — 22 testes, 53 asserções (inclui `test_eight_character_password_meeting_complexity_is_accepted` — 8 caracteres com todas as classes aceitos — e fronteira inferior de 7 caracteres rejeitada).
+- **Resultado frontend:** `npm run build` sem erros (bundle 228 kB); `npm run lint` (oxlint) 0 avisos, 0 erros em 8 arquivos.
+- **Status:** evidências atualizadas — QA pode executar o plano considerando a nova regra de 8 caracteres.
+
+---
+
+## 2026-09-21 — smoke test de integração (backend)
+
+**O que é:** verificação rápida ponta a ponta sobre a aplicação real em execução (`artisan serve` + HTTP real + banco migrado), distinta dos testes automatizados (que usam o ambiente de teste). O objetivo é confirmar que os fluxos críticos respondem corretamente antes de considerar a entrega válida — "o sistema não está pegando fogo".
+
+**Cenário preparado:** usuário `smoke@test.local` criado via factory com token de ativação válido (`smoke-token-8`).
+
+| # | Verificação | Resultado |
+|---|---|---|
+| T1 | `POST /api/register/activate` com senha `Abc@1234` (8 chars, todas as classes) — nova regra RF-07 | ✅ HTTP 200 — "Conta ativada com sucesso" |
+| T2 | `POST /api/auth/login` com a credencial ativada (senha de 8 chars) | ✅ HTTP 200 — token Sanctum emitido + auditoria (`account_activated`, `login_success`) |
+| T3 | `GET /api/user` autenticado com `Authorization: Bearer <token>` | ✅ HTTP 200 — dados do usuário retornados |
+| T4 | `POST /api/auth/login` com senha incorreta | ✅ HTTP 401 — `INVALID_CREDENTIALS` (não revela existência da conta) |
+
+**Comando executado:** servidor `./php83.sh artisan serve` + `curl` contra `http://127.0.0.1:8000`.
+
+**Observações:**
+- A regra de 8 caracteres (RF-07) validada ponta a ponta (ativação → login → endpoint autenticado).
+- Auditoria em `auth_audit_logs` registrando eventos de ativação e login.
+- Frontend (Vite) com build e lint limpos na mesma rodada — proxy `/api` → `localhost:8000` já configurado em dev.
+- E-mail real não é enviado em dev (log driver); fluxo verificado via token direto no banco, coberto também pelos testes automatizados (CA-2).
+
+**Status:** aprovado — backend operacional ponta a ponta para a Sprint 1 (CA-2, CA-3, CA-5).
+
+---
+
 ## Handoff
 
 - **Entrada lida:** `docs/product/test-plan.md`

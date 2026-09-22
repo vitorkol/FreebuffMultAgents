@@ -85,3 +85,13 @@ Nenhum bug registrado.
 - **Frontend:** cliente de API (`src/api.js`), telas de login (com aviso de bloqueio e tentativas restantes), recuperação de senha, definição de senha (ativação/reset) e dashboard pós-login; sessão em `localStorage`; proxy do Vite para `/api`.
 - **Verificação:** backend 21/21 testes verdes; frontend build Vite OK e oxlint sem avisos; smoke test do servidor com resposta 401 JSON esperada.
 - **Status:** concluído — pronto para QA executar `docs/product/test-plan.md`.
+
+---
+
+## 2026-09-21 — divergência na regra de complexidade de senha (CA-5)
+
+- **Tipo:** inconsistência entre artefatos (spec × protótipo × código)
+- **Situação encontrada:** durante o gate 6 (validação do protótipo pelo ANR) foi detectado que o protótipo `03-definicao-senha.html` exibia mínimo de 12 caracteres, o código usava `min:10` (decisão técnica de 2026-09-17) e RF-07 em `requirements.md` exige 8.
+- **Impacto:** regra de negócio inconsistente entre spec, protótipo e implementação.
+- **Ação adotada:** decisão do usuário por 8 caracteres (RF-07). Backend (`PasswordController` `min:8`), frontend (`ResetPasswordPage`) e protótipo alinhados; teste de fronteira adicionado em `ActivationAndResetTest`.
+- **Status:** resolvido

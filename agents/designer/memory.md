@@ -5,6 +5,7 @@
 - Separar fato, hipótese e dúvida ao interpretar especificações.
 - Apresentar resumo visual prévio (mapeamento spec -> componentes Biome DS) antes de gerar código.
 - Manter consistência de layout, sidebar e cabeçalho com as telas já existentes do sistema.
+- **Alinhamento interno de cards à esquerda:** todo card (`.card`, `.box`, `.plan`, tiles, painéis) deve ter conteúdo interno alinhado à esquerda — aplicar `text-align:left` no container do card e, em grids de cards, `justify-items:stretch` (nunca `center`/`place-items:center`). Centralização (`text-align:center`) é aceitável apenas em elementos de destaque intencional (ex.: dropzone, estados vazios), nunca como padrão do card.
 
 ## Processamento de histórias (fluxo obrigatório)
 

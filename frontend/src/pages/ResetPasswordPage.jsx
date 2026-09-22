@@ -22,7 +22,7 @@ export default function ResetPasswordPage({ mode = 'reset', onDone }) {
   // CA-5: regra de complexidade (espelha o backend)
   function passwordProblems(pwd) {
     const problems = []
-    if (pwd.length < 10) problems.push('Pelo menos 10 caracteres')
+    if (pwd.length < 8) problems.push('Pelo menos 8 caracteres')
     if (!/[a-z]/.test(pwd)) problems.push('Uma letra minúscula')
     if (!/[A-Z]/.test(pwd)) problems.push('Uma letra maiúscula')
     if (!/[0-9]/.test(pwd)) problems.push('Um número')
@@ -92,7 +92,7 @@ export default function ResetPasswordPage({ mode = 'reset', onDone }) {
 
         <ul className="rules" aria-live="polite">
           <li className={problems.length === 0 && password ? 'ok' : ''}>
-            {problems.length === 0 && password ? '✓ Senha válida' : `Requisitos: ${problems.join(', ') || '10+ caracteres, maiúscula, minúscula, número e especial'}`}
+            {problems.length === 0 && password ? '✓ Senha válida' : `Requisitos: ${problems.join(', ') || '8+ caracteres, maiúscula, minúscula, número e especial'}`}
           </li>
           <li className={password && password === confirmation ? 'ok' : ''}>
             {password && password === confirmation ? '✓ Senhas coincidem' : 'As senhas devem coincidir'}

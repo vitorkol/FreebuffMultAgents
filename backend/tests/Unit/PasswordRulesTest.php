@@ -40,6 +40,7 @@ class PasswordRulesTest extends TestCase
         $this->assertFalse($this->passes('semmaiuscula1@'));
         $this->assertFalse($this->passes('SEMESPECIAL1a'));
         $this->assertFalse($this->passes('SemNumero@'));
-        $this->assertFalse($this->passes('curta1@A'));
+        // Fronteira: 7 caracteres com todas as classes ainda é rejeitado (RF-07 exige 8).
+        $this->assertFalse($this->passes('Curta1@'));
     }
 }

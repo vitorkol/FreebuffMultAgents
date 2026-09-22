@@ -21,7 +21,7 @@ class PasswordController extends Controller
     public const PASSWORD_RULES = [
         'required',
         'string',
-        'min:10',
+        'min:8',         // RF-07: mínimo de 8 caracteres
         'regex:/[a-z]/',        // letra minúscula
         'regex:/[A-Z]/',        // letra maiúscula
         'regex:/[0-9]/',        // número
